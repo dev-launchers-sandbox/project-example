@@ -1,2 +1,2 @@
-# team-example
-Example team game page
+# project-example
+Example game project page
