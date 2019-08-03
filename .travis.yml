@@ -1,7 +1,9 @@
+language: node_js
+script: echo "No test to run yet"
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
-  file: *
+  file: ./*
   repo: $PRODUCTION_REPO
   skip_cleanup: true
   on:
