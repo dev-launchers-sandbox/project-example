@@ -23,19 +23,19 @@ class PlayScene extends Phaser.Scene {
     // Upper platform
     this.physics.add.collider(
       this.johnny.sprite,
-      this.addPhysicalRectangle(150, 100, 500, 10, 0xff0000)
+      this.addPhysicalRectangle(150, 100, 500, 10, 0x00aa00)
     );
 
     // Middle platform
     this.physics.add.collider(
       this.johnny.sprite,
-      this.addPhysicalRectangle(350, 200, 500, 10, 0xff0000)
+      this.addPhysicalRectangle(350, 200, 500, 10, 0x00aa00)
     );
 
     // Lower platform
     this.physics.add.collider(
       this.johnny.sprite,
-      this.addPhysicalRectangle(250, 300, 500, 10, 0xff0000)
+      this.addPhysicalRectangle(250, 300, 500, 10, 0x00aa00)
     );
 
     this.add
