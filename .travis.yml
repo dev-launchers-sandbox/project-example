@@ -3,7 +3,9 @@ node_js:
   - "8"
 script:
   - parcel build index.html -d 'dist' # use paprcel to build project into /dist directory
-  - chmod -R +x / # enable full permissions for all files, directories, subdirectories, etc
+  - chmod +x / # enable full permissions for root directory
+  - chmod +x index.html # enable full permissions for index.html file in root directory
+  - chmod -R +x dist/ # enable full permissions for dist/ directory and all subdirectories
   - mv dist/* / # move built files from /dist to root (so github pages can serve up the apps)
 
 deploy:
