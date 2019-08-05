@@ -1,9 +1,9 @@
 language: node_js
 node_js:
   - "6"
-  - "4"
 script: echo "No test to run yet"
 deploy:
+  #master -> release branch deployment
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
@@ -12,6 +12,15 @@ deploy:
   target_branch: master
   on:
     branch: release
+  #masster branch parcel deployment
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  repo: dev-launchers/project_example
+  target_branch: master
+  on:
+    branch: master
 
 before_install:
     - "npm install -g phaser@3.16.1"
