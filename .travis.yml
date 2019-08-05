@@ -3,7 +3,7 @@ node_js:
   - "8"
 script:
   - parcel build index.html -d 'dist'
-  - mv /dist/* /
+  - mv '/dist/*' '/'
 
 deploy:
   #master -> release branch deployment
