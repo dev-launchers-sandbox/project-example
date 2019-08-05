@@ -17,8 +17,8 @@ deploy:
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
   keep_history: true
-  repo: dev-launchers/project_example
-  target_branch: master
+  repo: dev-launchers-sandbox/project_example
+  target_branch: gh-pages
   on:
     branch: master
 
