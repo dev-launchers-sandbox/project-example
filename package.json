@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "start": "parcel index.html --open",
-    "build": "parcel build index.html -d build"
+    "build": "parcel build index.html"
   },
   "dependencies": {
     "phaser": "3.16.1"
