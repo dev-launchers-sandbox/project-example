@@ -9,3 +9,7 @@ deploy:
   target_branch: master
   on:
     branch: release
+
+before_install:
+    - "npm install -g phaser@3.16.1"
+    - "npm install -g parcel-bundler@^1.6.1"
