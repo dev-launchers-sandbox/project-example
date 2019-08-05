@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "8"
 script:
-  - parcel build index.html -d dist
+  - parcel build index.html -d '/'
 deploy:
   #master -> release branch deployment
   provider: pages
