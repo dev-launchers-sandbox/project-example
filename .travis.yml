@@ -14,7 +14,7 @@ deploy:
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
   keep_history: true
-  repo: dev-launchers/project_example
+  repo: dev-launchers/project__example
   target_branch: master
   on:
     branch: release
@@ -23,7 +23,7 @@ deploy:
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
   keep_history: true
-  repo: dev-launchers-sandbox/project_example
+  repo: dev-launchers-sandbox/project__example
   target_branch: gh-pages
   on:
     branch: master
