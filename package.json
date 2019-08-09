@@ -1,5 +1,5 @@
 {
-  "name": "project_example",
+  "name": "project__example",
   "version": "1.0.0",
   "description": "",
   "main": "index.html",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dev-launchers-sandbox/project_example.git"
+    "url": "git+https://github.com/dev-launchers-sandbox/project__example.git"
   },
   "keywords": []
 }
