@@ -1,6 +1,7 @@
 import Phaser from "phaser";
-
 import Player from "./classes/Player.js";
+import Enemy from "./classes/Enemy.js";
+import Vehicle from "./classes/Vehicle.js";
 
 class PlayScene extends Phaser.Scene {
   preload() {
@@ -10,33 +11,38 @@ class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
+    /*
+    this.load.spritesheet("enemy", "./assets/demon1.png", {
+      
+    });
+*/
   }
 
   create() {
     this.johnny = new Player(this, 10, 0);
+    this.enemy = new Enemy(this, 20, 0);
+    this.vehicle = new Vehicle(this, 40, 0);
     this.johnny.sprite.setCollideWorldBounds(true);
+    this.vehicle.sprite.setCollideWorldBounds(true);
 
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
 
-    // Upper platform
-    this.physics.add.collider(
-      this.johnny.sprite,
-      this.addPhysicalRectangle(150, 100, 500, 10, 0x00aa00)
-    );
-
-    // Middle platform
-    this.physics.add.collider(
-      this.johnny.sprite,
-      this.addPhysicalRectangle(350, 200, 500, 10, 0x00aa00)
-    );
-
-    // Lower platform
-    this.physics.add.collider(
-      this.johnny.sprite,
+    this.platforms = [
+      this.addPhysicalRectangle(150, 100, 500, 10, 0x00aa00),
+      this.addPhysicalRectangle(350, 200, 500, 10, 0x00aa00),
       this.addPhysicalRectangle(250, 300, 500, 10, 0x00aa00)
-    );
+    ];
+
+    //Player collisions
+    this.physics.add.collider(this.johnny.sprite, this.platforms);
+    //enemy collisions
+    this.physics.add.collider(this.enemy.sprite, this.platforms);
+    //vehicle collisions
+    this.physics.add.collider(this.vehicle.sprite, this.platforms);
+    //player and vehicle collisions
+    this.physics.add.collider(this.johnny.sprite, this.vehicle.sprite);
 
     this.add
       .text(64, 0, "Arrow keys to move and jump", {
@@ -50,6 +56,7 @@ class PlayScene extends Phaser.Scene {
 
   update(time, delta) {
     this.johnny.update(time, delta);
+    this.enemy.update(time, delta);
   }
 
   /* <Begin> helper functions added by Kris */
