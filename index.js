@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-import Character from "./classes/Character.js";
+import Player from "./classes/Player.js";
 
 class PlayScene extends Phaser.Scene {
   preload() {
@@ -13,7 +13,7 @@ class PlayScene extends Phaser.Scene {
   }
 
   create() {
-    this.johnny = new Character(this, 10, 0);
+    this.johnny = new Player(this, 10, 0);
     this.johnny.sprite.setCollideWorldBounds(true);
 
     const camera = this.cameras.main;
