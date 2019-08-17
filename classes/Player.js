@@ -21,7 +21,7 @@ export default class Player extends Character {
 
   update() {
     const keys = this.keys;
-    const sprite = this.sprite;
+    const sprite = this;
     const onGround = sprite.body.blocked.down;
     const acceleration = onGround ? 600 : 200;
 

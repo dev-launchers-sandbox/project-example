@@ -22,8 +22,6 @@ class PlayScene extends Phaser.Scene {
     this.johnny = new Player(this, 10, 0);
     this.enemy = new Enemy(this, 20, 0);
     this.vehicle = new Vehicle(this, 40, 0);
-    this.johnny.sprite.setCollideWorldBounds(true);
-    this.vehicle.sprite.setCollideWorldBounds(true);
 
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
@@ -36,13 +34,13 @@ class PlayScene extends Phaser.Scene {
     ];
 
     //Player collisions
-    this.physics.add.collider(this.johnny.sprite, this.platforms);
+    this.physics.add.collider(this.johnny, this.platforms);
     //enemy collisions
-    this.physics.add.collider(this.enemy.sprite, this.platforms);
+    this.physics.add.collider(this.enemy, this.platforms);
     //vehicle collisions
-    this.physics.add.collider(this.vehicle.sprite, this.platforms);
+    this.physics.add.collider(this.vehicle, this.platforms);
     //player and vehicle collisions
-    this.physics.add.collider(this.johnny.sprite, this.vehicle.sprite);
+    this.physics.add.collider(this.johnny, this.vehicle);
 
     this.add
       .text(64, 0, "Arrow keys to move and jump", {
