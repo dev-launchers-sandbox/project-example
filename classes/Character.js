@@ -27,5 +27,18 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       frameRate: 12,
       repeat: -1
     });
+
+    function moveTowards(targetX, targetY) {
+      if (this.x > targetX) {
+        this.x -= 1;
+      } else {
+        this.x += 1;
+      }
+      if (this.y > targetY) {
+        this.y -= 1;
+      } else {
+        this.y += 1;
+      }
+    }
   }
 }
