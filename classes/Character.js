@@ -1,8 +1,17 @@
 import Phaser from "phaser";
 
-export default class Character {
+export default class Character extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
+    super(scene, x, y, "johnny", 0);
     this.scene = scene;
+
+    // Add this to the scene as a Phaser game object
+    scene.add.existing(this);
+    // Create the physics-based sprite that we will move around and animate
+    this.sprite = scene.physics.add
+      .existing(this)
+      .setDrag(500, 0)
+      .setMaxVelocity(200, 400);
 
     // Create the animations we need from the player spritesheet
     const anims = scene.anims;
@@ -18,11 +27,5 @@ export default class Character {
       frameRate: 12,
       repeat: -1
     });
-
-    // Create the physics-based sprite that we will move around and animate
-    this.sprite = scene.physics.add
-      .sprite(x, y, "johnny", 0)
-      .setDrag(500, 0)
-      .setMaxVelocity(200, 400);
   }
 }
