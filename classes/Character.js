@@ -8,7 +8,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     // Add this to the scene as a Phaser game object
     scene.add.existing(this);
     // Create the physics-based sprite that we will move around and animate
-    this.sprite = scene.physics.add
+    scene.physics.add
       .existing(this)
       .setDrag(500, 0)
       .setMaxVelocity(200, 400);
@@ -27,18 +27,5 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       frameRate: 12,
       repeat: -1
     });
-
-    function moveTowards(targetX, targetY) {
-      if (this.x > targetX) {
-        this.x -= 1;
-      } else {
-        this.x += 1;
-      }
-      if (this.y > targetY) {
-        this.y -= 1;
-      } else {
-        this.y += 1;
-      }
-    }
   }
 }
