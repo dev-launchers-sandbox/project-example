@@ -28,15 +28,14 @@ class PlayScene extends Phaser.Scene {
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
 
     this.platforms = [
-      this.addPhysicalRectangle(150, 100, 500, 10, 0x00aa00),
-      this.addPhysicalRectangle(350, 200, 500, 10, 0x00aa00),
-      this.addPhysicalRectangle(250, 300, 500, 10, 0x00aa00)
+      this.addPhysicalRectangle(150, 100, 500, 10, 0xaa0000),
+      this.addPhysicalRectangle(350, 200, 500, 10, 0xaa0000),
+      this.addPhysicalRectangle(250, 300, 500, 10, 0xaa0000)
     ];
 
     //Player collisions
     this.physics.add.collider(this.johnny, this.platforms);
     //enemy collisions
-    this.physics.add.collider(this.enemy, this.platforms);
     //vehicle collisions
     this.physics.add.collider(this.vehicle, this.platforms);
     //player and vehicle collisions
@@ -50,6 +49,8 @@ class PlayScene extends Phaser.Scene {
         backgroundColor: "#000000"
       })
       .setScrollFactor(0);
+
+    this.enemy.body.setAllowGravity(false);
   }
 
   update(time, delta) {
