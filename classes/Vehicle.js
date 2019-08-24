@@ -27,9 +27,9 @@ export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
   takeAwayHealth() {
     this.damage = 100;
     //if (this.isColliding(this.Enemy)) {
-      this.health -= 1;
-    }
-    console.log();
+    this.health -= 1;
+    //}
+    console.log("");
   }
   update() {}
 
