@@ -1,10 +1,11 @@
 import Phaser from "phaser";
-import Enemy from "./Enemy";
 
 export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, speed) {
-    super(scene, x, y, "johnny");
+    super(scene, x, y, "cake");
     this.scene = scene;
+
+    //TODO; add animation
 
     // Add this to the scene as a Phaser game object
     scene.add.existing(this);
@@ -22,16 +23,28 @@ export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
       .setFriction(this.friction)
       .setCollideWorldBounds(true)
       .setBounce(1.5, 0);
-  }
 
+    this.healthDisplay = scene.add
+      .text(64, 0, "Health:" + this.health, {
+        font: "16px monospace",
+        fill: "#ffffff",
+        padding: { x: 1, y: 1 },
+        backgroundColor: "#000000"
+      })
+      .setScrollFactor(0);
+  }
   takeAwayHealth() {
-    this.damage = 100;
-    //if (this.isColliding(this.Enemy)) {
     this.health -= 1;
-    //}
-    console.log("");
-  }
-  update() {}
+    this.healthDisplay.setText("Health:" + this.health);
 
-  destroy() {}
+    if (this.health === 0) {
+      this.destroy();
+      console.log("destroy");
+    }
+    if (this.healthDisplay === 0) {
+      console.log("dead");
+    }
+  }
+
+  update() {}
 }
