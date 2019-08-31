@@ -2,6 +2,7 @@ import Phaser from "phaser";
 import Player from "./classes/Player.js";
 import Enemy from "./classes/Enemy.js";
 import Vehicle from "./classes/Vehicle.js";
+import Powerup from "./classes/Powerup.js";
 
 class PlayScene extends Phaser.Scene {
   preload() {
@@ -11,17 +12,14 @@ class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
-    /*
-    this.load.spritesheet("enemy", "./assets/demon1.png", {
-      
-    });
-*/
+    this.load.image("power", "./assets/powerup.png");
   }
 
   create() {
     this.johnny = new Player(this, 10, 0);
-    this.enemy = new Enemy(this, 20, 0);
+    this.enemy = new Enemy(this, 20, 80);
     this.vehicle = new Vehicle(this, 40, 0);
+    this.powerup = new Powerup(this, 100, 5);
 
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
@@ -35,11 +33,23 @@ class PlayScene extends Phaser.Scene {
 
     //Player collisions
     this.physics.add.collider(this.johnny, this.platforms);
-    //enemy collisions
+    //powerup collisions
+    this.physics.add.collider(this.powerup, this.platforms);
     //vehicle collisions
     this.physics.add.collider(this.vehicle, this.platforms);
     //player and vehicle collisions
     this.physics.add.collider(this.johnny, this.vehicle);
+    //enemy collisions
+    this.physics.add.collider(this.enemy, this.platforms);
+    //player and powerup collisions
+    //this.phyiscs.add.collider(this.johnny, this.powerup);
+    //player and powerup collisions
+    /*this.physics.add.collider(
+      this.player,
+      this.powerup,
+      this.playerAndPowerupCallBack
+    );
+    */
 
     this.add
       .text(64, 0, "Arrow keys to move and jump", {
@@ -51,6 +61,9 @@ class PlayScene extends Phaser.Scene {
       .setScrollFactor(0);
 
     this.enemy.body.setAllowGravity(false);
+  }
+  playerAndPowerupCallBack(player, powerup) {
+    this.enemy.moveAway(this.scene.player.x, this.scene.player.y);
   }
 
   update(time, delta) {
