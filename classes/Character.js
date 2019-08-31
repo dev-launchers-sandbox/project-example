@@ -29,6 +29,12 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       repeat: -1
     });
   }
+
+  /*
+   * moveTowards
+   * this fucntion will allow for any character
+   * to move towards the targetX and targetY position
+   */
   moveTowards(targetX, targetY) {
     if (this.x > targetX) {
       this.x -= 1;
