@@ -12,6 +12,12 @@ class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
+    this.load.spritesheet("cake", "./assets/cake.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+      margin: 0,
+      spacing: 0
+    });
     this.load.image("power", "./assets/powerup.png");
   }
 
@@ -41,6 +47,12 @@ class PlayScene extends Phaser.Scene {
     this.physics.add.collider(this.johnny, this.vehicle);
     //enemy collisions
     this.physics.add.collider(this.enemy, this.platforms);
+    //enemy and vehicle collision
+    this.physics.add.collider(
+      this.enemy,
+      this.vehicle,
+      this.enemyAndVehicleCallback
+    );
     //player and powerup collisions
     //this.phyiscs.add.collider(this.johnny, this.powerup);
     //player and powerup collisions
@@ -51,16 +63,10 @@ class PlayScene extends Phaser.Scene {
     );
     */
 
-    this.add
-      .text(64, 0, "Arrow keys to move and jump", {
-        font: "8px monospace",
-        fill: "#ffffff",
-        padding: { x: 1, y: 1 },
-        backgroundColor: "#000000"
-      })
-      .setScrollFactor(0);
-
     this.enemy.body.setAllowGravity(false);
+  }
+  enemyAndVehicleCallback(enemy, vehicle) {
+    vehicle.takeAwayHealth();
   }
   playerAndPowerupCallBack(player, powerup) {
     this.enemy.moveAway(this.scene.player.x, this.scene.player.y);
