@@ -3,7 +3,7 @@ import Phaser from "phaser";
 
 export default class Enemy extends Character {
   constructor(scene, x, y) {
-    super(scene, x, y);
+    super(scene, x, y, "ghost");
     this.attackVal = 10;
     this.step = 1;
     this.updateCounter = 0;
@@ -13,6 +13,15 @@ export default class Enemy extends Character {
     this.movementY = 0;
     this.updateFrames = 10;
     this.personalSpace = 30;
+
+    const anims = scene.anims;
+    anims.create({
+      key: "ghost-idle",
+      frames: anims.generateFrameNumbers("ghost", { start: 0, end: 2 }),
+      frameRate: 3,
+      repeat: -1
+    });
+    this.anims.play("ghost-idle", true);
 
     /*console.log(this.scene);*/
   }

@@ -18,6 +18,12 @@ class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
+    this.load.spritesheet("ghost", "./assets/ghost.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+      margin: 0,
+      spacing: 0
+    });
     this.load.image("power", "./assets/powerup.png");
   }
 
