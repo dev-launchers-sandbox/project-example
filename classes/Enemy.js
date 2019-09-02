@@ -7,7 +7,12 @@ export default class Enemy extends Character {
     this.attackVal = 10;
     this.step = 1;
     this.updateCounter = 0;
-    this.distance = 10;
+    this.targetX = 0;
+    this.targetY = 0;
+    this.movementX = 0;
+    this.movementY = 0;
+    this.updateFrames = 10;
+    this.personalSpace = 30;
 
     /*console.log(this.scene);*/
   }
@@ -30,28 +35,54 @@ export default class Enemy extends Character {
    * from a distance
    */
 
-  moveRandomlyTowards(targetX, targetY, distance) {
-    let x = this.scene.vehicle.x + Math.random() * distance;
+  moveRandomlyTowards() {
+    /*let x = this.scene.vehicle.x + Math.random() * distance;
     let y = this.scene.vehicle.y + Math.random() * distance;
-
+    */
     this.updateCounter++;
-    if (this.updateCounter % 60) {
-      //console.log(x)
+    let x = this.randomXMovement();
+    if (this.updateCounter % this.updateFrames === 0) {
+      this.movementX = this.randomXMovement();
+      this.movementY = this.randomYMovement();
     }
+    this.targetX =
+      this.scene.vehicle.x +
+      this.personalSpace / -2 +
+      Math.random() * this.personalSpace;
+    this.targetY =
+      this.scene.vehicle.y +
+      this.personalSpace / -2 +
+      Math.random() * this.personalSpace;
+    this.x += this.movementX;
+    this.y += this.movementY;
+    //this.y += this.randomYMovement();
+    /*this.moveTowards(
+      this.targetX + this.randomXMovement(),
+      this.targetY + this.randomYMovement(),
+    );*/
+  }
 
-    this.moveTowards(
-      this.scene.vehicle.x + distance,
-      this.scene.vehicle.y + distance
-    );
+  randomXMovement() {
+    let randomBoolean = Math.random() >= 0.5;
+    if (randomBoolean) {
+      return ((this.x - this.targetX) * Math.random()) / this.updateFrames;
+    } else {
+      return ((this.targetX - this.x) * Math.random()) / this.updateFrames;
+    }
+  }
+
+  randomYMovement() {
+    let randomBoolean = Math.random() >= 0.5;
+    if (randomBoolean) {
+      return ((this.y - this.targetY) * Math.random()) / this.updateFrames;
+    } else {
+      return ((this.targetY - this.y) * Math.random()) / this.updateFrames;
+    }
   }
 
   update() {
     //this.moveTowards(this.scene.vehicle.x, this.scene.vehicle.y);
-    this.moveRandomlyTowards(
-      this.scene.vehicle.x,
-      this.scene.vehicle.y,
-      this.distance
-    );
+    this.moveRandomlyTowards();
     /*
     this.updateCounter++;
     if(this.updateCounter % 60){

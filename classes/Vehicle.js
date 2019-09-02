@@ -13,7 +13,7 @@ export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
     this.gravity = 0;
     this.friction = 10;
     this.speed = speed;
-    this.health = 100;
+    this.health = 200;
 
     // Create the physics-based sprite that we will move around and animate
     scene.physics.add
@@ -32,7 +32,17 @@ export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
         backgroundColor: "#000000"
       })
       .setScrollFactor(0);
+
+    const anims = scene.anims;
+    anims.create({
+      key: "cake-idle",
+      frames: anims.generateFrameNumbers("cake", { start: 0, end: 3 }),
+      frameRate: 3,
+      repeat: -1
+    });
+    this.anims.play("cake-idle", true);
   }
+
   takeAwayHealth() {
     this.health -= 1;
     this.healthDisplay.setText("Health:" + this.health);
