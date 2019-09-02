@@ -6,7 +6,18 @@ export default class Player extends Character {
     super(scene, x, y);
 
     // Track the arrow keys & OPQA
-    const { LEFT, RIGHT, UP, Q, O, P, A, D } = Phaser.Input.Keyboard.KeyCodes;
+    const {
+      LEFT,
+      RIGHT,
+      UP,
+      Q,
+      O,
+      P,
+      A,
+      D,
+      W,
+      S
+    } = Phaser.Input.Keyboard.KeyCodes;
     this.keys = scene.input.keyboard.addKeys({
       left: LEFT,
       right: RIGHT,
@@ -15,7 +26,9 @@ export default class Player extends Character {
       o: O,
       p: P,
       a: A,
-      d: D
+      d: D,
+      w: W,
+      s: S
     });
   }
 
@@ -26,7 +39,7 @@ export default class Player extends Character {
     const acceleration = onGround ? 600 : 200;
 
     // Apply horizontal acceleration when left/a or right/d are applied
-    if (keys.left.isDown || keys.o.isDown) {
+    if (keys.left.isDown || keys.a.isDown) {
       sprite.setAccelerationX(-acceleration);
       sprite.setFlipX(true);
     } else if (keys.right.isDown || keys.d.isDown) {
@@ -37,7 +50,7 @@ export default class Player extends Character {
     }
 
     // Only allow the player to jump if they are on the ground
-    if (onGround && (keys.up.isDown || keys.q.isDown)) {
+    if (onGround && (keys.up.isDown || keys.w.isDown)) {
       sprite.setVelocityY(-5000 * 2);
     }
 
