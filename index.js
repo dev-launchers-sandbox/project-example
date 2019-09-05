@@ -24,13 +24,20 @@ class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
+    this.load.spritesheet("baker", "./assets/baker.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+      margin: 0,
+      spacing: 0
+    });
+
     this.load.image("power", "./assets/powerup.png");
   }
 
   create() {
-    this.johnny = new Player(this, 10, 0);
-    this.enemy = new Enemy(this, 20, 80);
-    this.vehicle = new Vehicle(this, 40, 0);
+    this.johnny = new Player(this, 40, 5);
+    this.enemy = new Enemy(this, 10, 0);
+    this.vehicle = new Vehicle(this, 80, 5);
     this.powerup = new Powerup(this, 100, 5);
 
     const camera = this.cameras.main;

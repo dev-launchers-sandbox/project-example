@@ -57,13 +57,13 @@ export default class Player extends Character {
     // Update the animation/texture based on the state of the player
     if (onGround) {
       if (sprite.body.velocity.x !== 0) {
-        sprite.anims.play("johnny-walk", true);
+        sprite.anims.play("baker-idle", true);
       } else {
-        sprite.anims.play("johnny-idle", true);
+        sprite.anims.play("baker-idle", true);
       }
     } else {
       sprite.anims.stop();
-      sprite.setTexture("johnny", 4);
+      sprite.setTexture("baker", 4);
     }
   }
 

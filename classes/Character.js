@@ -2,7 +2,7 @@ import Phaser from "phaser";
 
 export default class Character extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
-    super(scene, x, y, "johnny", 0);
+    super(scene, x, y, "player", 0);
     this.scene = scene;
 
     // Add this to the scene as a Phaser game object
@@ -17,8 +17,8 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     // Create the animations we need from the player spritesheet
     const anims = scene.anims;
     anims.create({
-      key: "johnny-idle",
-      frames: anims.generateFrameNumbers("johnny", { start: 0, end: 3 }),
+      key: "baker-idle",
+      frames: anims.generateFrameNumbers("baker", { start: 0, end: 0 }),
       frameRate: 3,
       repeat: -1
     });
