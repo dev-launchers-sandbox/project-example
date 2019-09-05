@@ -14,7 +14,7 @@ deploy:
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
   keep_history: true
-  repo: dev-launchers/project__example-game
+  repo: dev-launchers/project__hungry-ghost
   target_branch: master
   on:
     branch: release
@@ -23,7 +23,7 @@ deploy:
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
   keep_history: true
-  repo: dev-launchers-sandbox/project__example-game
+  repo: dev-launchers-sandbox/project__hungry-ghost
   target_branch: gh-pages
   on:
     branch: master
