@@ -15,7 +15,7 @@ export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
     this.friction = 10;
     this.speed = speed;
     this.health = 200;
-    this.updatecounter = 0;
+    this.updateCounter = 0;
 
     // Create the physics-based sprite that we will move around and animate
     scene.physics.add
@@ -46,8 +46,10 @@ export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
   }
 
   takeAwayHealth() {
-    /*if (this.updatecounter % 60 === 0){*/
-    this.health -= 1;
+    this.updateCounter++;
+    if (this.updateCounter % 30 === 0) {
+      this.health -= 1;
+    }
 
     this.healthDisplay.setText("Health:" + this.health);
 
