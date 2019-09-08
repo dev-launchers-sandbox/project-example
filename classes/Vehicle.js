@@ -11,7 +11,7 @@ export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
     // Add this to the scene as a Phaser game object
     scene.add.existing(this);
 
-    this.gravity = 0;
+    this.gravity = 10;
     this.friction = 10;
     this.speed = speed;
     this.health = 10;
@@ -21,7 +21,7 @@ export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
     // Create the physics-based sprite that we will move around and animate
     scene.physics.add
       .existing(this)
-      .setDrag(100, 0)
+      .setDrag(250, 0)
       .setMaxVelocity(200, 400)
       .setFriction(this.friction)
       .setCollideWorldBounds(true)
