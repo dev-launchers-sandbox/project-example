@@ -62,12 +62,17 @@ export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
   }
 
   losing() {
-    this.losingDisplay = this.scene.add.text(500 / 3, 350 / 3, "YOU LOOSE", {
-      font: "25px monospace",
-      fill: "#ffffff",
-      padding: { x: 1, y: 1 },
-      backgroundColor: "#000000"
-    });
+    this.losingDisplay = this.scene.add.text(
+      this.scene.game.config.width / 3,
+      this.scene.game.config.height / 3,
+      "YOU LOOSE",
+      {
+        font: "13px monospace",
+        fill: "#ffffff",
+        padding: { x: 1, y: 1 },
+        backgroundColor: "#000000"
+      }
+    );
     let timer = this.scene.time.delayedCall(5000, () => {
       this.scene.scene.restart();
     }); // delay in ms

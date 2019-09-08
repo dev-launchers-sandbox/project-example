@@ -2,7 +2,6 @@ import Phaser from "phaser";
 
 export default class FinishLine extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
-
     super(scene, x, y, "power", 0);
     this.scene = scene;
     this.winDisplay = undefined;
@@ -18,17 +17,21 @@ export default class FinishLine extends Phaser.Physics.Arcade.Sprite {
       .setCollideWorldBounds(true);
   }
 
-
   winning() {
     //this.updateCounter++;
-    this.winDisplay = this.scene.add.text(500 / 3, 350 / 3, "YOU WIN", {
-      font: "25px monospace",
-      fill: "#ffffff",
-      padding: { x: 1, y: 1 },
-      backgroundColor: "#ff0000"
-    });
+    this.winDisplay = this.scene.add.text(
+      this.scene.game.config.width / 3,
+      this.scene.game.config.height / 3,
+      "YOU WIN",
+      {
+        font: "13px monospace",
+        fill: "#ffffff",
+        padding: { x: 1, y: 1 },
+        backgroundColor: "#ff0000"
+      }
+    );
 
-    let timer = this.scene.time.delayedCall(5000, () => {
+    let timer = this.scene.time.delayedCall(3000, () => {
       this.scene.scene.restart();
     }); // delay in ms
   }
