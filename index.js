@@ -26,7 +26,7 @@ class PlayScene extends Phaser.Scene {
       spacing: 0
     });
     this.load.spritesheet("baker", "./assets/baker.png", {
-      frameWidth: 15,
+      frameWidth: 16,
       frameHeight: 16,
       margin: 0,
       spacing: 0

@@ -19,7 +19,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     const anims = scene.anims;
     anims.create({
       key: "baker-idle",
-      frames: anims.generateFrameNumbers("baker", { start: 0, end: 0 }),
+      frames: anims.generateFrameNumbers("baker", { start: 1, end: 1 }),
       frameRate: 3,
       repeat: -1
     });
