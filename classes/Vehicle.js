@@ -14,8 +14,9 @@ export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
     this.gravity = 0;
     this.friction = 10;
     this.speed = speed;
-    this.health = 200;
-    this.updatecounter = 0;
+    this.health = 10;
+    this.updateCounter = 0;
+    this.losingDisplay = undefined;
 
     // Create the physics-based sprite that we will move around and animate
     scene.physics.add
@@ -46,18 +47,30 @@ export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
   }
 
   takeAwayHealth() {
-    /*if (this.updatecounter % 60 === 0){*/
-    this.health -= 1;
+    this.updateCounter++;
+    if (this.updateCounter % 30 === 0) {
+      this.health -= 1;
+    }
 
     this.healthDisplay.setText("Health:" + this.health);
 
     if (this.health === 0) {
+      this.losing();
       this.destroy();
       console.log("destroy");
     }
-    if (this.healthDisplay === 0) {
-      console.log("dead");
-    }
+  }
+
+  losing() {
+    this.losingDisplay = this.scene.add.text(500 / 3, 350 / 3, "YOU LOOSE", {
+      font: "25px monospace",
+      fill: "#ffffff",
+      padding: { x: 1, y: 1 },
+      backgroundColor: "#000000"
+    });
+    let timer = this.scene.time.delayedCall(5000, () => {
+      this.scene.scene.restart();
+    }); // delay in ms
   }
 
   update() {}
