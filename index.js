@@ -31,6 +31,12 @@ class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
+    this.load.spritesheet("finishLine", "./assets/finish line.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+      margin: 0,
+      spacing: 0
+    });
 
     this.load.image("power", "./assets/powerup.png");
   }
@@ -40,7 +46,7 @@ class PlayScene extends Phaser.Scene {
     this.enemy = new Enemy(this, 10, 0);
     this.vehicle = new Vehicle(this, 80, 5);
     this.powerup = new Powerup(this, 100, 5);
-    this.finishLine = new FinishLine(this, 500, 10);
+    this.finishLine = new FinishLine(this, 500, 100);
 
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();

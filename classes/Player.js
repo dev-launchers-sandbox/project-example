@@ -36,7 +36,8 @@ export default class Player extends Character {
     const keys = this.keys;
     const sprite = this;
     const onGround = sprite.body.blocked.down;
-    const acceleration = onGround ? 250 : 100;
+    const acceleration = onGround ? 260 : 150;
+
 
     // Apply horizontal acceleration when left/a or right/d are applied
     if (keys.left.isDown || keys.a.isDown) {
