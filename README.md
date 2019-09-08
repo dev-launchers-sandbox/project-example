@@ -1,2 +1,3 @@
-# project-example
-Example game project page
+# project__hungry-ghost
+
+Protect your cake!
