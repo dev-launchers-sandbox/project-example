@@ -92,6 +92,9 @@ export default class Enemy extends Character {
   update() {
     //this.moveTowards(this.scene.vehicle.x, this.scene.vehicle.y);
     this.moveRandomlyTowards();
+    /*if (this.updateCounter % 60 === 0) {
+      console.log(this.x);
+    }
     /*
     this.updateCounter++;
     if(this.updateCounter % 60){
