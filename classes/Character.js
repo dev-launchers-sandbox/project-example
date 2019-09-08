@@ -2,7 +2,7 @@ import Phaser from "phaser";
 
 export default class Character extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
-    super(scene, x, y, "player", 0);
+    super(scene, x, y, "baker", 0);
     this.scene = scene;
 
     // Add this to the scene as a Phaser game object
@@ -15,6 +15,7 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       .setCollideWorldBounds(true);
 
     // Create the animations we need from the player spritesheet
+
     const anims = scene.anims;
     anims.create({
       key: "baker-idle",
@@ -22,12 +23,14 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       frameRate: 3,
       repeat: -1
     });
-    anims.create({
+    this.anims.play("baker-idle", true);
+
+    /*anims.create({
       key: "johnny-walk",
       frames: anims.generateFrameNumbers("johnny", { start: 5, end: 7 }),
       frameRate: 12,
       repeat: -1
-    });
+    });*/
   }
 
   /*

@@ -11,16 +11,16 @@ export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
     // Add this to the scene as a Phaser game object
     scene.add.existing(this);
 
-    this.gravity = 0;
+    this.gravity = 10;
     this.friction = 10;
     this.speed = speed;
-    this.health = 200;
-    this.updatecounter = 0;
+    this.health = 20;
+    this.updateCounter = 0;
 
     // Create the physics-based sprite that we will move around and animate
     scene.physics.add
       .existing(this)
-      .setDrag(100, 0)
+      .setDrag(250, 0)
       .setMaxVelocity(200, 400)
       .setFriction(this.friction)
       .setCollideWorldBounds(true)
@@ -46,8 +46,10 @@ export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
   }
 
   takeAwayHealth() {
-    /*if (this.updatecounter % 60 === 0){*/
-    this.health -= 1;
+    this.updateCounter++;
+    if (this.updateCounter % 30 === 0) {
+      this.health -= 1;
+    }
 
     this.healthDisplay.setText("Health:" + this.health);
 

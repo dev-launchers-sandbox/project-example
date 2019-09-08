@@ -25,7 +25,7 @@ class PlayScene extends Phaser.Scene {
       spacing: 0
     });
     this.load.spritesheet("baker", "./assets/baker.png", {
-      frameWidth: 16,
+      frameWidth: 15,
       frameHeight: 16,
       margin: 0,
       spacing: 0
@@ -45,9 +45,9 @@ class PlayScene extends Phaser.Scene {
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
 
     this.platforms = [
-      this.addPhysicalRectangle(150, 100, 500, 10, 0xaa0000),
-      this.addPhysicalRectangle(350, 200, 500, 10, 0xaa0000),
-      this.addPhysicalRectangle(250, 300, 500, 10, 0xaa0000)
+      this.addPhysicalRectangle(150 / 2, 100 / 2, 500 / 2, 10 / 2, 0xaa0000),
+      this.addPhysicalRectangle(350 / 2, 200 / 2, 500 / 2, 10 / 2, 0xaa0000),
+      this.addPhysicalRectangle(250 / 2, 300 / 2, 500 / 2, 10 / 2, 0xaa0000)
     ];
 
     //Player collisions
@@ -107,11 +107,11 @@ class PlayScene extends Phaser.Scene {
 
 const config = {
   type: Phaser.AUTO,
-  width: 500,
-  height: 300,
+  width: 500 / 2,
+  height: 300 / 2,
   parent: "game-container",
   pixelArt: true,
-  zoom: 1,
+  zoom: 2,
   backgroundColor: "#000000",
   scene: PlayScene,
   physics: {
