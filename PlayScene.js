@@ -4,6 +4,7 @@ import Enemy from "./classes/Enemy.js";
 import Vehicle from "./classes/Vehicle.js";
 import Powerup from "./classes/Powerup.js";
 import FinishLine from "./classes/FinishLine.js";
+import Obstacle from "./classes/Obstacle.js";
 
 class PlayScene extends Phaser.Scene {
   preload() {
@@ -31,6 +32,12 @@ class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
+    this.load.spritesheet("finishLine", "./assets/finish line.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+      margin: 0,
+      spacing: 0
+    });
 
     this.load.image("power", "./assets/powerup.png");
   }
@@ -40,7 +47,8 @@ class PlayScene extends Phaser.Scene {
     this.enemy = new Enemy(this, 10, 0);
     this.vehicle = new Vehicle(this, 80, 5);
     this.powerup = new Powerup(this, 100, 5);
-    this.finishLine = new FinishLine(this, 500, 10);
+    this.finishLine = new FinishLine(this, 500, 100);
+    this.obstacle = new Obstacle(this, 150, 1500);
 
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
@@ -67,6 +75,12 @@ class PlayScene extends Phaser.Scene {
       this.vehicle,
       this.enemyAndVehicleCallback
     );
+    //obstacle collisions
+    this.physics.add.collider(
+      this.vehicle,
+      this.obstacle,
+      this.vehicleAndObstacleCallback
+    );
 
     //player and finishline collision
     this.physics.add.collider(
@@ -92,6 +106,9 @@ class PlayScene extends Phaser.Scene {
   }
   playerAndFinishLineCallback(vehicle, finishLine) {
     finishLine.winning();
+  }
+  vehicleAndObstacleCallback(vehicle, obstacle) {
+    obstacle.playerLost();
   }
 
   update(time, delta) {
