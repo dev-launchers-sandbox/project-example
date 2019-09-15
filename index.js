@@ -81,13 +81,6 @@ class PlayScene extends Phaser.Scene {
       this.playerAndFinishLineCallback
     );
 
-    //player and powerup collisions
-    this.physics.add.collider(
-      this.player,
-      this.powerup,
-      this.playerAndPowerupCallback
-    );
-
     this.enemy.body.setAllowGravity(false);
   }
   enemyAndVehicleCallback(enemy, vehicle) {
