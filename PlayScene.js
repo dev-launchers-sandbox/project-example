@@ -4,6 +4,8 @@ import Enemy from "./classes/Enemy.js";
 import Vehicle from "./classes/Vehicle.js";
 import Powerup from "./classes/Powerup.js";
 import FinishLine from "./classes/FinishLine.js";
+import Obstacle from "./classes/Obstacle.js";
+import RandomDataPoints from "./classes/RandomDataPoints.js";
 
 class PlayScene extends Phaser.Scene {
   preload() {
@@ -31,6 +33,12 @@ class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
+    this.load.spritesheet("finishLine", "./assets/finish line.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+      margin: 0,
+      spacing: 0
+    });
 
     this.load.image("power", "./assets/powerup.png");
   }
@@ -40,12 +48,22 @@ class PlayScene extends Phaser.Scene {
     this.enemy = new Enemy(this, 10, 0);
     this.vehicle = new Vehicle(this, 80, 5);
     this.powerup = new Powerup(this, 100, 5);
-    this.finishLine = new FinishLine(this, 500, 10);
-
+    this.finishLine = new FinishLine(this, 500, 100);
+    this.randomDataPointsGenerator = new RandomDataPoints();
+    const obstacleLocations = this.randomDataPointsGenerator.datapoints(
+      2,
+      game.config.width,
+      game.config.height
+    );
+    console.log("obstacleLocations ", obstacleLocations);
+    this.obstacles = [];
+    obstacleLocations.forEach(point => {
+      console.log("point", point);
+      this.obstacles.push(new Obstacle(this, point.x, point.y));
+    });
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
-
     this.platforms = [
       this.addPhysicalRectangle(150 / 2, 100 / 2, 500 / 2, 10 / 2, 0xaa0000),
       this.addPhysicalRectangle(350 / 2, 200 / 2, 500 / 2, 10 / 2, 0xaa0000),
@@ -67,6 +85,14 @@ class PlayScene extends Phaser.Scene {
       this.vehicle,
       this.enemyAndVehicleCallback
     );
+    //obstacles collisions
+    this.obstacles.forEach(obstacle => {
+      this.physics.add.collider(
+        this.vehicle,
+        obstacle,
+        this.vehicleAndObstacleCallback
+      );
+    });
 
     //player and finishline collision
     this.physics.add.collider(
@@ -83,6 +109,9 @@ class PlayScene extends Phaser.Scene {
     );
 
     this.enemy.body.setAllowGravity(false);
+    var vehicleX = this.vehicle.x;
+
+    var vehicleWidth = this.vehicle.width;
   }
   enemyAndVehicleCallback(enemy, vehicle) {
     vehicle.takeAwayHealth();
@@ -92,6 +121,9 @@ class PlayScene extends Phaser.Scene {
   }
   playerAndFinishLineCallback(vehicle, finishLine) {
     finishLine.winning();
+  }
+  vehicleAndObstacleCallback(vehicle, obstacle) {
+    obstacle.playerLost();
   }
 
   update(time, delta) {
