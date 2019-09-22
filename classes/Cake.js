@@ -1,7 +1,7 @@
 import Phaser from "phaser";
 import Enemy from "./Enemy";
 
-export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
+export default class Cake extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, speed) {
     super(scene, x, y, "cake");
     this.scene = scene;
@@ -18,6 +18,20 @@ export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
     this.updateCounter = 0;
     this.losingDisplay = undefined;
 
+    this.scene.physics.add.collider(this, this.scene.platforms);
+    this.scene.physics.add.collider(this.scene.player, this);
+    this.scene.physics.add.collider(
+      this.scene.enemy,
+      this,
+      this.scene.enemyAndCakeCallback
+    );
+
+    this.scene.physics.add.collider(
+      this,
+      this.scene.finishLine,
+      this.scene.playerAndFinishLineCallback
+    );
+
     // Create the physics-based sprite that we will move around and animate
     scene.physics.add
       .existing(this)
@@ -28,10 +42,10 @@ export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
       .setBounce(1.5, 0.4);
 
     this.healthDisplay = scene.add
-      .text(64, 0, "Health:" + this.health, {
-        font: "16px monospace",
+      .text(10, 0, "Health:" + this.health, {
+        font: "10px monospace",
         fill: "#ffffff",
-        padding: { x: 1, y: 1 },
+        padding: { x: 8, y: 1 },
         backgroundColor: "#000000"
       })
       .setScrollFactor(0);
@@ -56,21 +70,29 @@ export default class Vehicle extends Phaser.Physics.Arcade.Sprite {
 
     if (this.health === 0) {
       this.losing();
+      this.scene.cake = new Cake(this.scene, 80, 5);
       this.destroy();
-      console.log("destroy");
+
+      //new Cake(this.scene, 80, 5)
     }
   }
 
   losing() {
-    this.losingDisplay = this.scene.add.text(500 / 3, 350 / 3, "YOU LOOSE", {
-      font: "25px monospace",
-      fill: "#ffffff",
-      padding: { x: 1, y: 1 },
-      backgroundColor: "#000000"
-    });
+    this.scene.finishLine.score -= 1;
+
+    this.scene.finishLine.scoreDisplay.setText(
+      "Score:" + this.scene.finishLine.score
+    );
+
+    if (this.scene.finishLine.score < 0) {
+      this.scene.scene.restart();
+    }
+
+    /*
     let timer = this.scene.time.delayedCall(5000, () => {
       this.scene.scene.restart();
     }); // delay in ms
+    */
   }
 
   update() {}

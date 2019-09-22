@@ -1,11 +1,15 @@
 import Phaser from "phaser";
-import Player from "./classes/Player.js";
-import Enemy from "./classes/Enemy.js";
-import Vehicle from "./classes/Vehicle.js";
-import Powerup from "./classes/Powerup.js";
-import FinishLine from "./classes/FinishLine.js";
+import Player from "../classes/Player.js";
+import Enemy from "../classes/Enemy.js";
+import Cake from "../classes/Cake.js";
+import Powerup from "../classes/Powerup.js";
+import FinishLine from "../classes/FinishLine.js";
 
-class PlayScene extends Phaser.Scene {
+export default class PlayScene extends Phaser.Scene {
+  constructor() {
+    super("PlayScene");
+    console.log("wow");
+  }
   preload() {
     this.load.spritesheet("johnny", "./assets/johnny_sprite.png", {
       frameWidth: 16,
@@ -31,6 +35,12 @@ class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
+    this.load.spritesheet("finishLine", "./assets/finish line.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+      margin: 0,
+      spacing: 0
+    });
 
     this.load.image("power", "./assets/powerup.png");
   }
@@ -38,9 +48,11 @@ class PlayScene extends Phaser.Scene {
   create() {
     this.player = new Player(this, 40, 5);
     this.enemy = new Enemy(this, 10, 0);
-    this.vehicle = new Vehicle(this, 80, 5);
+    this.cake = new Cake(this, 80, 5);
     this.powerup = new Powerup(this, 100, 5);
-    this.finishLine = new FinishLine(this, 500, 10);
+    this.finishLine = new FinishLine(this, 500, 100);
+
+    this.player.setDepth(1);
 
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
@@ -56,21 +68,17 @@ class PlayScene extends Phaser.Scene {
     //powerup collisions
     this.physics.add.collider(this.powerup, this.platforms);
     //vehicle collisions
-    this.physics.add.collider(this.vehicle, this.platforms);
+    this.physics.add.collider(this.cake, this.platforms);
     //player and vehicle collisions
-    this.physics.add.collider(this.player, this.vehicle);
+    this.physics.add.collider(this.player, this.cake);
     //enemy collisions
     this.physics.add.collider(this.enemy, this.platforms);
     //enemy and vehicle collision
-    this.physics.add.collider(
-      this.enemy,
-      this.vehicle,
-      this.enemyAndVehicleCallback
-    );
+    this.physics.add.collider(this.enemy, this.cake, this.enemyAndCakeCallback);
 
     //player and finishline collision
     this.physics.add.collider(
-      this.vehicle,
+      this.cake,
       this.finishLine,
       this.playerAndFinishLineCallback
     );
@@ -84,13 +92,13 @@ class PlayScene extends Phaser.Scene {
 
     this.enemy.body.setAllowGravity(false);
   }
-  enemyAndVehicleCallback(enemy, vehicle) {
-    vehicle.takeAwayHealth();
+  enemyAndCakeCallback(enemy, cake) {
+    cake.takeAwayHealth();
   }
   playerAndPowerupCallback(player, powerup) {
     powerup.activate();
   }
-  playerAndFinishLineCallback(vehicle, finishLine) {
+  playerAndFinishLineCallback(cake, finishLine) {
     finishLine.winning();
   }
 
@@ -113,23 +121,3 @@ class PlayScene extends Phaser.Scene {
 
   /* </End> Helper functions added by kris */
 }
-
-const config = {
-  type: Phaser.AUTO,
-  width: 500 / 2,
-  height: 300 / 2,
-  parent: "game-container",
-  pixelArt: true,
-  zoom: 2,
-  backgroundColor: "#000000",
-  scene: PlayScene,
-  physics: {
-    default: "arcade",
-    arcade: {
-      gravity: { y: 500 }
-    }
-  }
-};
-
-const game = new Phaser.Game(config);
-let controls;
