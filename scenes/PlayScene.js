@@ -4,8 +4,8 @@ import Enemy from "../classes/Enemy.js";
 import Cake from "../classes/Cake.js";
 import Powerup from "../classes/Powerup.js";
 import FinishLine from "../classes/FinishLine.js";
-import Obstacle from "./classes/Obstacle.js";
-import RandomDataPoints from "./classes/RandomDataPoints.js";
+import Obstacle from "../classes/Obstacle.js";
+import RandomDataPoints from "../classes/RandomDataPoints.js";
 
 export default class PlayScene extends Phaser.Scene {
   constructor() {
@@ -53,11 +53,12 @@ export default class PlayScene extends Phaser.Scene {
     this.cake = new Cake(this, 80, 5);
     this.powerup = new Powerup(this, 100, 5);
     this.finishLine = new FinishLine(this, 500, 100);
+
     this.randomDataPointsGenerator = new RandomDataPoints();
     const obstacleLocations = this.randomDataPointsGenerator.datapoints(
       2,
-      game.config.width,
-      game.config.height
+      this.game.config.width,
+      this.game.config.height
     );
     console.log("obstacleLocations ", obstacleLocations);
     this.obstacles = [];
@@ -90,13 +91,11 @@ export default class PlayScene extends Phaser.Scene {
     //enemy and vehicle collision
     this.physics.add.collider(this.enemy, this.cake, this.enemyAndCakeCallback);
     //obstacles collisions
-    this.obstacles.forEach(obstacle => {
-      this.physics.add.collider(
-        this.vehicle,
-        obstacle,
-        this.vehicleAndObstacleCallback
-      );
-    });
+    this.physics.add.collider(
+      this.cake,
+      this.obstacles,
+      this.vehicleAndObstacleCallback
+    );
 
     //player and finishline collision
     this.physics.add.collider(
