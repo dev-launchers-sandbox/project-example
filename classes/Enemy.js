@@ -55,11 +55,11 @@ export default class Enemy extends Character {
       this.movementY = this.randomYMovement();
     }
     this.targetX =
-      this.scene.vehicle.x +
+      this.scene.cake.x +
       this.personalSpace / -2 +
       Math.random() * this.personalSpace;
     this.targetY =
-      this.scene.vehicle.y +
+      this.scene.cake.y +
       this.personalSpace / -2 +
       Math.random() * this.personalSpace;
     this.x += this.movementX;
