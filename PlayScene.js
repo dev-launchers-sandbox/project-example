@@ -1,17 +1,13 @@
 import Phaser from "phaser";
-import Player from "../classes/Player.js";
-import Enemy from "../classes/Enemy.js";
-import Cake from "../classes/Cake.js";
-import Powerup from "../classes/Powerup.js";
-import FinishLine from "../classes/FinishLine.js";
+import Player from "./classes/Player.js";
+import Enemy from "./classes/Enemy.js";
+import Vehicle from "./classes/Vehicle.js";
+import Powerup from "./classes/Powerup.js";
+import FinishLine from "./classes/FinishLine.js";
 import Obstacle from "./classes/Obstacle.js";
 import RandomDataPoints from "./classes/RandomDataPoints.js";
 
-export default class PlayScene extends Phaser.Scene {
-  constructor() {
-    super("PlayScene");
-    console.log("wow");
-  }
+class PlayScene extends Phaser.Scene {
   preload() {
     this.load.spritesheet("johnny", "./assets/johnny_sprite.png", {
       frameWidth: 16,
@@ -50,7 +46,7 @@ export default class PlayScene extends Phaser.Scene {
   create() {
     this.player = new Player(this, 40, 5);
     this.enemy = new Enemy(this, 10, 0);
-    this.cake = new Cake(this, 80, 5);
+    this.vehicle = new Vehicle(this, 80, 5);
     this.powerup = new Powerup(this, 100, 5);
     this.finishLine = new FinishLine(this, 500, 100);
     this.randomDataPointsGenerator = new RandomDataPoints();
@@ -65,13 +61,9 @@ export default class PlayScene extends Phaser.Scene {
       console.log("point", point);
       this.obstacles.push(new Obstacle(this, point.x, point.y));
     });
-
-    this.player.setDepth(1);
-
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
-
     this.platforms = [
       this.addPhysicalRectangle(150 / 2, 100 / 2, 500 / 2, 10 / 2, 0xaa0000),
       this.addPhysicalRectangle(350 / 2, 200 / 2, 500 / 2, 10 / 2, 0xaa0000),
@@ -82,13 +74,17 @@ export default class PlayScene extends Phaser.Scene {
     //powerup collisions
     this.physics.add.collider(this.powerup, this.platforms);
     //vehicle collisions
-    this.physics.add.collider(this.cake, this.platforms);
+    this.physics.add.collider(this.vehicle, this.platforms);
     //player and vehicle collisions
-    this.physics.add.collider(this.player, this.cake);
+    this.physics.add.collider(this.player, this.vehicle);
     //enemy collisions
     this.physics.add.collider(this.enemy, this.platforms);
     //enemy and vehicle collision
-    this.physics.add.collider(this.enemy, this.cake, this.enemyAndCakeCallback);
+    this.physics.add.collider(
+      this.enemy,
+      this.vehicle,
+      this.enemyAndVehicleCallback
+    );
     //obstacles collisions
     this.obstacles.forEach(obstacle => {
       this.physics.add.collider(
@@ -100,20 +96,30 @@ export default class PlayScene extends Phaser.Scene {
 
     //player and finishline collision
     this.physics.add.collider(
-      this.cake,
+      this.vehicle,
       this.finishLine,
       this.playerAndFinishLineCallback
     );
 
+    //player and powerup collisions
+    this.physics.add.collider(
+      this.player,
+      this.powerup,
+      this.playerAndPowerupCallback
+    );
+
     this.enemy.body.setAllowGravity(false);
+    var vehicleX = this.vehicle.x;
+
+    var vehicleWidth = this.vehicle.width;
   }
-  enemyAndCakeCallback(enemy, cake) {
-    cake.takeAwayHealth();
+  enemyAndVehicleCallback(enemy, vehicle) {
+    vehicle.takeAwayHealth();
   }
   playerAndPowerupCallback(player, powerup) {
     powerup.activate();
   }
-  playerAndFinishLineCallback(cake, finishLine) {
+  playerAndFinishLineCallback(vehicle, finishLine) {
     finishLine.winning();
   }
   vehicleAndObstacleCallback(vehicle, obstacle) {
@@ -139,3 +145,23 @@ export default class PlayScene extends Phaser.Scene {
 
   /* </End> Helper functions added by kris */
 }
+
+const config = {
+  type: Phaser.AUTO,
+  width: 500 / 2,
+  height: 300 / 2,
+  parent: "game-container",
+  pixelArt: true,
+  zoom: 2,
+  backgroundColor: "#000000",
+  scene: PlayScene,
+  physics: {
+    default: "arcade",
+    arcade: {
+      gravity: { y: 500 }
+    }
+  }
+};
+
+const game = new Phaser.Game(config);
+let controls;
