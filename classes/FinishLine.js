@@ -26,16 +26,22 @@ export default class FinishLine extends Phaser.Physics.Arcade.Sprite {
       padding: { x: 1, y: 1 },
       backgroundColor: "#000000"
     });
-
-    this.scoreDisplay.setText("Score:" + this.score);
+    console.log(this.score);
   }
 
   winning() {
     this.updateCounter++;
 
+    console.log(this.score);
+
     this.score += 1;
 
-    this.scoreDisplay.setText("Score:" + this.score);
+    this.scoreDisplay = this.scene.add.text(160, 0, "Score: " + this.score, {
+      font: "10px monospace",
+      fill: "#ffffff",
+      padding: { x: 8, y: 1 },
+      backgroundColor: "#000000"
+    });
     /*
     let timer = this.scene.time.delayedCall(3000, () => {
       this.scene.scene.restart();
