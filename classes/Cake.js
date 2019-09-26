@@ -80,6 +80,8 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
   losing() {
     this.scene.finishLine.score -= 1;
 
+    console.log(this.scene.finishLine.score);
+
     this.scene.finishLine.scoreDisplay.setText(
       "Score:" + this.scene.finishLine.score
     );
