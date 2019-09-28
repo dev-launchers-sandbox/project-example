@@ -63,8 +63,8 @@ export default class Player extends Character {
     if (this.distanceAwayFromX(this.scene.cake.x) <= 30) {
       if (this.x < this.scene.cake.x && this.y === this.scene.cake.y) {
         if (onGround && cakeOnGround && this.body.velocity.y === 10000) {
-          this.scene.cake.setVelocityY(-5000 * 2);
-          this.scene.cake.setVelocityX(150);
+          this.scene.cake.setVelocityY(-170);
+          this.scene.cake.setVelocityX(200);
           this.particleSmash();
           this.scene.cameras.main.shake(500, 0.01);
         }
@@ -73,8 +73,8 @@ export default class Player extends Character {
     if (this.distanceAwayFromX(this.scene.cake.x) >= -30) {
       if (this.x > this.scene.cake.x && this.y === this.scene.cake.y) {
         if (onGround && cakeOnGround && this.body.velocity.y === 10000) {
-          this.scene.cake.setVelocityY(-5000 * 2);
-          this.scene.cake.setVelocityX(-150);
+          this.scene.cake.setVelocityY(-170);
+          this.scene.cake.setVelocityX(-200);
           this.particleSmash();
           this.scene.cameras.main.shake(500, 0.01);
         }

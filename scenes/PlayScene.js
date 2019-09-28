@@ -96,13 +96,9 @@ export default class PlayScene extends Phaser.Scene {
       this.obstacles,
       this.vehicleAndObstacleCallback
     );
-
-    //player and finishline collision
-    this.physics.add.collider(
-      this.cake,
-      this.finishLine,
-      this.playerAndFinishLineCallback
-    );
+    this//player and finishline collision
+    .this.physics.add
+      .collider(this.cake, this.finishLine, this.playerAndFinishLineCallback);
 
     this.enemy.body.setAllowGravity(false);
   }
@@ -117,6 +113,11 @@ export default class PlayScene extends Phaser.Scene {
   }
   vehicleAndObstacleCallback(vehicle, obstacle) {
     obstacle.playerLost();
+  }
+
+  update(time, delta) {
+    this.player.update(time, delta);
+    this.enemy.update(time, delta);
   }
 
   update(time, delta) {
