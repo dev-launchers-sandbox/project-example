@@ -26,8 +26,6 @@ export default class FinishLine extends Phaser.Physics.Arcade.Sprite {
       padding: { x: 1, y: 1 },
       backgroundColor: "#000000"
     });
-
-    this.scoreDisplay.setText("Score:" + this.score);
   }
 
   winning() {
@@ -35,7 +33,8 @@ export default class FinishLine extends Phaser.Physics.Arcade.Sprite {
 
     this.score += 1;
 
-    this.scoreDisplay.setText("Score:" + this.score);
+    this.scoreDisplay.setText("Score: " + this.score);
+
     /*
     let timer = this.scene.time.delayedCall(3000, () => {
       this.scene.scene.restart();
