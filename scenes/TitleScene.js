@@ -14,6 +14,7 @@ export default class TitleScene extends Phaser.Scene {
       spacing: 0
     });
     this.load.image("background", "/assets/cool_image.jpg");
+    this.load.audio("music", "./assets/Hypnotic-Puzzle3.mp3");
 
     //this.load.audio('introMusic', "./assests/Hypnotic-Puzzle3.mp3");
   }
@@ -26,6 +27,9 @@ export default class TitleScene extends Phaser.Scene {
     const cursors = this.input.keyboard.createCursorKeys();
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
     this.backgroundImage = this.add.image(100, 50, "background");
+
+    this.coolMusic = this.sound.add("music");
+    this.coolMusic.play();
     /* 
     let sound = this.sound.add("introMusic");
     this.sound.play('introMusic', {
@@ -49,6 +53,7 @@ export default class TitleScene extends Phaser.Scene {
     this.backgroundImage
       .setInteractive()
       .on("pointerdown", (pointer, localX, localY, event) => {
+        this.coolMusic.stop();
         this.scene.start("PlayScene");
       });
     // ...
