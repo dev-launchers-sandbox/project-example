@@ -20,16 +20,22 @@ export default class FinishLine extends Phaser.Physics.Arcade.Sprite {
       .setMaxVelocity(200, 400)
       .setCollideWorldBounds(true);
 
+
     this.scoreDisplay = this.scene.add.text(160, 0, "Score: " + this.score);
+
+
   }
 
   winning() {
     this.updateCounter++;
 
+    console.log(this.score);
+
     this.score += 1;
 
     this.scoreDisplay.setText("Score: " + this.score);
 
+   
     /*
     let timer = this.scene.time.delayedCall(3000, () => {
       this.scene.scene.restart();
