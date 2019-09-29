@@ -55,11 +55,11 @@ export default class Enemy extends Character {
       this.movementY = this.randomYMovement();
     }
     this.targetX =
-      this.scene.vehicle.x +
+      this.scene.cake.x +
       this.personalSpace / -2 +
       Math.random() * this.personalSpace;
     this.targetY =
-      this.scene.vehicle.y +
+      this.scene.cake.y +
       this.personalSpace / -2 +
       Math.random() * this.personalSpace;
     this.x += this.movementX;
@@ -92,6 +92,9 @@ export default class Enemy extends Character {
   update() {
     //this.moveTowards(this.scene.vehicle.x, this.scene.vehicle.y);
     this.moveRandomlyTowards();
+    /*if (this.updateCounter % 60 === 0) {
+      console.log(this.x);
+    }
     /*
     this.updateCounter++;
     if(this.updateCounter % 60){
