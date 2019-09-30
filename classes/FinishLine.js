@@ -20,14 +20,12 @@ export default class FinishLine extends Phaser.Physics.Arcade.Sprite {
       .setMaxVelocity(200, 400)
       .setCollideWorldBounds(true);
 
-    this.scoreDisplay = this.scene.add.text(160, 0, "Score: " + this.score, {
+    this.scoreDisplay = scene.add.text(160, 0, "Score: " + this.score, {
       font: "10px monospace",
       fill: "#ffffff",
-      padding: { x: 1, y: 1 },
+      padding: { x: 8, y: 1 },
       backgroundColor: "#000000"
     });
-
-    this.scoreDisplay.setText("Score:" + this.score);
   }
 
   winning() {
@@ -35,13 +33,11 @@ export default class FinishLine extends Phaser.Physics.Arcade.Sprite {
 
     this.score += 1;
 
-    this.scoreDisplay.setText("Score:" + this.score);
-    /*
-    let timer = this.scene.time.delayedCall(3000, () => {
-      this.scene.scene.restart();
-    }); // delay in ms
-    */
+    this.scoreDisplay.setText("Score: " + this.score);
 
+    if (this.score === 5) {
+      this.scene.scene.start("WinScene");
+    }
     this.scene.cake.destroy();
     this.scene.cake = new Cake(this.scene, 80, 5);
   }

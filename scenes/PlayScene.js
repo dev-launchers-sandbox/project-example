@@ -43,6 +43,12 @@ export default class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
+    this.load.spritesheet("trap", "./assets/traps.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+      margin: 0,
+      spacing: 0
+    });
 
     this.load.image("power", "./assets/powerup.png");
   }
@@ -90,14 +96,14 @@ export default class PlayScene extends Phaser.Scene {
     this.physics.add.collider(this.enemy, this.platforms);
     //enemy and vehicle collision
     this.physics.add.collider(this.enemy, this.cake, this.enemyAndCakeCallback);
+    //obstacles and finishline collision
+    this.physics.add.collider(this.obstacles, this.platforms);
     //obstacles collisions
     this.physics.add.collider(
       this.cake,
       this.obstacles,
       this.vehicleAndObstacleCallback
-    );
-
-    //player and finishline collision
+    ); //player and finishline collision
     this.physics.add.collider(
       this.cake,
       this.finishLine,
@@ -105,6 +111,7 @@ export default class PlayScene extends Phaser.Scene {
     );
 
     this.enemy.body.setAllowGravity(false);
+    //this.obstacles.body.setAllowGravity(true);
   }
   enemyAndCakeCallback(enemy, cake) {
     cake.takeAwayHealth();

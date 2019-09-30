@@ -58,6 +58,7 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
       repeat: -1
     });
     this.anims.play("cake-idle", true);
+    console.log(this.healthDiplay);
   }
 
   takeAwayHealth() {
@@ -85,7 +86,7 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
     );
 
     if (this.scene.finishLine.score < 0) {
-      this.scene.scene.restart();
+      this.scene.scene.start("LoseScene");
     }
 
     /*
