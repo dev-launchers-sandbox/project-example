@@ -10,23 +10,23 @@ script:
 
 deploy:
   #master -> release branch deployment
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  keep_history: true
-  repo: dev-launchers/project__hungry-ghost
-  target_branch: master
-  on:
-    branch: release
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    keep_history: true
+    repo: dev-launchers/project__hungry-ghost
+    target_branch: master
+    on:
+      branch: release
   #masster branch parcel deployment
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  keep_history: true
-  repo: dev-launchers-sandbox/project__hungry-ghost
-  target_branch: gh-pages
-  on:
-    branch: master
+  - provider: pages
+    skip_cleanup: true
+    github_token: $GITHUB_TOKEN
+    keep_history: true
+    repo: dev-launchers-sandbox/project__hungry-ghost
+    target_branch: gh-pages
+    on:
+      branch: master
 
 before_install:
     - "npm install -g phaser@3.16.1"

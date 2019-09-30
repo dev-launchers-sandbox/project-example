@@ -109,6 +109,7 @@ export default class PlayScene extends Phaser.Scene {
       this.finishLine,
       this.playerAndFinishLineCallback
     );
+   
 
     this.enemy.body.setAllowGravity(false);
     //this.obstacles.body.setAllowGravity(true);
@@ -124,6 +125,11 @@ export default class PlayScene extends Phaser.Scene {
   }
   vehicleAndObstacleCallback(vehicle, obstacle) {
     obstacle.playerLost();
+  }
+
+  update(time, delta) {
+    this.player.update(time, delta);
+    this.enemy.update(time, delta);
   }
 
   update(time, delta) {

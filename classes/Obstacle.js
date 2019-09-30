@@ -34,6 +34,7 @@ export default class Obstacle extends Phaser.Physics.Arcade.Sprite {
 
     if (this.scene.finishLine.score < 0) {
       this.scene.scene.start("LoseScene");
+
     }
   }
 
