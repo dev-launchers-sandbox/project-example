@@ -31,6 +31,13 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
       this,
       this.scene.finishLine,
       this.scene.playerAndFinishLineCallback
+
+    
+    );
+    this.scene.physics.add.collider(
+      this,
+      this.scene.obstacles,
+      this.scene.cakeAndObstacleCallback
     );
 
     // Create the physics-based sprite that we will move around and animate
@@ -78,7 +85,6 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
       //new Cake(this.scene, 80, 5)
     }
   }
-
 
   update() {}
 }

@@ -111,7 +111,7 @@ export default class PlayScene extends Phaser.Scene {
     this.physics.add.collider(
       this.cake,
       this.obstacles,
-      this.vehicleAndObstacleCallback
+      this.cakeAndObstacleCallback
     ); //player and finishline collision
     this.physics.add.collider(
       this.cake,
@@ -132,7 +132,7 @@ export default class PlayScene extends Phaser.Scene {
   playerAndFinishLineCallback(cake, finishLine) {
     finishLine.winning();
   }
-  vehicleAndObstacleCallback(vehicle, obstacle) {
+  cakeAndObstacleCallback(cake, obstacle) {
     obstacle.playerLost();
   }
 
