@@ -26,16 +26,8 @@ export default class Obstacle extends Phaser.Physics.Arcade.Sprite {
   }
 
   playerLost() {
-    this.scene.finishLine.score -= 1;
+    this.scene.emitter.emit("obstcaleTouched");
 
-    this.scene.finishLine.scoreDisplay.setText(
-      "Score:" + this.scene.finishLine.score
-    );
-
-    if (this.scene.finishLine.score < 0) {
-      this.scene.scene.start("LoseScene");
-
-    }
   }
 
   changeTint(sprite) {
