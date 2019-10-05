@@ -67,7 +67,6 @@ export default class Player extends Character {
         if (onGround && cakeOnGround && this.body.velocity.y === 10000) {
           this.scene.cake.setVelocityY(-170);
           this.scene.cake.setVelocityX(-200);
-
           this.particleSmash();
           this.scene.cameras.main.shake(500, 0.01);
         }

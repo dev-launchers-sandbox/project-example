@@ -19,15 +19,14 @@ export default class Obstacle extends Phaser.Physics.Arcade.Sprite {
     scene.physics.add // add to physics engine
       .existing(this)
       .setDrag(0, 0)
-      .setMaxVelocity(0, 0)
+      .setMaxVelocity(0, 100)
       .setFriction(this.friction)
       .setCollideWorldBounds(true)
       .setBounce(0, 0);
   }
 
   playerLost() {
-    this.scene.emitter.emit("obstcaleTouched");
-
+    this.scene.emitter.emit("obstacleTouched");
   }
 
   changeTint(sprite) {
