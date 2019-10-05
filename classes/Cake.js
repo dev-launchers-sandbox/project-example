@@ -79,5 +79,6 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+
   update() {}
 }
