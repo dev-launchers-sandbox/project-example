@@ -6,11 +6,13 @@ import Powerup from "../classes/Powerup.js";
 import FinishLine from "../classes/FinishLine.js";
 import Obstacle from "../classes/Obstacle.js";
 import RandomDataPoints from "../classes/RandomDataPoints.js";
+import Score from "../classes/Score.js";
 
 export default class PlayScene extends Phaser.Scene {
-  constructor() {
+  constructor(loseScene) {
     super("PlayScene");
     console.log("wow");
+    this.loseScene = loseScene;
   }
   preload() {
     this.load.spritesheet("johnny", "./assets/johnny_sprite.png", {
@@ -54,11 +56,18 @@ export default class PlayScene extends Phaser.Scene {
   }
 
   create() {
+    /*
+      Create our own EventEmitter instance
+      to communicate from cake to score to decrement score
+    */
+    this.emitter = new Phaser.Events.EventEmitter();
+
     this.player = new Player(this, 40, 5);
     this.enemy = new Enemy(this, 10, 0);
-    this.cake = new Cake(this, 80, 5);
+    this.cake = new Cake(this);
     this.powerup = new Powerup(this, 100, 5);
     this.finishLine = new FinishLine(this, 500, 100);
+    this.score = new Score(this);
 
     this.randomDataPointsGenerator = new RandomDataPoints();
     const obstacleLocations = this.randomDataPointsGenerator.datapoints(
@@ -148,6 +157,10 @@ export default class PlayScene extends Phaser.Scene {
 
     return rect;
   }
+
+  /*
+    Method to switch to win scene, use as a callback for Score object
+  */
 
   /* </End> Helper functions added by kris */
 }

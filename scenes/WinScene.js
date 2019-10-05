@@ -26,6 +26,7 @@ export default class WinScene extends Phaser.Scene {
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
+    this.playScene = new PlayScene(this);
 
     this.coolMusic = this.sound.add("music");
     this.coolMusic.play();
@@ -52,6 +53,8 @@ export default class WinScene extends Phaser.Scene {
     this.input.on("pointerdown", (pointer, localX, localY, event) => {
       this.coolMusic.stop();
       this.scene.start("TitleScene");
+      //this.scene.PlayScene.restart();
+
     });
     // ...
     // console.log("exit");
