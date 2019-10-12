@@ -59,7 +59,6 @@ export default class Player extends Character {
     //key.down is when you press down arrow key and key s is when you press down s key
     if (keys.down.isDown || keys.s.isDown) {
       this.setVelocityY(220);
-      //console.log(this.scene.cake);
     }
 
     if (this.distanceAwayFromX(this.scene.cake.x) >= -30) {
@@ -83,20 +82,6 @@ export default class Player extends Character {
         }
       }
     }
-
-    // Update the animation/texture based on the state of the player
-    /*
-    if (onGround) {
-      if (this.body.velocity.x !== 0) {
-        this.anims.play("baker-idle", true);
-      } else {
-        this.anims.play("baker-idle", true);
-      }
-    } else {
-      this.anims.stop();
-      this.setTexture("baker", 4);
-    }
-    */
   }
   particleSmash() {
     const p = this.scene.add.particles("power");
@@ -138,5 +123,5 @@ export default class Player extends Character {
     }
   }
 
-  destroy() {}
+  destroy() { }
 }

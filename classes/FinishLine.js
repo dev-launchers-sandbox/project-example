@@ -4,7 +4,7 @@ export default class FinishLine extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {
     super(scene, x, y, "finishLine", 0);
     this.scene = scene;
-    this.winDisplay = undefined;
+    //this.winDisplay = undefined;
     this.updateCounter = 0;
     //this.score = 0;
     this.friction = 10;

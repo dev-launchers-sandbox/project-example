@@ -81,7 +81,7 @@ export default class Score extends Phaser.GameObjects.Text {
     });
     this.scene.scene.start("WinScene");
   }
-  update() {}
+  update() { }
 
   destroy() {
     super.destroy();
