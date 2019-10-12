@@ -12,7 +12,7 @@ export default class RandomDataPoints {
     var points = [];
     for (var i = 0; i < numPoints; i++) {
       //var constraint = this.rnd.pick();
-      const x = this.rnd.between(0, borderNumX);
+      const x = this.rnd.between(60, borderNumX);
       const y = this.rnd.between(0, borderNumY);
       points.push({
         x: x,
