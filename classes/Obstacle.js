@@ -16,7 +16,7 @@ export default class Obstacle extends Phaser.Physics.Arcade.Sprite {
     // Add this to the scene as a Phaser game object
     scene.add.existing(this); // add to rendering engine
 
-    scene.physics.add // add to physics engine
+    this.physicalSprite = scene.physics.add // add to physics engine
       .existing(this)
       .setDrag(0, 0)
       .setMaxVelocity(0, 100)
@@ -35,5 +35,7 @@ export default class Obstacle extends Phaser.Physics.Arcade.Sprite {
 
   update() {}
 
-  destroy() {}
+  destroy() {
+    super.destroy();
+  }
 }
