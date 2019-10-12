@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import Enemy from "./Enemy";
-const INIT_X = 80;
+const INIT_X = 50;
 const INIT_Y = 5;
 export default class Cake extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, speed) {
@@ -31,8 +31,6 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
       this,
       this.scene.finishLine,
       this.scene.playerAndFinishLineCallback
-
-    
     );
     this.scene.physics.add.collider(
       this,
@@ -47,7 +45,7 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
       .setMaxVelocity(200, 400)
       .setFriction(this.friction)
       .setCollideWorldBounds(true)
-      .setBounce(1.5, 0.4);
+      .setBounce(1.5, 0);
 
     this.healthDisplay = scene.add
       .text(10, 0, "Health:" + this.health, {
@@ -86,5 +84,14 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  update() {}
+  update() {
+    this.updateCounter++;
+
+    if (this.updateCounter % 60 === 0) {
+      console.log("acceleration", this.body.acceleration.y);
+      // console.log(this.body.acceleration.x);
+      console.log("velocity", this.body.velocity.y);
+      //console.log(this.body.velocity.x);
+    }
+  }
 }
