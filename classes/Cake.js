@@ -15,7 +15,7 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
     this.gravity = 10;
     this.friction = 10;
     this.speed = speed;
-    this.health = 1000;
+    this.health = 10;
     this.updateCounter = 0;
     this.losingDisplay = undefined;
 
@@ -84,14 +84,5 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  update() {
-    this.updateCounter++;
-
-    if (this.updateCounter % 60 === 0) {
-      console.log("acceleration", this.body.acceleration.y);
-      // console.log(this.body.acceleration.x);
-      console.log("velocity", this.body.velocity.y);
-      //console.log(this.body.velocity.x);
-    }
-  }
+  update() { }
 }

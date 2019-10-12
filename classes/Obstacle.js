@@ -27,13 +27,10 @@ export default class Obstacle extends Phaser.Physics.Arcade.Sprite {
 
   playerLost() {
     this.scene.emitter.emit("obstacleTouched");
+    console.log("touched");
   }
 
-  changeTint(sprite) {
-    sprite.tint = Math.random() * 0xffffff;
-  }
-
-  update() {}
+  update() { }
 
   destroy() {
     super.destroy();

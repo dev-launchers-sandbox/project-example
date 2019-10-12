@@ -52,7 +52,7 @@ export default class LoseScene extends Phaser.Scene {
     this.input.on("pointerdown", (pointer, localX, localY, event) => {
       this.coolMusic.stop();
       this.scene.start("TitleScene");
-     // this.scene.PlayScene.restart();
+      // this.scene.PlayScene.restart();
     });
     // ...
     // console.log("exit");
