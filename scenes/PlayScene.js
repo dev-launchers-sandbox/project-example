@@ -40,6 +40,12 @@ export default class PlayScene extends Phaser.Scene {
       spacing: 0
     });
     this.load.spritesheet("finishLine", "./assets/finish line.png", {
+      frameWidth: 32,
+      frameHeight: 32,
+      margin: 0,
+      spacing: 0
+    });
+    this.load.spritesheet("trap", "./assets/traps.png", {
       frameWidth: 16,
       frameHeight: 16,
       margin: 0,
@@ -89,10 +95,47 @@ export default class PlayScene extends Phaser.Scene {
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
 
     this.platforms = [
-      this.addPhysicalRectangle(150 / 2, 100 / 2, 500 / 2, 10 / 2, 0xaa0000),
-      this.addPhysicalRectangle(350 / 2, 200 / 2, 500 / 2, 10 / 2, 0xaa0000),
-      this.addPhysicalRectangle(250 / 2, 300 / 2, 500 / 2, 10 / 2, 0xaa0000)
+      this.addPhysicalRectangle(
+        10 / 2,
+        75 / 2,
+        300 / 2,
+        10 / 2,
+        this.RandomColor()
+      ),
+      this.addPhysicalRectangle(
+        250 / 2,
+        150 / 2,
+        300 / 2,
+        10 / 2,
+        this.RandomColor()
+      ),
+      this.addPhysicalRectangle(
+        250 / 2,
+        300 / 2,
+        500 / 2,
+        10 / 2,
+        this.RandomColor()
+      ),
+      this.addPhysicalRectangle(
+        0 / 2,
+        225 / 2,
+        350 / 2,
+        10 / 2,
+        this.RandomColor()
+      ),
+      this.addPhysicalRectangle(
+        500 / 2,
+        225 / 2,
+        500 / 2,
+        10 / 2,
+        this.RandomColor()
+      )
     ];
+
+    /*this.platforms.forEach(platform => {
+      this.changeTint(platform);
+    });*/
+
     //Player collisions
     this.physics.add.collider(this.player, this.platforms);
     //powerup collisions
@@ -118,6 +161,7 @@ export default class PlayScene extends Phaser.Scene {
       this.finishLine,
       this.playerAndFinishLineCallback
     );
+    this.physics.add.collider(this.finishLine, this.platforms);
 
     this.enemy.body.setAllowGravity(false);
     //this.obstacles.body.setAllowGravity(true);
@@ -133,6 +177,31 @@ export default class PlayScene extends Phaser.Scene {
   }
   cakeAndObstacleCallback(cake, obstacle) {
     obstacle.playerLost();
+  }
+
+  changeTint(platform) {
+    let rand = Math.random() * 0xaa;
+    console.log("rand ", rand);
+    platform.tint = Math.floor(rand);
+  }
+  /* Color are in RGB format. The first byte is blue value, the second byte is the green value, and the thrid byte is the red
+     value
+  */
+
+  RandomColor() {
+    return this.randomRed() + this.randomGreen() + this.randomBlue();
+  }
+
+  randomBlue() {
+    return Math.floor(Math.random() * 0xff);
+  }
+
+  randomGreen() {
+    return Math.floor(Math.random() * 0xff) << 8;
+  }
+
+  randomRed() {
+    return Math.floor(Math.random() * 0xaa) << 16;
   }
 
   update(time, delta) {
