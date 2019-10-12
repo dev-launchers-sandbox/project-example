@@ -1,9 +1,10 @@
 import Phaser from "phaser";
 import Enemy from "./Enemy";
-
+const INIT_X = 80;
+const INIT_Y = 5;
 export default class Cake extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y, speed) {
-    super(scene, x, y, "cake");
+  constructor(scene, speed) {
+    super(scene, INIT_X, INIT_Y, "cake");
     this.scene = scene;
 
     //TODO; add animation
@@ -14,7 +15,7 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
     this.gravity = 10;
     this.friction = 10;
     this.speed = speed;
-    this.health = 10;
+    this.health = 100000;
     this.updateCounter = 0;
     this.losingDisplay = undefined;
 
@@ -30,6 +31,11 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
       this,
       this.scene.finishLine,
       this.scene.playerAndFinishLineCallback
+    );
+    this.scene.physics.add.collider(
+      this,
+      this.scene.obstacles,
+      this.scene.cakeAndObstacleCallback
     );
 
     // Create the physics-based sprite that we will move around and animate
@@ -58,6 +64,7 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
       repeat: -1
     });
     this.anims.play("cake-idle", true);
+    console.log(this.healthDiplay);
   }
 
   takeAwayHealth() {
@@ -69,30 +76,12 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
     this.healthDisplay.setText("Health:" + this.health);
 
     if (this.health === 0) {
-      this.losing();
+      this.scene.emitter.emit("cakeTouched");
       this.scene.cake = new Cake(this.scene, 80, 5);
       this.destroy();
 
       //new Cake(this.scene, 80, 5)
     }
-  }
-
-  losing() {
-    this.scene.finishLine.score -= 1;
-
-    this.scene.finishLine.scoreDisplay.setText(
-      "Score:" + this.scene.finishLine.score
-    );
-
-    if (this.scene.finishLine.score < 0) {
-      this.scene.scene.restart();
-    }
-
-    /*
-    let timer = this.scene.time.delayedCall(5000, () => {
-      this.scene.scene.restart();
-    }); // delay in ms
-    */
   }
 
   update() {}

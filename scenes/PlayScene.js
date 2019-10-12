@@ -6,11 +6,13 @@ import Powerup from "../classes/Powerup.js";
 import FinishLine from "../classes/FinishLine.js";
 import Obstacle from "../classes/Obstacle.js";
 import RandomDataPoints from "../classes/RandomDataPoints.js";
+import Score from "../classes/Score.js";
 
 export default class PlayScene extends Phaser.Scene {
-  constructor() {
+  constructor(loseScene) {
     super("PlayScene");
     console.log("wow");
+    this.loseScene = loseScene;
   }
   preload() {
     this.load.spritesheet("johnny", "./assets/johnny_sprite.png", {
@@ -38,6 +40,12 @@ export default class PlayScene extends Phaser.Scene {
       spacing: 0
     });
     this.load.spritesheet("finishLine", "./assets/finish line.png", {
+      frameWidth: 32,
+      frameHeight: 32,
+      margin: 0,
+      spacing: 0
+    });
+    this.load.spritesheet("trap", "./assets/traps.png", {
       frameWidth: 16,
       frameHeight: 16,
       margin: 0,
@@ -48,11 +56,18 @@ export default class PlayScene extends Phaser.Scene {
   }
 
   create() {
+    /*
+      Create our own EventEmitter instance
+      to communicate from cake to score to decrement score
+    */
+    this.emitter = new Phaser.Events.EventEmitter();
+
     this.player = new Player(this, 40, 5);
     this.enemy = new Enemy(this, 10, 0);
-    this.cake = new Cake(this, 80, 5);
+    this.cake = new Cake(this);
     this.powerup = new Powerup(this, 100, 5);
-    this.finishLine = new FinishLine(this, 500, 100);
+    this.finishLine = new FinishLine(this, 240, 125);
+    this.score = new Score(this);
 
     this.randomDataPointsGenerator = new RandomDataPoints();
     const obstacleLocations = this.randomDataPointsGenerator.datapoints(
@@ -74,10 +89,47 @@ export default class PlayScene extends Phaser.Scene {
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
 
     this.platforms = [
-      this.addPhysicalRectangle(150 / 2, 100 / 2, 500 / 2, 10 / 2, 0xaa0000),
-      this.addPhysicalRectangle(350 / 2, 200 / 2, 500 / 2, 10 / 2, 0xaa0000),
-      this.addPhysicalRectangle(250 / 2, 300 / 2, 500 / 2, 10 / 2, 0xaa0000)
+      this.addPhysicalRectangle(
+        10 / 2,
+        75 / 2,
+        300 / 2,
+        10 / 2,
+        this.RandomColor()
+      ),
+      this.addPhysicalRectangle(
+        250 / 2,
+        150 / 2,
+        300 / 2,
+        10 / 2,
+        this.RandomColor()
+      ),
+      this.addPhysicalRectangle(
+        250 / 2,
+        300 / 2,
+        500 / 2,
+        10 / 2,
+        this.RandomColor()
+      ),
+      this.addPhysicalRectangle(
+        0 / 2,
+        225 / 2,
+        350 / 2,
+        10 / 2,
+        this.RandomColor()
+      ),
+      this.addPhysicalRectangle(
+        500 / 2,
+        225 / 2,
+        500 / 2,
+        10 / 2,
+        this.RandomColor()
+      )
     ];
+
+    /*this.platforms.forEach(platform => {
+      this.changeTint(platform);
+    });*/
+
     //Player collisions
     this.physics.add.collider(this.player, this.platforms);
     //powerup collisions
@@ -90,21 +142,23 @@ export default class PlayScene extends Phaser.Scene {
     this.physics.add.collider(this.enemy, this.platforms);
     //enemy and vehicle collision
     this.physics.add.collider(this.enemy, this.cake, this.enemyAndCakeCallback);
+    //obstacles and finishline collision
+    this.physics.add.collider(this.obstacles, this.platforms);
     //obstacles collisions
     this.physics.add.collider(
       this.cake,
       this.obstacles,
-      this.vehicleAndObstacleCallback
-    );
-
-    //player and finishline collision
+      this.cakeAndObstacleCallback
+    ); //player and finishline collision
     this.physics.add.collider(
       this.cake,
       this.finishLine,
       this.playerAndFinishLineCallback
     );
+    this.physics.add.collider(this.finishLine, this.platforms);
 
     this.enemy.body.setAllowGravity(false);
+    //this.obstacles.body.setAllowGravity(true);
   }
   enemyAndCakeCallback(enemy, cake) {
     cake.takeAwayHealth();
@@ -115,8 +169,33 @@ export default class PlayScene extends Phaser.Scene {
   playerAndFinishLineCallback(cake, finishLine) {
     finishLine.winning();
   }
-  vehicleAndObstacleCallback(vehicle, obstacle) {
+  cakeAndObstacleCallback(cake, obstacle) {
     obstacle.playerLost();
+  }
+
+  changeTint(platform) {
+    let rand = Math.random() * 0xaa;
+    console.log("rand ", rand);
+    platform.tint = Math.floor(rand);
+  }
+  /* Color are in RGB format. The first byte is blue value, the second byte is the green value, and the thrid byte is the red
+     value
+  */
+
+  RandomColor() {
+    return this.randomRed() + this.randomGreen() + this.randomBlue();
+  }
+
+  randomBlue() {
+    return Math.floor(Math.random() * 0xff);
+  }
+
+  randomGreen() {
+    return Math.floor(Math.random() * 0xff) << 8;
+  }
+
+  randomRed() {
+    return Math.floor(Math.random() * 0xaa) << 16;
   }
 
   update(time, delta) {
@@ -135,6 +214,10 @@ export default class PlayScene extends Phaser.Scene {
 
     return rect;
   }
+
+  /*
+    Method to switch to win scene, use as a callback for Score object
+  */
 
   /* </End> Helper functions added by kris */
 }

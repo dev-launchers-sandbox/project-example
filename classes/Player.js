@@ -56,25 +56,28 @@ export default class Player extends Character {
     if (onGround && (keys.up.isDown || keys.w.isDown)) {
       this.setVelocityY(-5000 * 2);
     }
-
+    //key.down is when you press down arrow key and key s is when you press down s key
     if (keys.down.isDown || keys.s.isDown) {
       this.setVelocityY(5000 * 2);
+      //console.log(this.scene.cake);
     }
-    if (this.distanceAwayFromX(this.scene.cake.x) <= 30) {
-      if (this.x < this.scene.cake.x && this.y === this.scene.cake.y) {
+
+    if (this.distanceAwayFromX(this.scene.cake.x) >= -30) {
+      if (this.x > this.scene.cake.x && this.y === this.scene.cake.y) {
         if (onGround && cakeOnGround && this.body.velocity.y === 10000) {
-          this.scene.cake.setVelocityY(-5000 * 2);
-          this.scene.cake.setVelocityX(150);
+          this.scene.cake.setVelocityY(-170);
+          this.scene.cake.setVelocityX(-200);
           this.particleSmash();
           this.scene.cameras.main.shake(500, 0.01);
         }
       }
     }
-    if (this.distanceAwayFromX(this.scene.cake.x) >= -30) {
-      if (this.x > this.scene.cake.x && this.y === this.scene.cake.y) {
+
+    if (this.distanceAwayFromX(this.scene.cake.x) <= 30) {
+      if (this.x < this.scene.cake.x && this.y === this.scene.cake.y) {
         if (onGround && cakeOnGround && this.body.velocity.y === 10000) {
-          this.scene.cake.setVelocityY(-5000 * 2);
-          this.scene.cake.setVelocityX(-150);
+          this.scene.cake.setVelocityY(-170);
+          this.scene.cake.setVelocityX(200);
           this.particleSmash();
           this.scene.cameras.main.shake(500, 0.01);
         }
@@ -115,6 +118,24 @@ export default class Player extends Character {
   distanceAwayFromX(targetX) {
     var distanceX = this.scene.cake.x - this.x;
     return distanceX;
+  }
+
+  playerMoveCake(distance, velocityY, velo) {
+    const onGround = this.body.blocked.down;
+    const cakeOnGround = this.scene.cake.body.blocked.down;
+    const right = this.scene.cake.x - this.x > 0;
+    const left = this.scene.cake.x - this.x < 0;
+
+    if (this.distanceAwayFromX(this.scene.cake.x) <= distance) {
+      if (this.x < this.scene.cake.x && this.y === this.scene.cake.y) {
+        if (onGround && cakeOnGround && this.body.velocity.y === 10000) {
+          this.scene.cake.setVelocityY(-170);
+          this.scene.cake.setVelocityX(200);
+          this.particleSmash();
+          this.scene.cameras.main.shake(500, 0.01);
+        }
+      }
+    }
   }
 
   destroy() {}
