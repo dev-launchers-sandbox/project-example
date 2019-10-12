@@ -15,15 +15,20 @@ export default class Score extends Phaser.GameObjects.Text {
     });
     this.scene = scene;
     this.score = 0;
+    this.updateCounter = 0;
 
     scene.add.existing(this);
 
-    this.scene.emitter.on("cakeTouched", this.losing, this);
-    this.scene.emitter.on("finishLineTouched", this.winning, this);
-    this.scene.emitter.on("obstacleTouched", this.losing, this);
+    this.scene.emitter.on("cakeTouched", this.obstacleAndCakeTouch, this);
+    this.scene.emitter.on(
+      "finishLineTouched",
+      this.cakeAndFinishlineTouch,
+      this
+    );
+    this.scene.emitter.on("obstacleTouched", this.obstacleAndCakeTouch, this);
   }
-
-  winning() {
+  //winnning:
+  cakeAndFinishlineTouch() {
     this.updateCounter++;
 
     this.score += 1;
@@ -32,20 +37,22 @@ export default class Score extends Phaser.GameObjects.Text {
     this.updateScore();
 
     if (this.score === WINNING_SCORE) {
-      this.scene.scene.start("WinScene");
+      this.win();
     }
     this.scene.cake.destroy();
     this.scene.cake = new Cake(this.scene);
   }
 
-  
+  //obstacleAndCakeTouch: gets called when cake and obstacle touch
+  obstacleAndCakeTouch() {
+    this.updateCounter++;
 
-  losing() {
     this.score -= 1;
 
     this.updateScore();
+
     if (this.score < 0) {
-      this.scene.scene.start("LoseScene");
+      this.lost();
     }
 
     /*
@@ -54,14 +61,29 @@ export default class Score extends Phaser.GameObjects.Text {
     }); // delay in ms
     */
   }
-  
+  //updateScore: updates the score when score changes
   updateScore() {
     this.setText("Score:" + this.score);
-
   }
-  
 
+  // Lost: this is called when you lose
+  lost() {
+    this.scene.obstacles.forEach(obstacle => {
+      obstacle.destroy();
+    });
+    this.scene.scene.start("LoseScene");
+    console.log(this.scene.obstacles.length);
+  }
+
+  win() {
+    this.scene.obstacles.forEach(obstacle => {
+      obstacle.destroy();
+    });
+    this.scene.scene.start("WinScene");
+  }
   update() {}
 
-  destroy() {}
+  destroy() {
+    super.destroy();
+  }
 }

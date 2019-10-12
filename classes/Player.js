@@ -58,13 +58,13 @@ export default class Player extends Character {
     }
     //key.down is when you press down arrow key and key s is when you press down s key
     if (keys.down.isDown || keys.s.isDown) {
-      this.setVelocityY(5000 * 2);
+      this.setVelocityY(220);
       //console.log(this.scene.cake);
     }
 
     if (this.distanceAwayFromX(this.scene.cake.x) >= -30) {
       if (this.x > this.scene.cake.x && this.y === this.scene.cake.y) {
-        if (onGround && cakeOnGround && this.body.velocity.y === 10000) {
+        if (onGround && cakeOnGround && this.body.velocity.y === 220) {
           this.scene.cake.setVelocityY(-170);
           this.scene.cake.setVelocityX(-200);
           this.particleSmash();
@@ -75,7 +75,7 @@ export default class Player extends Character {
 
     if (this.distanceAwayFromX(this.scene.cake.x) <= 30) {
       if (this.x < this.scene.cake.x && this.y === this.scene.cake.y) {
-        if (onGround && cakeOnGround && this.body.velocity.y === 10000) {
+        if (onGround && cakeOnGround && this.body.velocity.y === 220) {
           this.scene.cake.setVelocityY(-170);
           this.scene.cake.setVelocityX(200);
           this.particleSmash();

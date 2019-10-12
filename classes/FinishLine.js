@@ -1,5 +1,4 @@
 import Phaser from "phaser";
-import Cake from "../classes/Cake.js";
 
 export default class FinishLine extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y) {

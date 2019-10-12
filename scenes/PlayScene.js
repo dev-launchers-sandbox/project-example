@@ -62,7 +62,7 @@ export default class PlayScene extends Phaser.Scene {
     */
     this.emitter = new Phaser.Events.EventEmitter();
 
-    this.player = new Player(this, 40, 5);
+    this.player = new Player(this, 30, 5);
     this.enemy = new Enemy(this, 10, 0);
     this.cake = new Cake(this);
     this.powerup = new Powerup(this, 100, 5);
@@ -72,7 +72,7 @@ export default class PlayScene extends Phaser.Scene {
     this.randomDataPointsGenerator = new RandomDataPoints();
     const obstacleLocations = this.randomDataPointsGenerator.datapoints(
       2,
-      this.game.config.width,
+      this.game.config.width - 50,
       this.game.config.height
     );
     console.log("obstacleLocations ", obstacleLocations);
@@ -118,7 +118,6 @@ export default class PlayScene extends Phaser.Scene {
       this.finishLine,
       this.playerAndFinishLineCallback
     );
-   
 
     this.enemy.body.setAllowGravity(false);
     //this.obstacles.body.setAllowGravity(true);
@@ -144,6 +143,7 @@ export default class PlayScene extends Phaser.Scene {
   update(time, delta) {
     this.player.update(time, delta);
     this.enemy.update(time, delta);
+    this.cake.update(time, delta);
   }
 
   /* <Begin> helper functions added by Kris */
