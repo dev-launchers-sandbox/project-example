@@ -11,7 +11,7 @@ export default class Enemy extends Character {
     this.targetY = 0;
     this.movementX = 0;
     this.movementY = 0;
-    this.updateFrames = 10;
+    this.updateFrames = 15;
     this.personalSpace = 30;
 
     const anims = scene.anims;
