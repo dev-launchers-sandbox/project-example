@@ -39,7 +39,7 @@ export default class Player extends Character {
     //const sprite = this;
     const onGround = this.body.blocked.down;
     const cakeOnGround = this.scene.cake.body.blocked.down;
-    const acceleration = onGround ? 260 : 150;
+    const acceleration = onGround ? 150 : 150;
 
     // Apply horizontal acceleration when left/a or right/d are applied
     if (keys.left.isDown || keys.a.isDown) {
@@ -49,15 +49,15 @@ export default class Player extends Character {
       this.setAccelerationX(acceleration);
       this.setFlipX(false);
     } else {
-      this.setAccelerationX(0);
+      this.setVelocityX(0);
     }
 
     // Only allow the player to jump if they are on the ground
     if (onGround && (keys.up.isDown || keys.w.isDown)) {
-      this.setVelocityY(-5000 * 2);
+      this.setVelocityY(-230);
     }
     //key.down is when you press down arrow key and key s is when you press down s key
-    if (keys.down.isDown || keys.s.isDown) {
+    if (onGround && (keys.down.isDown || keys.s.isDown)) {
       this.setVelocityY(220);
     }
 
@@ -123,5 +123,5 @@ export default class Player extends Character {
     }
   }
 
-  destroy() { }
+  destroy() {}
 }
