@@ -1,5 +1,5 @@
 {
-  "name": "project-hungry-ghost-9-8-2019-alejandro-titlescene",
+  "name": "project__hungry-ghost",
   "version": "1.0.0",
   "description": "",
   "main": "index.html",
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dev-launchers-sandbox/project__example-game.git"
+    "url": "git+https://github.com/dev-launchers-sandbox/project__hungry-ghost.git"
   },
   "keywords": []
 }
