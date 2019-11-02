@@ -15,15 +15,6 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
       .setCollideWorldBounds(true);
     // Create the animations we need from the player spritesheet
 
-    const anims = scene.anims;
-    anims.create({
-      key: "baker-idle",
-      frames: anims.generateFrameNumbers("baker", { start: 1, end: 1 }),
-      frameRate: 3,
-      repeat: -1
-    });
-    this.anims.play("baker-idle", true);
-
     /*anims.create({
       key: "johnny-walk",
       frames: anims.generateFrameNumbers("johnny", { start: 5, end: 7 }),
