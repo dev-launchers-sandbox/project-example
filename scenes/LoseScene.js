@@ -13,7 +13,7 @@ export default class LoseScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
-    this.load.image("titleScreen", "/assets/TITLESCREEN.png");
+    this.load.image("loseScene", "/assets/Hungryghostlosingscreen.png");
     this.load.audio("music", "./assets/Hypnotic-Puzzle3.mp3");
 
     //this.load.audio('introMusic', "./assests/Hypnotic-Puzzle3.mp3");
@@ -35,17 +35,10 @@ export default class LoseScene extends Phaser.Scene {
       loop: true
     });
   */
-
-    this.add.text(
-      this.game.config.width / 3,
-      this.game.config.height / 3,
-      "You Lose",
-      {
-        font: "13px monospace",
-        fill: "#ff0000",
-        padding: { x: 1, y: 1 },
-        backgroundColor: "#0000ff"
-      }
+    this.add.image(
+      this.game.config.width / 2,
+      this.game.config.height / 2,
+      "loseScene"
     );
 
     //this.input.on("pointerdown", () => console.log("clicked"));
