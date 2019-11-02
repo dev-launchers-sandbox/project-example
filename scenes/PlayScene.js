@@ -33,7 +33,13 @@ export default class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
-    this.load.spritesheet("baker", "./assets/baker.png", {
+    this.load.spritesheet("baker", "./assets/Bakerspoonanimations.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+      margin: 0,
+      spacing: 0
+    });
+    this.load.spritesheet("bakerWalk", "./assets/bakerwalkinganimations.png", {
       frameWidth: 16,
       frameHeight: 16,
       margin: 0,
@@ -45,13 +51,13 @@ export default class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
-    this.load.spritesheet("trap", "./assets/traps.png", {
+    this.load.spritesheet("trap", "./assets/small_traps.png", {
       frameWidth: 16,
       frameHeight: 16,
       margin: 0,
       spacing: 0
     });
-    this.load.spritesheet("trap", "./assets/traps.png", {
+    this.load.spritesheet("trap", "./assets/small_traps.png", {
       frameWidth: 16,
       frameHeight: 16,
       margin: 0,
