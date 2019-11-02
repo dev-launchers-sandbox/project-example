@@ -87,7 +87,7 @@ export default class Player extends Character {
         this.anims.play("baker-smash", true);
         this.setVelocityY(220);
       } else if (this.body.velocity.x !== 0) {
-        this.anims.play("baker-idle", true);
+        this.anims.play("baker-walk", true);
       }
     } else {
       this.anims.stop();
