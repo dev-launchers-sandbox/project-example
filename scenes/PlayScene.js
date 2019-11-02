@@ -33,7 +33,13 @@ export default class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
-    this.load.spritesheet("baker", "./assets/baker.png", {
+    this.load.spritesheet("baker", "./assets/Bakerspoonanimations.png", {
+      frameWidth: 16,
+      frameHeight: 16,
+      margin: 0,
+      spacing: 0
+    });
+    this.load.spritesheet("bakerWalk", "./assets/bakerwalkinganimations.png", {
       frameWidth: 16,
       frameHeight: 16,
       margin: 0,
@@ -45,13 +51,13 @@ export default class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
-    this.load.spritesheet("trap", "./assets/traps.png", {
+    this.load.spritesheet("trap", "./assets/small_traps.png", {
       frameWidth: 16,
       frameHeight: 16,
       margin: 0,
       spacing: 0
     });
-    this.load.spritesheet("trap", "./assets/traps.png", {
+    this.load.spritesheet("trap", "./assets/small_traps.png", {
       frameWidth: 16,
       frameHeight: 16,
       margin: 0,
@@ -59,9 +65,16 @@ export default class PlayScene extends Phaser.Scene {
     });
 
     this.load.image("power", "./assets/powerup.png");
+    this.load.image("PlaySceneIMage", "./assets/Hungryghostbc.png");
   }
 
   create() {
+    this.add.image(
+      this.game.config.width / 2,
+      this.game.config.height / 2,
+      "PlaySceneIMage"
+    );
+
     /*
       Create our own EventEmitter instance
       to communicate from cake to score to decrement score

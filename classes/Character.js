@@ -10,20 +10,10 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     // Create the physics-based sprite that we will move around and animate
     this.sprite = scene.physics.add
       .existing(this)
-      .setDrag(500, 0)
+      .setDrag(250, 0)
       .setMaxVelocity(200, 400)
       .setCollideWorldBounds(true);
-
     // Create the animations we need from the player spritesheet
-
-    const anims = scene.anims;
-    anims.create({
-      key: "baker-idle",
-      frames: anims.generateFrameNumbers("baker", { start: 1, end: 1 }),
-      frameRate: 3,
-      repeat: -1
-    });
-    this.anims.play("baker-idle", true);
 
     /*anims.create({
       key: "johnny-walk",

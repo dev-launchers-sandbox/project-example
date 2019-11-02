@@ -32,6 +32,26 @@ export default class Player extends Character {
       s: S,
       down: DOWN
     });
+
+    const anims = scene.anims;
+    anims.create({
+      key: "baker-idle",
+      frames: anims.generateFrameNumbers("baker", { start: 1, end: 1 }),
+      frameRate: 3,
+      repeat: -1
+    });
+    anims.create({
+      key: "baker-smash",
+      frames: anims.generateFrameNumbers("baker", { start: 2, end: 6 }),
+      frameRate: 1,
+      repeat: -1
+    });
+    anims.create({
+      key: "baker-walk",
+      frames: anims.generateFrameNumbers("bakerWalk", { start: 1, end: 4 }),
+      frameRate: 3,
+      repeat: -1
+    });
   }
 
   update() {
@@ -39,7 +59,7 @@ export default class Player extends Character {
     //const sprite = this;
     const onGround = this.body.blocked.down;
     const cakeOnGround = this.scene.cake.body.blocked.down;
-    const acceleration = onGround ? 260 : 150;
+    const acceleration = onGround ? 150 : 150;
 
     // Apply horizontal acceleration when left/a or right/d are applied
     if (keys.left.isDown || keys.a.isDown) {
@@ -49,18 +69,32 @@ export default class Player extends Character {
       this.setAccelerationX(acceleration);
       this.setFlipX(false);
     } else {
-      this.setAccelerationX(0);
+      this.setVelocityX(0);
     }
 
     // Only allow the player to jump if they are on the ground
     if (onGround && (keys.up.isDown || keys.w.isDown)) {
-      this.setVelocityY(-5000 * 2);
+      this.setVelocityY(-230);
     }
     //key.down is when you press down arrow key and key s is when you press down s key
-    if (keys.down.isDown || keys.s.isDown) {
+    /*if (onGround && (keys.down.isDown || keys.s.isDown)) {
+      this.anims.play("baker-smash", true);
       this.setVelocityY(220);
+    }*/
+
+    if (onGround) {
+      if (keys.down.isDown || keys.s.isDown) {
+        this.anims.play("baker-smash", true);
+        this.setVelocityY(220);
+      } else if (this.body.velocity.x !== 0) {
+        this.anims.play("baker-walk", true);
+      }
+    } else {
+      this.anims.stop();
+      //this.setTexture("baker", 4);
     }
 
+    //checks distance from cake, checks if it's on the right side of the cake, checks if it's equal y from the cake, and if cake and player are onground, and checks for the player's Y velocity
     if (this.distanceAwayFromX(this.scene.cake.x) >= -30) {
       if (this.x > this.scene.cake.x && this.y === this.scene.cake.y) {
         if (onGround && cakeOnGround && this.body.velocity.y === 220) {
@@ -71,7 +105,7 @@ export default class Player extends Character {
         }
       }
     }
-
+    //checks distance from cake, checks if it's on the left side of the cake, checks if it's equal y from the cake, and if cake and player are onground, and checks for the player's Y velocity
     if (this.distanceAwayFromX(this.scene.cake.x) <= 30) {
       if (this.x < this.scene.cake.x && this.y === this.scene.cake.y) {
         if (onGround && cakeOnGround && this.body.velocity.y === 220) {
@@ -83,6 +117,7 @@ export default class Player extends Character {
       }
     }
   }
+
   particleSmash() {
     const p = this.scene.add.particles("power");
     const emitter = p.createEmitter({
@@ -123,5 +158,5 @@ export default class Player extends Character {
     }
   }
 
-  destroy() { }
+  destroy() {}
 }
