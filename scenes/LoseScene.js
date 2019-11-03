@@ -13,7 +13,7 @@ export default class LoseScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
-    this.load.image("loseScene", "/assets/Hungryghostlosingscreen.png");
+    this.load.image("loseScene", "./assets/Hungryghostlosingscreen.png");
     this.load.audio("music", "./assets/Hypnotic-Puzzle3.mp3");
 
     //this.load.audio('introMusic', "./assests/Hypnotic-Puzzle3.mp3");
