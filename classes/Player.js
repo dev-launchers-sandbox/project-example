@@ -42,14 +42,14 @@ export default class Player extends Character {
     });
     anims.create({
       key: "baker-smash",
-      frames: anims.generateFrameNumbers("baker", { start: 2, end: 6 }),
-      frameRate: 1,
+      frames: anims.generateFrameNumbers("baker", { start: 4, end: 7 }),
+      frameRate: 8,
       repeat: -1
     });
     anims.create({
       key: "baker-walk",
-      frames: anims.generateFrameNumbers("bakerWalk", { start: 1, end: 4 }),
-      frameRate: 3,
+      frames: anims.generateFrameNumbers("baker", { start: 0, end: 3 }),
+      frameRate: 4,
       repeat: -1
     });
   }
@@ -76,18 +76,19 @@ export default class Player extends Character {
     if (onGround && (keys.up.isDown || keys.w.isDown)) {
       this.setVelocityY(-230);
     }
-    //key.down is when you press down arrow key and key s is when you press down s key
-    /*if (onGround && (keys.down.isDown || keys.s.isDown)) {
-      this.anims.play("baker-smash", true);
-      this.setVelocityY(220);
-    }*/
 
+    /*
+     *this changes the players animation depending on different states of the player
+     *it also performs the smash feature
+     */
     if (onGround) {
       if (keys.down.isDown || keys.s.isDown) {
         this.anims.play("baker-smash", true);
         this.setVelocityY(220);
       } else if (this.body.velocity.x !== 0) {
-        this.anims.play("baker-idle", true);
+        this.anims.play("baker-walk", true);
+      } else {
+        this.anims.stop();
       }
     } else {
       this.anims.stop();

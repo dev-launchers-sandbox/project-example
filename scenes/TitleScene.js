@@ -15,7 +15,7 @@ export default class TitleScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
-    this.load.image("titleScreen", "/assets/TITLESCREEN.png");
+    this.load.image("titleScreen", "./assets/TITLESCREEN.png");
     this.load.audio("music", "./assets/Hypnotic-Puzzle3.mp3");
 
     //this.load.audio('introMusic', "./assests/Hypnotic-Puzzle3.mp3");

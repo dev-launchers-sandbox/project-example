@@ -33,18 +33,13 @@ export default class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
-    this.load.spritesheet("baker", "./assets/Bakerspoonanimations.png", {
+    this.load.spritesheet("baker", "./assets/baker.png", {
       frameWidth: 16,
       frameHeight: 16,
       margin: 0,
       spacing: 0
     });
-    this.load.spritesheet("bakerWalk", "./assets/bakerwalkinganimations.png", {
-      frameWidth: 16,
-      frameHeight: 16,
-      margin: 0,
-      spacing: 0
-    });
+
     this.load.spritesheet("finishLine", "./assets/finish line.png", {
       frameWidth: 32,
       frameHeight: 32,
@@ -106,6 +101,10 @@ export default class PlayScene extends Phaser.Scene {
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
+    camera.setZoom(1.2);
+
+    //make the game caemra follow the player
+    camera.startFollow(this.player);
 
     this.platforms = [
       this.addPhysicalRectangle(

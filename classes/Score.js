@@ -19,6 +19,8 @@ export default class Score extends Phaser.GameObjects.Text {
 
     scene.add.existing(this);
 
+    // this.setScrollFactor(0);
+
     this.scene.emitter.on("cakeTouched", this.obstacleAndCakeTouch, this);
     this.scene.emitter.on(
       "finishLineTouched",
