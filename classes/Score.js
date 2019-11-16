@@ -3,7 +3,7 @@ import Cake from "./Cake.js";
 
 const WINNING_SCORE = 5;
 const INIT_X = 160;
-const INIT_Y = 0;
+const INIT_Y = 10;
 
 export default class Score extends Phaser.GameObjects.Text {
   constructor(scene) {
@@ -16,11 +16,9 @@ export default class Score extends Phaser.GameObjects.Text {
     this.scene = scene;
     this.score = 0;
     this.updateCounter = 0;
+    this.setScrollFactor(0, 0);
 
     scene.add.existing(this);
-
-    // this.setScrollFactor(0);
-
     this.scene.emitter.on("cakeTouched", this.obstacleAndCakeTouch, this);
     this.scene.emitter.on(
       "finishLineTouched",

@@ -64,6 +64,16 @@ export default class PlayScene extends Phaser.Scene {
   }
 
   create() {
+    const camera = this.cameras.main;
+    const cursors = this.input.keyboard.createCursorKeys();
+    camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
+    camera.setZoom(1.15);
+
+    this.player = new Player(this, 30, 5);
+    //make the game caemra follow the player
+    camera.startFollow(this.player);
+
+    //background image
     this.add.image(
       this.game.config.width / 2,
       this.game.config.height / 2,
@@ -76,7 +86,6 @@ export default class PlayScene extends Phaser.Scene {
     */
     this.emitter = new Phaser.Events.EventEmitter();
 
-    this.player = new Player(this, 30, 5);
     this.enemy = new Enemy(this, 10, 0);
     this.cake = new Cake(this);
     this.powerup = new Powerup(this, 100, 5);
@@ -95,16 +104,6 @@ export default class PlayScene extends Phaser.Scene {
       console.log("point", point);
       this.obstacles.push(new Obstacle(this, point.x, point.y));
     });
-
-    this.player.setDepth(1);
-
-    const camera = this.cameras.main;
-    const cursors = this.input.keyboard.createCursorKeys();
-    camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
-    camera.setZoom(1.2);
-
-    //make the game caemra follow the player
-    camera.startFollow(this.player);
 
     this.platforms = [
       this.addPhysicalRectangle(
