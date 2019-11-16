@@ -52,6 +52,7 @@ export default class Player extends Character {
       frameRate: 4,
       repeat: -1
     });
+    this.setDepth(1);
   }
 
   update() {
