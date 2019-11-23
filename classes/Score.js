@@ -1,9 +1,10 @@
 import Phaser from "phaser";
 import Cake from "./Cake.js";
+import GameLevelManager from "./GameLevelManager";
 
-const WINNING_SCORE = 5;
+const WINNING_SCORE = 1;
 const INIT_X = 160;
-const INIT_Y = 0;
+const INIT_Y = 10;
 
 export default class Score extends Phaser.GameObjects.Text {
   constructor(scene) {
@@ -16,18 +17,16 @@ export default class Score extends Phaser.GameObjects.Text {
     this.scene = scene;
     this.score = 0;
     this.updateCounter = 0;
+    this.setScrollFactor(0, 0);
 
     scene.add.existing(this);
-
-    // this.setScrollFactor(0);
-
-    this.scene.emitter.on("cakeTouched", this.obstacleAndCakeTouch, this);
-    this.scene.emitter.on(
+    this.scene.events.on("cakeTouched", this.obstacleAndCakeTouch, this);
+    this.scene.events.on(
       "finishLineTouched",
       this.cakeAndFinishlineTouch,
       this
     );
-    this.scene.emitter.on("obstacleTouched", this.obstacleAndCakeTouch, this);
+    this.scene.events.on("obstacleTouched", this.obstacleAndCakeTouch, this);
   }
   //winnning:
   cakeAndFinishlineTouch() {
@@ -40,6 +39,7 @@ export default class Score extends Phaser.GameObjects.Text {
 
     if (this.score === WINNING_SCORE) {
       this.win();
+      this.scene.game.events.emit("changeLevel");
     }
     this.scene.cake.destroy();
     this.scene.cake = new Cake(this.scene);

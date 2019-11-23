@@ -21,7 +21,7 @@ export default class FinishLine extends Phaser.Physics.Arcade.Sprite {
   }
 
   winning() {
-    this.scene.emitter.emit("finishLineTouched");
+    this.scene.events.emit("finishLineTouched");
   }
 
   update() {}

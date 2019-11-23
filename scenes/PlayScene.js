@@ -7,12 +7,17 @@ import FinishLine from "../classes/FinishLine.js";
 import Obstacle from "../classes/Obstacle.js";
 import RandomDataPoints from "../classes/RandomDataPoints.js";
 import Score from "../classes/Score.js";
+import GameLevelManager from "../classes/GameLevelManager.js";
 
 export default class PlayScene extends Phaser.Scene {
-  constructor(loseScene) {
-    super("PlayScene");
-    console.log("wow");
-    this.loseScene = loseScene;
+  constructor(key) {
+    if (key) {
+      super(key);
+      console.log(key);
+    } else {
+      super("PlayScene");
+    }
+    console.log("hwllo");
   }
   preload() {
     this.load.spritesheet("johnny", "./assets/johnny_sprite.png", {
@@ -64,6 +69,17 @@ export default class PlayScene extends Phaser.Scene {
   }
 
   create() {
+    console.log("create scene");
+    const camera = this.cameras.main;
+    const cursors = this.input.keyboard.createCursorKeys();
+    camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
+    camera.setZoom(1.15);
+
+    this.player = new Player(this, 30, 5);
+    //make the game caemra follow the player
+    camera.startFollow(this.player);
+
+    //background image
     this.add.image(
       this.game.config.width / 2,
       this.game.config.height / 2,
@@ -74,9 +90,7 @@ export default class PlayScene extends Phaser.Scene {
       Create our own EventEmitter instance
       to communicate from cake to score to decrement score
     */
-    this.emitter = new Phaser.Events.EventEmitter();
 
-    this.player = new Player(this, 30, 5);
     this.enemy = new Enemy(this, 10, 0);
     this.cake = new Cake(this);
     this.powerup = new Powerup(this, 100, 5);
@@ -85,7 +99,7 @@ export default class PlayScene extends Phaser.Scene {
 
     this.randomDataPointsGenerator = new RandomDataPoints();
     const obstacleLocations = this.randomDataPointsGenerator.datapoints(
-      2,
+      0,
       this.game.config.width - 50,
       this.game.config.height
     );
@@ -95,16 +109,6 @@ export default class PlayScene extends Phaser.Scene {
       console.log("point", point);
       this.obstacles.push(new Obstacle(this, point.x, point.y));
     });
-
-    this.player.setDepth(1);
-
-    const camera = this.cameras.main;
-    const cursors = this.input.keyboard.createCursorKeys();
-    camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
-    camera.setZoom(1.2);
-
-    //make the game caemra follow the player
-    camera.startFollow(this.player);
 
     this.platforms = [
       this.addPhysicalRectangle(

@@ -47,13 +47,14 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
       .setCollideWorldBounds(true)
       .setBounce(1.5, 0);
 
-    this.healthDisplay = scene.add.text(10, 0, "Health:" + this.health, {
-      font: "10px monospace",
-      fill: "#ffffff",
-      padding: { x: 8, y: 1 },
-      backgroundColor: "#000000"
-    });
-    //.setScrollFactor(0);
+    this.healthDisplay = scene.add
+      .text(20, 10, "Health:" + this.health, {
+        font: "10px monospace",
+        fill: "#ffffff",
+        padding: { x: 8, y: 1 },
+        backgroundColor: "#000000"
+      })
+      .setScrollFactor(0);
 
     const anims = scene.anims;
     anims.create({
@@ -75,7 +76,7 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
     this.healthDisplay.setText("Health:" + this.health);
 
     if (this.health === 0) {
-      this.scene.emitter.emit("cakeTouched");
+      this.scene.events.emit("cakeTouched");
       this.scene.cake = new Cake(this.scene, 80, 5);
       this.destroy();
 
