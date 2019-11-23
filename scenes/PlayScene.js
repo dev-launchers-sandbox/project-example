@@ -59,9 +59,16 @@ export default class PlayScene extends Phaser.Scene {
     });
 
     this.load.image("power", "./assets/powerup.png");
+    this.load.image("PlaySceneIMage", "./assets/Hungryghostbc.png");
   }
 
   create() {
+    this.add.image(
+      this.game.config.width / 2,
+      this.game.config.height / 2,
+      "PlaySceneIMage"
+    );
+
     /*
       Create our own EventEmitter instance
       to communicate from cake to score to decrement score
@@ -226,6 +233,7 @@ export default class PlayScene extends Phaser.Scene {
 
     return rect;
   }
+  
 
   /*
     Method to switch to win scene, use as a callback for Score object

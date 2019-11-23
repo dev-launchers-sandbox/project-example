@@ -10,10 +10,9 @@ export default class Character extends Phaser.Physics.Arcade.Sprite {
     // Create the physics-based sprite that we will move around and animate
     this.sprite = scene.physics.add
       .existing(this)
-      .setDrag(500, 0)
+      .setDrag(250, 0)
       .setMaxVelocity(200, 400)
       .setCollideWorldBounds(true);
-
     // Create the animations we need from the player spritesheet
 
     const anims = scene.anims;

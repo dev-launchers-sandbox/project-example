@@ -3,20 +3,13 @@ import Player from "../classes/Player.js";
 import PlayScene from "./PlayScene.js";
 import LoseScene from "./LoseScene.js";
 import WinScene from "./WinScene.js";
-import Instructions from "./Instructions.js";
 
-export default class TitleScene extends Phaser.Scene {
+export default class Instructions extends Phaser.Scene {
   constructor() {
-    super({ key: "TitleScene" });
+    super({ key: "instruction" });
   }
   preload() {
-    this.load.spritesheet("baker", "./assets/baker.png", {
-      frameWidth: 16,
-      frameHeight: 16,
-      margin: 0,
-      spacing: 0
-    });
-    this.load.image("titleScreen", "./assets/TITLESCREEN.png");
+    this.load.image("instruction", "./assets/instructionscreennew.png");
     this.load.audio("music", "./assets/Hypnotic-Puzzle3.mp3");
 
     //this.load.audio('introMusic', "./assests/Hypnotic-Puzzle3.mp3");
@@ -32,7 +25,7 @@ export default class TitleScene extends Phaser.Scene {
     this.backgroundImage = this.add.image(
       this.game.config.width / 2,
       this.game.config.height / 2,
-      "titleScreen"
+      "instruction"
     );
 
     this.coolMusic = this.sound.add("music");
@@ -62,7 +55,7 @@ export default class TitleScene extends Phaser.Scene {
       .setInteractive()
       .on("pointerdown", (pointer, localX, localY, event) => {
         this.coolMusic.stop();
-        this.scene.start("instruction");
+        this.scene.start("PlayScene");
       });
     // ...
     // console.log("exit");
@@ -77,22 +70,3 @@ export default class TitleScene extends Phaser.Scene {
 
   /* </End> Helper functions added by kris */
 }
-
-const config = {
-  type: Phaser.AUTO,
-  width: 500 / 2,
-  height: 300 / 2,
-  parent: "game-container",
-  pixelArt: true,
-  zoom: 2,
-  backgroundColor: "#000000",
-  scene: [TitleScene, PlayScene, LoseScene, WinScene, Instructions],
-  physics: {
-    default: "arcade",
-    arcade: {
-      gravity: { y: 500 }
-    }
-  }
-};
-
-const game = new Phaser.Game(config);
