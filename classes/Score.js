@@ -73,14 +73,17 @@ export default class Score extends Phaser.GameObjects.Text {
     this.scene.obstacles.forEach(obstacle => {
       obstacle.destroy();
     });
-    this.scene.scene.start("LoseScene");
+    this.scene.scene.restart();
+
+    //this.scene.scene.start("LoseScene");
   }
 
   win() {
     this.scene.obstacles.forEach(obstacle => {
       obstacle.destroy();
     });
-    this.scene.scene.start("WinScene");
+
+    //this.scene.scene.start("WinScene");
   }
   update() {}
 

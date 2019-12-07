@@ -10,14 +10,14 @@ import Score from "../classes/Score.js";
 import GameLevelManager from "../classes/GameLevelManager.js";
 
 export default class PlayScene extends Phaser.Scene {
-  constructor(key) {
+  constructor(key, numObstacles) {
     if (key) {
       super(key);
       console.log(key);
     } else {
       super("PlayScene");
     }
-    console.log("hwllo");
+    this.numObstacles = numObstacles;
   }
   preload() {
     this.load.spritesheet("johnny", "./assets/johnny_sprite.png", {
@@ -99,7 +99,7 @@ export default class PlayScene extends Phaser.Scene {
 
     this.randomDataPointsGenerator = new RandomDataPoints();
     const obstacleLocations = this.randomDataPointsGenerator.datapoints(
-      0,
+      this.numObstacles,
       this.game.config.width - 50,
       this.game.config.height
     );

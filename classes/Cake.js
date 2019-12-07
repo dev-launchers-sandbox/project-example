@@ -64,7 +64,7 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
       repeat: -1
     });
     this.anims.play("cake-idle", true);
-    console.log(this.healthDiplay);
+    //console.log(this.healthDiplay);
   }
 
   takeAwayHealth() {

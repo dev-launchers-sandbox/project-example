@@ -19,9 +19,12 @@ export default class GameLevelManager extends Phaser.Scene {
     this.level = 1;
     this.generateNum = 1;
     this.currentKey = sceneBaseName;
+    this.gameLives = 3;
+    this.numOfObs = 0;
   }
   create() {
     this.game.events.on("changeLevel", this.switchLevel, this);
+    //this.game.events.on("goToWinScene", this.goToWinScene, this);
   }
 
   update() {}
@@ -30,14 +33,19 @@ export default class GameLevelManager extends Phaser.Scene {
 
   switchLevel() {
     this.level++;
+    this.numOfObs++;
+
     this.scene.remove(this.currentKey);
     //this.scene.start("PlayScene");
-    let playScene = new PlayScene(this.generateNewKey());
+    let playScene = new PlayScene(this.generateNewKey(), this.numOfObs);
     this.scene.add("PlayScene", playScene, true);
     //this.scene.start("PlayScene");
     console.log("current level: ", this.level);
-    console.log("switch level");
     //console.log(changeLevelEvent);
+    if (this.level === 6) {
+      console.log("yo this actually worked");
+      this.scene.start("WinScene");
+    }
   }
 
   generateNewKey() {
