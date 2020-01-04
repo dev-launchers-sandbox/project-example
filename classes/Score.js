@@ -26,8 +26,7 @@ export default class Score extends Phaser.GameObjects.Text {
 
     this.scene.game.events.on("obstacleTouched", this.enemyAndCakeTouch, this);
     this.scene.game.events.on("cakeTouched", this.enemyAndCakeTouch, this);
-    this.scene.gam.e.events.on(
-
+    this.scene.game.events.on(
       "finishLineTouched",
       this.cakeAndFinishlineTouch,
       this
@@ -38,7 +37,6 @@ export default class Score extends Phaser.GameObjects.Text {
     when called it increments score, updates score, and checks if you win
   */
   cakeAndFinishlineTouch() {
-    console.log(this);
     this.updateCounter++;
     console.log("the cake is touching the finsihline");
     this.score += 1;
