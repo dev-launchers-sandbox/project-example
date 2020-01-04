@@ -9,10 +9,14 @@ import RandomDataPoints from "../classes/RandomDataPoints.js";
 import Score from "../classes/Score.js";
 
 export default class PlayScene extends Phaser.Scene {
-  constructor(loseScene) {
-    super("PlayScene");
-    console.log("wow");
-    this.loseScene = loseScene;
+  constructor(key, numObstacles) {
+    if (key) {
+      super(key);
+      console.log(key);
+    } else {
+      super("PlayScene");
+    }
+    this.numObstacles = numObstacles;
   }
   preload() {
     this.load.spritesheet("johnny", "./assets/johnny_sprite.png", {
@@ -64,6 +68,8 @@ export default class PlayScene extends Phaser.Scene {
   }
 
   create() {
+    console.log("create playscene");
+
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
@@ -84,26 +90,28 @@ export default class PlayScene extends Phaser.Scene {
       Create our own EventEmitter instance
       to communicate from cake to score to decrement score
     */
-    this.emitter = new Phaser.Events.EventEmitter();
 
     this.enemy = new Enemy(this, 10, 0);
-    this.cake = new Cake(this);
     this.powerup = new Powerup(this, 100, 5);
     this.finishLine = new FinishLine(this, 500, 100);
     this.score = new Score(this);
 
+    //event handelers
+
     this.randomDataPointsGenerator = new RandomDataPoints();
     const obstacleLocations = this.randomDataPointsGenerator.datapoints(
-      2,
+      this.numObstacles,
       this.game.config.width - 50,
       this.game.config.height
     );
+
     console.log("obstacleLocations ", obstacleLocations);
     this.obstacles = [];
     obstacleLocations.forEach(point => {
       console.log("point", point);
       this.obstacles.push(new Obstacle(this, point.x, point.y));
     });
+    this.cake = new Cake(this);
 
     this.platforms = [
       this.addPhysicalRectangle(
@@ -158,36 +166,51 @@ export default class PlayScene extends Phaser.Scene {
     //enemy collisions
     this.physics.add.collider(this.enemy, this.platforms);
     //enemy and vehicle collision
-    this.physics.add.collider(this.enemy, this.cake, this.enemyAndCakeCallback);
+    /*
+    this.physics.add.collider(this.enemy, this.cake, () => {
+      this.enemyAndCakeCallback.call(this, this.enemy, this.cake);
+    });
+    */
     //obstacles and finishline collision
     this.physics.add.collider(this.obstacles, this.platforms);
+    /*this.physics.add.collider(
+      this.cake,
+      this.finishLine,
+      this.playerAndFinishLineCallback,
+      function() {},
+      this
+    ); //player and finishline collision
     //obstacles collisions
+    /*
     this.physics.add.collider(
       this.cake,
       this.obstacles,
-      this.cakeAndObstacleCallback
-    ); //player and finishline collision
-    this.physics.add.collider(
-      this.cake,
+      this.cakeAndObstacleCallback,
+      function() {},
+      this
+    
+    );*/ this.physics.add.collider(
       this.finishLine,
-      this.playerAndFinishLineCallback
+      this.platforms
     );
-    this.physics.add.collider(this.finishLine, this.platforms);
 
     this.enemy.body.setAllowGravity(false);
     //this.obstacles.body.setAllowGravity(true);
   }
   enemyAndCakeCallback(enemy, cake) {
+    // console.lo(this);
     cake.takeAwayHealth();
+    this.game.events.emit("cakeTouched");
   }
   playerAndPowerupCallback(player, powerup) {
     powerup.activate();
   }
-  playerAndFinishLineCallback(cake, finishLine) {
-    finishLine.winning();
+  cakeAndFinishLineCallback(cake, finishLine) {
+    this.game.events.emit("finishLineTouched");
   }
   cakeAndObstacleCallback(cake, obstacle) {
-    obstacle.playerLost();
+    console.log(this);
+    this.game.events.emit("obstacleTouched");
   }
 
   changeTint(platform) {
@@ -198,6 +221,17 @@ export default class PlayScene extends Phaser.Scene {
   /* Color are in RGB format. The first byte is blue value, the second byte is the green value, and the thrid byte is the red
      value
   */
+  destroy() {
+    console.log("playscene destroy");
+    this.obstacles.forEach(obstacle => {
+      obstacle.destroy();
+    });
+    this.finishLine.destroy();
+  }
+
+  restart() {
+    this.scene.restart();
+  }
 
   RandomColor() {
     return this.randomRed() + this.randomGreen() + this.randomBlue();

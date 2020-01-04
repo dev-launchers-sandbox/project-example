@@ -20,11 +20,5 @@ export default class FinishLine extends Phaser.Physics.Arcade.Sprite {
       .setCollideWorldBounds(true);
   }
 
-  winning() {
-    this.scene.emitter.emit("finishLineTouched");
-  }
-
   update() {}
-
-  destroy() {}
 }
