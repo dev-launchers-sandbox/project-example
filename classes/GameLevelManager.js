@@ -31,11 +31,13 @@ export default class GameLevelManager extends Phaser.Scene {
     this.game.events.on("lost", this.lost, this);
 
     //this.game.events.on("goToWinScene", this.goToWinScene, this);
+
   }
 
   update() {}
 
   destroy() {}
+
 
   switchLevel() {
     this.level++;

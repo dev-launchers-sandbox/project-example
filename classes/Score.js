@@ -18,6 +18,7 @@ export default class Score extends Phaser.GameObjects.Text {
     this.scene = scene;
     this.score = 0;
     this.updateCounter = 0;
+    this.setScrollFactor(0, 0);
 
     this.setScrollFactor(0, 0);
 
@@ -26,6 +27,7 @@ export default class Score extends Phaser.GameObjects.Text {
     this.scene.game.events.on("obstacleTouched", this.enemyAndCakeTouch, this);
     this.scene.game.events.on("cakeTouched", this.enemyAndCakeTouch, this);
     this.scene.gam.e.events.on(
+
       "finishLineTouched",
       this.cakeAndFinishlineTouch,
       this
