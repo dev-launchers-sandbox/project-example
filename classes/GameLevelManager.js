@@ -23,7 +23,6 @@ export default class GameLevelManager extends Phaser.Scene {
     this.gameLives = 3;
     this.numOfObs = 1;
 
-    this.numOfObs = 0;
     console.log("gamelevelmanger is working");
   }
   create() {

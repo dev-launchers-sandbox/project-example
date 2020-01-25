@@ -18,9 +18,6 @@ export default class Score extends Phaser.GameObjects.Text {
     this.scene = scene;
     this.score = 0;
     this.updateCounter = 0;
-
-    this.setScrollFactor(0, 0);
-
     this.setScrollFactor(0, 0);
 
     scene.add.existing(this);
@@ -46,7 +43,6 @@ export default class Score extends Phaser.GameObjects.Text {
 
     this.updateScore();
     console.log(this.updateScore);
-
     //this.setText("Score: " + this.score);
 
     if (this.score === WINNING_SCORE) {
