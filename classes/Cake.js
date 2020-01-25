@@ -1,7 +1,8 @@
 import Phaser from "phaser";
 import Enemy from "./Enemy";
-const INIT_X = 50;
+const INIT_X = 15;
 const INIT_Y = 5;
+const HEALTH = 10;
 export default class Cake extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, speed) {
     super(scene, INIT_X, INIT_Y, "cake");
@@ -15,27 +16,35 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
     this.gravity = 10;
     this.friction = 10;
     this.speed = speed;
-    this.health = 10;
+    this.health = HEALTH;
     this.updateCounter = 0;
     this.losingDisplay = undefined;
 
-    this.scene.physics.add.collider(this, this.scene.platforms);
     this.scene.physics.add.collider(this.scene.player, this);
     this.scene.physics.add.collider(
       this.scene.enemy,
       this,
-      this.scene.enemyAndCakeCallback
+      this.scene.enemyAndCakeCallback,
+      null,
+      this.scene
     );
 
     this.scene.physics.add.collider(
       this,
       this.scene.finishLine,
-      this.scene.playerAndFinishLineCallback
+      this.scene.cakeAndFinishLineCallback,
+      null,
+      this.scene
     );
+
+    this.scene.physics.add.collider(this, this.scene.platformArray);
+
     this.scene.physics.add.collider(
       this,
       this.scene.obstacles,
-      this.scene.cakeAndObstacleCallback
+      this.scene.cakeAndObstacleCallback,
+      null,
+      this.scene
     );
 
     // Create the physics-based sprite that we will move around and animate
@@ -64,19 +73,20 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
       repeat: -1
     });
     this.anims.play("cake-idle", true);
-    console.log(this.healthDiplay);
+    //console.log(this.healthDiplay);
   }
-
+  /*
+    takeAwayHealth() gets called when ghost and cake touch
+    when called it decrements health and if health equals 0 it destroys and makes a new cake
+  */
   takeAwayHealth() {
     this.updateCounter++;
     if (this.updateCounter % 30 === 0) {
       this.health -= 1;
     }
-
     this.healthDisplay.setText("Health:" + this.health);
 
     if (this.health === 0) {
-      this.scene.events.emit("cakeTouched");
       this.scene.cake = new Cake(this.scene, 80, 5);
       this.destroy();
 

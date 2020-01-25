@@ -23,16 +23,11 @@ export default class Obstacle extends Phaser.Physics.Arcade.Sprite {
       .setFriction(this.friction)
       .setCollideWorldBounds(true)
       .setBounce(0, 0);
-  }
 
-  playerLost() {
-    this.scene.events.emit("obstacleTouched");
-    console.log("touched");
+    //obstacles and finishline collision
+    this.scene.physics.add.collider(this, this.scene.platforms);
+    //obstacles collisions
   }
 
   update() {}
-
-  destroy() {
-    super.destroy();
-  }
 }
