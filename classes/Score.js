@@ -18,7 +18,6 @@ export default class Score extends Phaser.GameObjects.Text {
     this.scene = scene;
     this.score = 0;
     this.updateCounter = 0;
-
     this.setScrollFactor(0, 0);
 
     scene.add.existing(this);

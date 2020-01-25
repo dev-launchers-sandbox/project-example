@@ -158,6 +158,7 @@ export default class PlayScene extends Phaser.Scene {
     });
     */
     //obstacles and finishline collision
+
     /*this.physics.add.collider(
       this.cake,
       this.finishLine,
@@ -199,6 +200,7 @@ export default class PlayScene extends Phaser.Scene {
     this.game.events.emit("finishLineTouched");
   }
   cakeAndObstacleCallback(cake, obstacle) {
+
     this.game.events.emit("obstacleTouched");
   }
 
