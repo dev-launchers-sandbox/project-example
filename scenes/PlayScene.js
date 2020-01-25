@@ -11,6 +11,7 @@ import { STAGE_CONFIG } from "../settings/StageConfig.js";
 
 export default class PlayScene extends Phaser.Scene {
   constructor(key, numObstacles, level) {
+
     if (key) {
       super(key);
       console.log(key);
@@ -28,6 +29,7 @@ export default class PlayScene extends Phaser.Scene {
     } else {
       this.numObstacles = 1;
     }
+
   }
   preload() {
     this.load.spritesheet("johnny", "./assets/johnny_sprite.png", {
@@ -80,6 +82,7 @@ export default class PlayScene extends Phaser.Scene {
 
   create() {
     console.log("create playscene");
+
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
@@ -158,6 +161,7 @@ export default class PlayScene extends Phaser.Scene {
     });
     */
     //obstacles and finishline collision
+
     /*this.physics.add.collider(
       this.cake,
       this.finishLine,
@@ -175,6 +179,7 @@ export default class PlayScene extends Phaser.Scene {
       this
     
     );*/
+
 
     this.enemy.body.setAllowGravity(false);
     //this.obstacles.body.setAllowGravity(true);
@@ -199,6 +204,7 @@ export default class PlayScene extends Phaser.Scene {
     this.game.events.emit("finishLineTouched");
   }
   cakeAndObstacleCallback(cake, obstacle) {
+
     this.game.events.emit("obstacleTouched");
   }
 

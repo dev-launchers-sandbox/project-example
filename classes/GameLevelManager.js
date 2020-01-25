@@ -22,6 +22,8 @@ export default class GameLevelManager extends Phaser.Scene {
     this.currentKey = sceneBaseName;
     this.gameLives = 3;
     this.numOfObs = 1;
+
+    this.numOfObs = 0;
     console.log("gamelevelmanger is working");
   }
   create() {
@@ -30,11 +32,13 @@ export default class GameLevelManager extends Phaser.Scene {
     this.game.events.on("lost", this.lost, this);
 
     //this.game.events.on("goToWinScene", this.goToWinScene, this);
+
   }
 
   update() {}
 
   destroy() {}
+
 
   switchLevel() {
     this.level++;
@@ -84,7 +88,14 @@ export default class GameLevelManager extends Phaser.Scene {
   }
 }
 
-const scenes = [TitleScene, PlayScene, LoseScene, WinScene, GameLevelManager];
+const scenes = [
+  TitleScene,
+  PlayScene,
+  LoseScene,
+  WinScene,
+  Level,
+  GameLevelManager
+];
 
 const gameConfig = {
   type: Phaser.AUTO,

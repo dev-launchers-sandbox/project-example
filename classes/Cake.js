@@ -39,6 +39,7 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
 
     this.scene.physics.add.collider(this, this.scene.platformArray);
 
+
     this.scene.physics.add.collider(
       this,
       this.scene.obstacles,

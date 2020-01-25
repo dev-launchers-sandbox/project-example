@@ -25,4 +25,5 @@ export default class FinishLine extends Phaser.Physics.Arcade.Sprite {
   destroy() {
     super.destroy();
   }
+
 }
