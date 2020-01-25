@@ -18,6 +18,7 @@ export default class Score extends Phaser.GameObjects.Text {
     this.scene = scene;
     this.score = 0;
     this.updateCounter = 0;
+
     this.setScrollFactor(0, 0);
 
     this.setScrollFactor(0, 0);
@@ -37,12 +38,15 @@ export default class Score extends Phaser.GameObjects.Text {
     when called it increments score, updates score, and checks if you win
   */
   cakeAndFinishlineTouch() {
+    //console.log(this.scene);
     this.updateCounter++;
     console.log("the cake is touching the finsihline");
     this.score += 1;
     console.log("current score ", this.score);
 
     this.updateScore();
+    console.log(this.updateScore);
+
     //this.setText("Score: " + this.score);
 
     if (this.score === WINNING_SCORE) {
