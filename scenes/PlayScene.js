@@ -7,9 +7,11 @@ import FinishLine from "../classes/FinishLine.js";
 import Obstacle from "../classes/Obstacle.js";
 import RandomDataPoints from "../classes/RandomDataPoints.js";
 import Score from "../classes/Score.js";
+import { STAGE_CONFIG } from "../settings/StageConfig.js";
 
 export default class PlayScene extends Phaser.Scene {
-  constructor(key, numObstacles) {
+  constructor(key, numObstacles, level) {
+
     if (key) {
       super(key);
       console.log(key);
@@ -17,6 +19,17 @@ export default class PlayScene extends Phaser.Scene {
       super("PlayScene");
     }
     this.numObstacles = numObstacles;
+    if (level) {
+      this.level = level;
+    } else {
+      this.level = 0;
+    }
+    if (numObstacles) {
+      this.numObstacles = numObstacles;
+    } else {
+      this.numObstacles = 1;
+    }
+
   }
   preload() {
     this.load.spritesheet("johnny", "./assets/johnny_sprite.png", {
@@ -113,58 +126,34 @@ export default class PlayScene extends Phaser.Scene {
     });
     this.cake = new Cake(this);
 
-    this.platforms = [
-      this.addPhysicalRectangle(
-        10 / 2,
-        75 / 2,
-        300 / 2,
-        10 / 2,
-        this.RandomColor()
-      ),
-      this.addPhysicalRectangle(
-        250 / 2,
-        150 / 2,
-        300 / 2,
-        10 / 2,
-        this.RandomColor()
-      ),
-      this.addPhysicalRectangle(
-        250 / 2,
-        300 / 2,
-        500 / 2,
-        10 / 2,
-        this.RandomColor()
-      ),
-      this.addPhysicalRectangle(
-        0 / 2,
-        225 / 2,
-        350 / 2,
-        10 / 2,
-        this.RandomColor()
-      ),
-      this.addPhysicalRectangle(
-        500 / 2,
-        225 / 2,
-        500 / 2,
-        10 / 2,
-        this.RandomColor()
-      )
-    ];
+    let stageData = STAGE_CONFIG;
+    let level = this.level;
+    console.log("playscene: ", level);
+    this.platforms = stageData[level].platforms;
 
-    /*this.platforms.forEach(platform => {
-      this.changeTint(platform);
-    });*/
-
+    this.platformArray = [];
+    for (let i = 0; i < this.platforms.length; i++) {
+      console.log("i am logged");
+      let platform = this.platforms[i];
+      this.physicalPlatform = this.addPhysicalRectangle(
+        platform.x,
+        platform.y,
+        platform.width,
+        platform.height,
+        this.RandomColor()
+      );
+      this.platformArray.push(this.physicalPlatform);
+    }
+    this.platformCollisions();
+    console.log("number of platforms: ", this.platformArray);
     //Player collisions
-    this.physics.add.collider(this.player, this.platforms);
+    //this.physics.add.collider(this.player, this.physicalPlatform);
     //powerup collisions
-    this.physics.add.collider(this.powerup, this.platforms);
     //vehicle collisions
-    this.physics.add.collider(this.cake, this.platforms);
+    //this.physics.add.collider(this.cake, this.physicalPlatform);
     //player and vehicle collisions
     this.physics.add.collider(this.player, this.cake);
     //enemy collisions
-    this.physics.add.collider(this.enemy, this.platforms);
     //enemy and vehicle collision
     /*
     this.physics.add.collider(this.enemy, this.cake, () => {
@@ -172,7 +161,7 @@ export default class PlayScene extends Phaser.Scene {
     });
     */
     //obstacles and finishline collision
-    this.physics.add.collider(this.obstacles, this.platforms);
+
     /*this.physics.add.collider(
       this.cake,
       this.finishLine,
@@ -189,13 +178,19 @@ export default class PlayScene extends Phaser.Scene {
       function() {},
       this
     
-    );*/ this.physics.add.collider(
-      this.finishLine,
-      this.platforms
-    );
+    );*/
+
 
     this.enemy.body.setAllowGravity(false);
     //this.obstacles.body.setAllowGravity(true);
+  }
+  platformCollisions() {
+    this.physics.add.collider(this.player, this.platformArray);
+    this.physics.add.collider(this.cake, this.platformArray);
+    this.physics.add.collider(this.powerup, this.platformArray);
+    this.physics.add.collider(this.enemy, this.platformArray);
+    this.physics.add.collider(this.obstacles, this.platformArray);
+    this.physics.add.collider(this.finishLine, this.platformArray);
   }
   enemyAndCakeCallback(enemy, cake) {
     // console.lo(this);
@@ -209,7 +204,7 @@ export default class PlayScene extends Phaser.Scene {
     this.game.events.emit("finishLineTouched");
   }
   cakeAndObstacleCallback(cake, obstacle) {
-    console.log(this);
+
     this.game.events.emit("obstacleTouched");
   }
 

@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 import Enemy from "./Enemy";
-const INIT_X = 50;
+const INIT_X = 15;
 const INIT_Y = 5;
 const HEALTH = 10;
 export default class Cake extends Phaser.Physics.Arcade.Sprite {
@@ -20,7 +20,6 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
     this.updateCounter = 0;
     this.losingDisplay = undefined;
 
-    this.scene.physics.add.collider(this, this.scene.platforms);
     this.scene.physics.add.collider(this.scene.player, this);
     this.scene.physics.add.collider(
       this.scene.enemy,
@@ -38,7 +37,9 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
       this.scene
     );
 
-    console.log(this.scene.obstacle);
+    this.scene.physics.add.collider(this, this.scene.platformArray);
+
+
     this.scene.physics.add.collider(
       this,
       this.scene.obstacles,

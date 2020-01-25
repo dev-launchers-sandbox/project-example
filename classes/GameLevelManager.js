@@ -3,7 +3,6 @@ import TitleScene from "../scenes/TitleScene";
 import PlayScene from "../scenes/PlayScene";
 import LoseScene from "../scenes/LoseScene";
 import WinScene from "../scenes/WinScene";
-import Level from "../scenes/Level";
 import Score from "./Score";
 
 export const changeLevelEvent = "changeLevel";
@@ -18,10 +17,12 @@ export default class GameLevelManager extends Phaser.Scene {
       visible: false
     });
     this.updateCounter = 0;
-    this.level = 1;
+    this.level = 0;
     this.generateNum = 1;
     this.currentKey = sceneBaseName;
     this.gameLives = 3;
+    this.numOfObs = 1;
+
     this.numOfObs = 0;
     console.log("gamelevelmanger is working");
   }
@@ -42,10 +43,15 @@ export default class GameLevelManager extends Phaser.Scene {
   switchLevel() {
     this.level++;
     this.numOfObs++;
+    console.log("gamelevelmanager: ", this.level);
 
     this.scene.remove(this.currentKey);
     //this.scene.start("PlayScene");
-    let playScene = new PlayScene(this.generateNewKey(), this.numOfObs);
+    let playScene = new PlayScene(
+      this.generateNewKey(),
+      this.numOfObs,
+      this.level
+    );
     this.scene.add("PlayScene", playScene, true);
     //this.scene.start("PlayScene");
     console.log("current level: ", this.level);
