@@ -128,6 +128,7 @@ export default class PlayScene extends Phaser.Scene {
     console.log("playscene: ", level);
     this.platforms = stageData[level].platforms;
 
+    //creates platform
     this.platformArray = [];
     for (let i = 0; i < this.platforms.length; i++) {
       console.log("i am logged");
