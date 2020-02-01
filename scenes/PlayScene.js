@@ -128,10 +128,8 @@ export default class PlayScene extends Phaser.Scene {
     console.log("playscene: ", level);
     this.platforms = stageData[level].platforms;
 
-
     this.platformArray = [];
     for (let i = 0; i < this.platforms.length; i++) {
-      console.log("i am logged");
       let platform = this.platforms[i];
       this.physicalPlatform = this.addPhysicalRectangle(
         platform.x,
@@ -143,7 +141,6 @@ export default class PlayScene extends Phaser.Scene {
       this.platformArray.push(this.physicalPlatform);
     }
     this.platformCollisions();
-    console.log("number of platforms: ", this.platformArray);
     //Player collisions
     //this.physics.add.collider(this.player, this.physicalPlatform);
     //powerup collisions
@@ -198,9 +195,11 @@ export default class PlayScene extends Phaser.Scene {
   }
   cakeAndFinishLineCallback(cake, finishLine) {
     this.game.events.emit("finishLineTouched");
+    console.log("cake and finishline");
   }
   cakeAndObstacleCallback(cake, obstacle) {
     this.game.events.emit("obstacleTouched");
+    //console.log("cake and obstacle collisions");
   }
 
   changeTint(platform) {
