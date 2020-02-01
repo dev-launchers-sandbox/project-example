@@ -62,10 +62,11 @@ export default class Score extends Phaser.GameObjects.Text {
     //console.log("called method");
     this.updateCounter++;
     if (this.updateCounter % 30 === 0) {
-      this.health -= 1;
+      this.scene.cake.health -= 1;
     }
 
-    this.updateScore();
+    console.log("cake and obstacle touch, inside the funtion");
+    this.scene.cake.healthDisplay.setText("Health:" + this.scene.cake.health);
     //this.setText("Score: " + this.score);
     /*
     if (this.score < 0) {
