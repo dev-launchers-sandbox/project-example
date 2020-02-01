@@ -8,6 +8,10 @@ import Obstacle from "../classes/Obstacle.js";
 import RandomDataPoints from "../classes/RandomDataPoints.js";
 import Score from "../classes/Score.js";
 
+import smashSound from "../assets/thump2.mp3";
+import jump from "../assets/jump.wav";
+import yay from "../assets/yay.wav";
+
 export default class PlayScene extends Phaser.Scene {
   constructor(loseScene) {
     super("PlayScene");
@@ -59,9 +63,19 @@ export default class PlayScene extends Phaser.Scene {
     });
 
     this.load.image("power", "./assets/powerup.png");
+    this.load.image("PlaySceneIMage", "./assets/Hungryghostbc.png");
+    this.load.audio("smash", smashSound);
+    this.load.audio("jump", jump);
+    this.load.audio("yay", yay);
   }
 
   create() {
+    this.add.image(
+      this.game.config.width / 2,
+      this.game.config.height / 2,
+      "PlaySceneIMage"
+    );
+
     /*
       Create our own EventEmitter instance
       to communicate from cake to score to decrement score

@@ -3,6 +3,7 @@ import Player from "../classes/Player.js";
 import PlayScene from "./PlayScene.js";
 import LoseScene from "./LoseScene.js";
 import WinScene from "./WinScene.js";
+import InstructionScene from "./InstructionScene.js";
 
 export default class TitleScene extends Phaser.Scene {
   constructor() {
@@ -17,7 +18,7 @@ export default class TitleScene extends Phaser.Scene {
     });
     this.load.image("titleScreen", "/assets/TITLESCREEN.png");
     this.load.audio("music", "./assets/Hypnotic-Puzzle3.mp3");
-
+    //this.load.audio("smash", "./assets/smash.wav");
     //this.load.audio('introMusic', "./assests/Hypnotic-Puzzle3.mp3");
   }
 
@@ -60,8 +61,11 @@ export default class TitleScene extends Phaser.Scene {
     this.backgroundImage
       .setInteractive()
       .on("pointerdown", (pointer, localX, localY, event) => {
+        console.log("start");
+
         this.coolMusic.stop();
-        this.scene.start("PlayScene");
+        this.scene.start("InstructionScene");
+        console.log("end");
       });
     // ...
     // console.log("exit");
@@ -85,7 +89,7 @@ const config = {
   pixelArt: true,
   zoom: 2,
   backgroundColor: "#000000",
-  scene: [TitleScene, PlayScene, LoseScene, WinScene],
+  scene: [TitleScene, PlayScene, LoseScene, WinScene, InstructionScene],
   physics: {
     default: "arcade",
     arcade: {

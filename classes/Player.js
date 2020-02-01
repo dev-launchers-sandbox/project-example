@@ -32,14 +32,17 @@ export default class Player extends Character {
       s: S,
       down: DOWN
     });
+    this.smashSound = this.scene.sound.add("smash");
+    this.jump = this.scene.sound.add("jump");
+    console.log("smash construct", this.smashSound);
+    console.log("jump construct", this.jump);
   }
-
   update() {
     const keys = this.keys;
     //const sprite = this;
     const onGround = this.body.blocked.down;
     const cakeOnGround = this.scene.cake.body.blocked.down;
-    const acceleration = onGround ? 260 : 150;
+    const acceleration = onGround ? 150 : 150;
 
     // Apply horizontal acceleration when left/a or right/d are applied
     if (keys.left.isDown || keys.a.isDown) {
@@ -49,12 +52,13 @@ export default class Player extends Character {
       this.setAccelerationX(acceleration);
       this.setFlipX(false);
     } else {
-      this.setAccelerationX(0);
+      this.setVelocityX(0);
     }
 
     // Only allow the player to jump if they are on the ground
     if (onGround && (keys.up.isDown || keys.w.isDown)) {
-      this.setVelocityY(-5000 * 2);
+      this.setVelocityY(-230);
+      this.jump.play();
     }
     //key.down is when you press down arrow key and key s is when you press down s key
     if (keys.down.isDown || keys.s.isDown) {
@@ -64,9 +68,11 @@ export default class Player extends Character {
     if (this.distanceAwayFromX(this.scene.cake.x) >= -30) {
       if (this.x > this.scene.cake.x && this.y === this.scene.cake.y) {
         if (onGround && cakeOnGround && this.body.velocity.y === 220) {
+          console.log("smash", this.smashSound);
           this.scene.cake.setVelocityY(-170);
           this.scene.cake.setVelocityX(-200);
           this.particleSmash();
+          this.smashSound.play();
           this.scene.cameras.main.shake(500, 0.01);
         }
       }
@@ -78,6 +84,9 @@ export default class Player extends Character {
           this.scene.cake.setVelocityY(-170);
           this.scene.cake.setVelocityX(200);
           this.particleSmash();
+          this.smashSound.play();
+          console.log("smashed");
+
           this.scene.cameras.main.shake(500, 0.01);
         }
       }
@@ -117,11 +126,12 @@ export default class Player extends Character {
           this.scene.cake.setVelocityY(-170);
           this.scene.cake.setVelocityX(200);
           this.particleSmash();
+
           this.scene.cameras.main.shake(500, 0.01);
         }
       }
     }
   }
 
-  destroy() { }
+  destroy() {}
 }
