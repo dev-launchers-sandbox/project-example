@@ -38,12 +38,9 @@ export default class Score extends Phaser.GameObjects.Text {
   cakeAndFinishlineTouch() {
     //console.log(this.scene);
     this.updateCounter++;
-    console.log("the cake is touching the finsihline");
     this.score += 1;
-    console.log("current score ", this.score);
 
     this.updateScore();
-    console.log(this.updateScore);
     //this.setText("Score: " + this.score);
 
     if (this.score === WINNING_SCORE) {
@@ -70,7 +67,6 @@ export default class Score extends Phaser.GameObjects.Text {
       this.scene.cake = new Cake(this.scene);
     }
 
-    console.log("cake and obstacle touch, inside the funtion");
     this.scene.cake.healthDisplay.setText("Health:" + this.scene.cake.health);
     //this.setText("Score: " + this.score);
     /*
@@ -93,10 +89,6 @@ export default class Score extends Phaser.GameObjects.Text {
   }
 
   // Lost: this is called when you lose
-<<<<<<< HEAD
-
-  update() {}
-=======
   lost() {
     this.scene.obstacles.forEach(obstacle => {
       obstacle.destroy();
@@ -115,5 +107,4 @@ export default class Score extends Phaser.GameObjects.Text {
   destroy() {
     super.destroy();
   }
->>>>>>> csb-1580588144052
 }

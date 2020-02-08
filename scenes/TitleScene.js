@@ -61,11 +61,8 @@ export default class TitleScene extends Phaser.Scene {
     this.backgroundImage
       .setInteractive()
       .on("pointerdown", (pointer, localX, localY, event) => {
-        console.log("start");
-
         this.coolMusic.stop();
         this.scene.start("InstructionScene");
-        console.log("end");
       });
     // ...
     // console.log("exit");
@@ -80,25 +77,3 @@ export default class TitleScene extends Phaser.Scene {
 
   /* </End> Helper functions added by kris */
 }
-<<<<<<< HEAD
-=======
-
-const config = {
-  type: Phaser.AUTO,
-  width: 500 / 2,
-  height: 300 / 2,
-  parent: "game-container",
-  pixelArt: true,
-  zoom: 2,
-  backgroundColor: "#000000",
-  scene: [TitleScene, PlayScene, LoseScene, WinScene, InstructionScene],
-  physics: {
-    default: "arcade",
-    arcade: {
-      gravity: { y: 500 }
-    }
-  }
-};
-
-const game = new Phaser.Game(config);
->>>>>>> csb-1580588144052

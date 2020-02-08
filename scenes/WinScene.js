@@ -13,11 +13,7 @@ export default class WinScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
-<<<<<<< HEAD
     this.load.image("WinScene", "./assets/hungryghostwinscreen.png");
-=======
-    this.load.image("WinScene", "/assets/hungryghostwinscreen.png");
->>>>>>> csb-1580588144052
     this.load.audio("music", "./assets/Hypnotic-Puzzle3.mp3");
 
     //this.load.audio('introMusic', "./assests/Hypnotic-Puzzle3.mp3");

@@ -7,6 +7,7 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, speed) {
     super(scene, INIT_X, INIT_Y, "cake");
     this.scene = scene;
+    this.chompSound = this.scene.sound.add("chomp");
 
     //TODO; add animation
 
@@ -16,11 +17,7 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
     this.gravity = 10;
     this.friction = 10;
     this.speed = speed;
-<<<<<<< HEAD
     this.health = HEALTH;
-=======
-    this.health = 1000;
->>>>>>> csb-1580588144052
     this.updateCounter = 0;
     this.losingDisplay = undefined;
 
@@ -89,7 +86,7 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
       this.health -= 1;
     }
     this.healthDisplay.setText("Health:" + this.health);
-
+    this.chompSound.play();
     if (this.health === 0) {
       this.scene.cake = new Cake(this.scene, 80, 5);
       this.destroy();
