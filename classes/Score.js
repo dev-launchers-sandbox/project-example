@@ -93,6 +93,27 @@ export default class Score extends Phaser.GameObjects.Text {
   }
 
   // Lost: this is called when you lose
+<<<<<<< HEAD
 
   update() {}
+=======
+  lost() {
+    this.scene.obstacles.forEach(obstacle => {
+      obstacle.destroy();
+    });
+    this.scene.scene.start("LoseScene");
+  }
+
+  win() {
+    this.scene.obstacles.forEach(obstacle => {
+      obstacle.destroy();
+    });
+    this.scene.scene.start("WinScene");
+  }
+  update() {}
+
+  destroy() {
+    super.destroy();
+  }
+>>>>>>> csb-1580588144052
 }

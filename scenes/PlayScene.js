@@ -9,6 +9,10 @@ import RandomDataPoints from "../classes/RandomDataPoints.js";
 import Score from "../classes/Score.js";
 import { STAGE_CONFIG } from "../settings/StageConfig.js";
 
+import smashSound from "../assets/thump2.mp3";
+import jump from "../assets/jump.wav";
+import yay from "../assets/yay.wav";
+
 export default class PlayScene extends Phaser.Scene {
   constructor(key, numObstacles, level) {
     if (key) {
@@ -91,6 +95,9 @@ export default class PlayScene extends Phaser.Scene {
     camera.startFollow(this.player);
 
     //background image
+    this.load.audio("smash", smashSound);
+    this.load.audio("jump", jump);
+    this.load.audio("yay", yay);
     this.add.image(
       this.game.config.width / 2,
       this.game.config.height / 2,
