@@ -29,6 +29,7 @@ export default class PlayScene extends Phaser.Scene {
       this.numObstacles = 1;
     }
   }
+  //hello
   preload() {
     this.load.spritesheet("johnny", "./assets/johnny_sprite.png", {
       frameWidth: 16,
@@ -171,7 +172,7 @@ export default class PlayScene extends Phaser.Scene {
       this.cakeAndObstacleCallback,
       function() {},
       this
-    
+
     );*/
 
     this.enemy.body.setAllowGravity(false);
