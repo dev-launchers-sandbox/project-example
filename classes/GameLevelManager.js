@@ -3,6 +3,7 @@ import TitleScene from "../scenes/TitleScene";
 import PlayScene from "../scenes/PlayScene";
 import LoseScene from "../scenes/LoseScene";
 import WinScene from "../scenes/WinScene";
+import InstructionScene from "../scenes/InstructionScene.js";
 import Score from "./Score";
 
 export const changeLevelEvent = "changeLevel";
@@ -22,8 +23,6 @@ export default class GameLevelManager extends Phaser.Scene {
     this.currentKey = sceneBaseName;
     this.gameLives = 3;
     this.numOfObs = 1;
-
-    console.log("gamelevelmanger is working");
   }
   create() {
     this.game.events.on("changeLevel", this.switchLevel, this);
@@ -37,11 +36,9 @@ export default class GameLevelManager extends Phaser.Scene {
 
   destroy() {}
 
-
   switchLevel() {
     this.level++;
     this.numOfObs++;
-    console.log("gamelevelmanager: ", this.level);
 
     this.scene.remove(this.currentKey);
     //this.scene.start("PlayScene");
@@ -52,10 +49,8 @@ export default class GameLevelManager extends Phaser.Scene {
     );
     this.scene.add("PlayScene", playScene, true);
     //this.scene.start("PlayScene");
-    console.log("current level: ", this.level);
     //console.log(changeLevelEvent);
     if (this.level === 6) {
-      console.log("yo this actually worked");
       this.scene.start("WinScene");
     }
   }
@@ -64,14 +59,12 @@ export default class GameLevelManager extends Phaser.Scene {
     this.generateNum++;
     const keyString = this.generateNum.toString();
 
-    console.log(keyString);
     return sceneBaseName + keyString;
   }
 
   win() {
     let playScene = this.scene.get(this.currentKey);
     playScene.destroy();
-    console.log("called win method");
     //this.destroy();
 
     //this.scene.scene.start("WinScene");
@@ -81,7 +74,6 @@ export default class GameLevelManager extends Phaser.Scene {
     playScene.destroy();
     playScene.restart();
 
-    console.log("called lost method");
     //this.scene.scene.start("LoseScene");
   }
 }
@@ -91,6 +83,7 @@ const scenes = [
   PlayScene,
   LoseScene,
   WinScene,
+  InstructionScene,
   GameLevelManager
 ];
 

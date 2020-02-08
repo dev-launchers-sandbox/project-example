@@ -53,8 +53,9 @@ export default class Player extends Character {
       repeat: -1
     });
     this.setDepth(1);
+    this.smashSound = this.scene.sound.add("smash");
+    this.jump = this.scene.sound.add("jump");
   }
-
   update() {
     const keys = this.keys;
     //const sprite = this;
@@ -76,6 +77,7 @@ export default class Player extends Character {
     // Only allow the player to jump if they are on the ground
     if (onGround && (keys.up.isDown || keys.w.isDown)) {
       this.setVelocityY(-230);
+      this.jump.play();
     }
 
     /*
@@ -100,9 +102,11 @@ export default class Player extends Character {
     if (this.distanceAwayFromX(this.scene.cake.x) >= -30) {
       if (this.x > this.scene.cake.x && this.y === this.scene.cake.y) {
         if (onGround && cakeOnGround && this.body.velocity.y === 220) {
+          // console.log("smash", this.smashSound);
           this.scene.cake.setVelocityY(-170);
           this.scene.cake.setVelocityX(-200);
           this.particleSmash();
+          this.smashSound.play();
           this.scene.cameras.main.shake(500, 0.01);
         }
       }
@@ -114,6 +118,7 @@ export default class Player extends Character {
           this.scene.cake.setVelocityY(-170);
           this.scene.cake.setVelocityX(200);
           this.particleSmash();
+          this.smashSound.play();
           this.scene.cameras.main.shake(500, 0.01);
         }
       }
@@ -154,6 +159,7 @@ export default class Player extends Character {
           this.scene.cake.setVelocityY(-170);
           this.scene.cake.setVelocityX(200);
           this.particleSmash();
+
           this.scene.cameras.main.shake(500, 0.01);
         }
       }

@@ -9,11 +9,15 @@ import RandomDataPoints from "../classes/RandomDataPoints.js";
 import Score from "../classes/Score.js";
 import { STAGE_CONFIG } from "../settings/StageConfig.js";
 
+import smashSound from "../assets/thump2.mp3";
+import jump from "../assets/jump.wav";
+import yay from "../assets/yay.wav";
+import chomp from "../assets/chomp.wav";
+
 export default class PlayScene extends Phaser.Scene {
   constructor(key, numObstacles, level) {
     if (key) {
       super(key);
-      console.log(key);
     } else {
       super("PlayScene");
     }
@@ -77,10 +81,14 @@ export default class PlayScene extends Phaser.Scene {
 
     this.load.image("power", "./assets/powerup.png");
     this.load.image("PlaySceneIMage", "./assets/Hungryghostbc.png");
+    //loading audio
+    this.load.audio("smash", smashSound);
+    this.load.audio("jump", jump);
+    this.load.audio("yay", yay);
+    this.load.audio("chomp", chomp);
   }
 
   create() {
-    console.log("create playscene");
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
@@ -91,6 +99,7 @@ export default class PlayScene extends Phaser.Scene {
     camera.startFollow(this.player);
 
     //background image
+
     this.add.image(
       this.game.config.width / 2,
       this.game.config.height / 2,
@@ -116,17 +125,14 @@ export default class PlayScene extends Phaser.Scene {
       this.game.config.height
     );
 
-    console.log("obstacleLocations ", obstacleLocations);
     this.obstacles = [];
     obstacleLocations.forEach(point => {
-      console.log("point", point);
       this.obstacles.push(new Obstacle(this, point.x, point.y));
     });
     this.cake = new Cake(this);
 
     let stageData = STAGE_CONFIG;
     let level = this.level;
-    console.log("playscene: ", level);
     this.platforms = stageData[level].platforms;
 
     this.platformArray = [];
@@ -196,7 +202,6 @@ export default class PlayScene extends Phaser.Scene {
   }
   cakeAndFinishLineCallback(cake, finishLine) {
     this.game.events.emit("finishLineTouched");
-    console.log("cake and finishline");
   }
   cakeAndObstacleCallback(cake, obstacle) {
     this.game.events.emit("obstacleTouched");
@@ -205,14 +210,12 @@ export default class PlayScene extends Phaser.Scene {
 
   changeTint(platform) {
     let rand = Math.random() * 0xaa;
-    console.log("rand ", rand);
     platform.tint = Math.floor(rand);
   }
   /* Color are in RGB format. The first byte is blue value, the second byte is the green value, and the thrid byte is the red
      value
   */
   destroy() {
-    console.log("playscene destroy");
     this.obstacles.forEach(obstacle => {
       obstacle.destroy();
     });
