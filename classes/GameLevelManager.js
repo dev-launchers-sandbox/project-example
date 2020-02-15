@@ -89,8 +89,6 @@ const scenes = [
 
 const gameConfig = {
   type: Phaser.AUTO,
-  width: 500 / 2,
-  height: 300 / 2,
   parent: "game-container",
   pixelArt: true,
   zoom: 2,
@@ -101,7 +99,13 @@ const gameConfig = {
     arcade: {
       gravity: { y: 500 }
     }
+  },
+  scale: {
+    parent: "game-container",
+    mode: Phaser.Scale.FIT,
+    width: 500 / 2,
+    height: 300 / 2
   }
-};
+}; // You'll wanna use the css in the html file, we can use t
 
 const game = new Phaser.Game(gameConfig);
