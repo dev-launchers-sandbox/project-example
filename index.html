@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+s<!DOCTYPE html>
 <html lang="en">
   <head>
     <base href="./" />
@@ -11,13 +11,8 @@
       html,
       body,
       #game-container {
-        margin: 0;
-        padding: 0;
-      }
-
-      #game-container {
-        min-width: 100vw;
-        min-height: 100vh;
+        min-width: 60vw;
+        min-height: 40vh;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -25,13 +20,17 @@
 
       #game-container > canvas {
         border-radius: 5px;
+        width: 800px;
+        margin: 10px;
       }
     </style>
   </head>
-
+  <!-- Want a hint?  sure just messing with values-->
+  <!-- The canvas is set to fill the game-container element, right? -->
+  <!-- ohhhh -->
+  <!-- :) -->
   <body>
     <div id="game-container"></div>
-
     <script src="./classes/GameLevelManager.js"></script>
   </body>
 </html>
