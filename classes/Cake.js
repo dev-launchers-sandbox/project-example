@@ -1,11 +1,13 @@
 import Phaser from "phaser";
 import Enemy from "./Enemy";
-const INIT_X = 15;
+const INIT_X = 45;
 const INIT_Y = 5;
 const HEALTH = 10;
 export default class Cake extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, speed) {
     super(scene, INIT_X, INIT_Y, "cake");
+    this.id = Math.floor(Math.random() * Math.floor(10));
+
     this.scene = scene;
     this.chompSound = this.scene.sound.add("chomp");
 
@@ -75,24 +77,43 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
     });
     this.anims.play("cake-idle", true);
     //console.log(this.healthDiplay);
+    this.scene.game.events.on("cakeTouched", this.takeAwayHealth, this);
+    this.scene.game.events.on("obstacleTouched", this.takeAwayHealth, this);
+    console.log("health constructor", this.health);
+    //console.log(this.health, "constructor");
   }
   /*
     takeAwayHealth() gets called when ghost and cake touch
     when called it decrements health and if health equals 0 it destroys and makes a new cake
   */
   takeAwayHealth() {
+    console.log("cake: ", this.id, "health: ", this.health);
     this.updateCounter++;
     if (this.updateCounter % 30 === 0) {
       this.health -= 1;
     }
+    /*
+      Updates and renders the text when enemy touches the cake
+      TODO: Fix error thrown when the game switches level and the ghost collides with the cake
+    */
+    //console.log(this.health, "takeAwayHealth");
     this.healthDisplay.setText("Health:" + this.health);
     this.chompSound.play();
     if (this.health === 0) {
       this.scene.cake = new Cake(this.scene, 80, 5);
       this.destroy();
-
       //new Cake(this.scene, 80, 5)
     }
+  }
+  /*
+    destroys the cake when called
+    it unhooks the cake event 
+  */
+  destroy() {
+    this.scene.game.events.off("cakeTouched", this.takeAwayHealth, this);
+    this.scene.game.events.off("obstacleTouched", this.takeAwayHealth, this);
+    super.destroy();
+    console.log("cake destroy method");
   }
 
   update() {}

@@ -37,6 +37,7 @@ export default class GameLevelManager extends Phaser.Scene {
   destroy() {}
 
   switchLevel() {
+    this.game.events.emit("obstacleDestroy");
     this.level++;
     this.numOfObs++;
 

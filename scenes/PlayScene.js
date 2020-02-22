@@ -99,6 +99,7 @@ export default class PlayScene extends Phaser.Scene {
   }
 
   create() {
+    this.game.events.on("obstacleDestroy", this.destroyObstacle, this);
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
     camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
@@ -145,6 +146,12 @@ export default class PlayScene extends Phaser.Scene {
     this.platforms = stageData[level].platforms;
     //this array gets all the platforms for the current level,so we can perform collisions with multiple platforms
     this.platformArray = [];
+    console.log(this.platforms.length);
+
+    if (level === this.platforms.length) {
+      console.log("if statement works");
+      this.scene.start("WinScene");
+    }
     /*
       this loop goes through the platforms of the current level
       then it phyisically creates the platforms for the level
@@ -178,12 +185,23 @@ export default class PlayScene extends Phaser.Scene {
     this.physics.add.collider(this.finishLine, this.platformArray);
   }
   /*
+    this method is called when GameLevelManger switches level
+    It's intended to destroy every object reference from the game
+  */
+  destroyObstacle() {
+    console.log("obstacle destroy methodd has been called");
+    this.obstacles.forEach(obstacle => {
+      obstacle.destroy();
+    });
+    this.finishLine.destroy();
+  }
+  /*
     gets called when enemy and cake collide
     when called it takes away cakes health and "cakeTouch" event is emitted
   */
   enemyAndCakeCallback(enemy, cake) {
     // console.lo(this);
-    cake.takeAwayHealth();
+    //cake.takeAwayHealth();
     this.game.events.emit("cakeTouched");
   }
   /*
