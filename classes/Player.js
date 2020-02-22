@@ -102,7 +102,6 @@ export default class Player extends Character {
     if (this.distanceAwayFromX(this.scene.cake.x) >= -30) {
       if (this.x > this.scene.cake.x && this.y === this.scene.cake.y) {
         if (onGround && cakeOnGround && this.body.velocity.y === 220) {
-          // console.log("smash", this.smashSound);
           this.scene.cake.setVelocityY(-170);
           this.scene.cake.setVelocityX(-200);
           this.particleSmash();

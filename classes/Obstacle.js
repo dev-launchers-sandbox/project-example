@@ -29,5 +29,9 @@ export default class Obstacle extends Phaser.Physics.Arcade.Sprite {
     //obstacles collisions
   }
 
+  destroy() {
+    super.destroy();
+  }
+
   update() {}
 }

@@ -23,8 +23,8 @@ export default class Score extends Phaser.GameObjects.Text {
 
     scene.add.existing(this);
 
-    this.scene.game.events.on("obstacleTouched", this.enemyAndCakeTouch, this);
-    this.scene.game.events.on("cakeTouched", this.enemyAndCakeTouch, this);
+    // this.scene.game.events.on("obstacleTouched", this.enemyAndCakeTouch, this);
+    //this.scene.game.events.on("cakeTouched", this.enemyAndCakeTouch, this);
     this.scene.game.events.on(
       "finishLineTouched",
       this.cakeAndFinishlineTouch,
@@ -36,19 +36,21 @@ export default class Score extends Phaser.GameObjects.Text {
     when called it increments score, updates score, and checks if you win
   */
   cakeAndFinishlineTouch() {
-    //console.log(this.scene);
     this.updateCounter++;
     this.score += 1;
-
-    this.updateScore();
-    //this.setText("Score: " + this.score);
-
-    if (this.score === WINNING_SCORE) {
-      this.scene.game.events.emit("win");
-      this.scene.game.events.emit("changeLevel");
-    }
+    /*
+      Updates and renders the score when cake touches the finishline
+      TODO: Fix error thrown when the game switches level and the cake collides with the finishline
+    */
     this.scene.cake.destroy();
     this.scene.cake = new Cake(this.scene);
+
+    this.updateScore();
+    if (this.score === WINNING_SCORE) {
+      //this.scene.game.events.emit("win");
+      this.scene.game.events.emit("changeLevel");
+      this.destroy();
+    }
   }
 
   /* 
@@ -56,7 +58,6 @@ export default class Score extends Phaser.GameObjects.Text {
     when called it decrements score anf score gets updated
   */
   enemyAndCakeTouch() {
-    //console.log("called method");
     this.updateCounter++;
     if (this.updateCounter % 30 === 0) {
       this.scene.cake.health -= 1;
@@ -105,6 +106,11 @@ export default class Score extends Phaser.GameObjects.Text {
   update() {}
 
   destroy() {
+    this.scene.game.events.off(
+      "finishLineTouched",
+      this.cakeAndFinishlineTouch,
+      this
+    );
     super.destroy();
   }
 }
