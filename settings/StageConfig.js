@@ -13,7 +13,9 @@ export const STAGE_CONFIG = [
         width: 500 / 2,
         height: 10 / 2
       }
-    ]
+    ],
+    levelWidth: 500 / 2,
+    levelHeight: 300 / 2
   },
   {
     level: 2,
@@ -36,7 +38,9 @@ export const STAGE_CONFIG = [
         width: 450 / 2,
         height: 10 / 2
       }
-    ]
+    ],
+    levelWidth: 1000,
+    levelHeight: 300 / 2
   },
   {
     level: 3,
@@ -71,6 +75,8 @@ export const STAGE_CONFIG = [
         width: 500 / 2,
         height: 10 / 2
       }
-    ]
+    ],
+    levelWidth: 1000,
+    levelHeight: 700
   }
 ];

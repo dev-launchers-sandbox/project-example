@@ -4,6 +4,7 @@ import PlayScene from "../scenes/PlayScene";
 import LoseScene from "../scenes/LoseScene";
 import WinScene from "../scenes/WinScene";
 import InstructionScene from "../scenes/InstructionScene.js";
+import { STAGE_CONFIG } from "../settings/StageConfig.js";
 import Score from "./Score";
 
 export const changeLevelEvent = "changeLevel";

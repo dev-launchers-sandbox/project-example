@@ -111,7 +111,15 @@ export default class PlayScene extends Phaser.Scene {
     this.game.events.on("obstacleDestroy", this.destroyObstacle, this);
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
-    camera.setBounds(0, 0, this.game.config.width, this.game.config.height);
+
+    //creates reference to stage config data
+    let stageData = STAGE_CONFIG;
+    //accesses width data based on current level
+    this.levelWidth = stageData[this.currentLevel].levelWidth;
+    //accesses height data based on current level
+    this.levelHeight = stageData[this.currentLevel].levelHeight;
+
+    camera.setBounds(0, 0, this.levelWidth, this.levelHeight);
     camera.setZoom(1.15);
     //creates player
     this.player = new Player(this, 30, 5);
@@ -148,14 +156,16 @@ export default class PlayScene extends Phaser.Scene {
     });
     //creates cake
     this.cake = new Cake(this);
-    //creates reference to stage config data
-    let stageData = STAGE_CONFIG;
 
     console.log("this current level: ", this.currentLevel);
     console.log("stageLevel length: ", stageData.length);
     if (this.currentLevel != stageData.length) {
       //accesses platform data based on current level
       this.platforms = stageData[this.currentLevel].platforms;
+
+      // setBounds() IS A METHOD OF THE WORLD CLASS!
+      // https://photonstorm.github.io/phaser3-docs/Phaser.Physics.Arcade.World.html
+      this.physics.world.setBounds(0, 0, this.levelWidth, this.levelHeight);
 
       //this array gets all the platforms for the current level,so we can perform collisions with multiple platforms
       this.platformArray = [];
