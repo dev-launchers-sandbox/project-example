@@ -87,7 +87,6 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
     when called it decrements health and if health equals 0 it destroys and makes a new cake
   */
   takeAwayHealth() {
-    console.log("cake: ", this.id, "health: ", this.health);
     this.updateCounter++;
     if (this.updateCounter % 30 === 0) {
       this.health -= 1;

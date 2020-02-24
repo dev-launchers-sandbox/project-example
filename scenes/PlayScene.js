@@ -14,7 +14,7 @@ import yay from "../assets/yay.wav";
 import chomp from "../assets/chomp.wav";
 
 export default class PlayScene extends Phaser.Scene {
-  constructor(key, numObstacles, level) {
+  constructor(key, numObstacles, level, currentLevel) {
     /*
       if key already exists,set it to the current key
       else, if key value doesn't already exist set key to "PlayScene"
@@ -25,6 +25,7 @@ export default class PlayScene extends Phaser.Scene {
       super("PlayScene");
     }
     this.numObstacles = numObstacles;
+    this.currentLevel = currentLevel;
     /*
       if level value already exists, set level to the current level
       else, if level value doesn't already exist set level to 0
@@ -42,6 +43,12 @@ export default class PlayScene extends Phaser.Scene {
       this.numObstacles = numObstacles;
     } else {
       this.numObstacles = 1;
+    }
+
+    if (currentLevel) {
+      this.currentLevel = currentLevel;
+    } else {
+      this.currentLevel = 0;
     }
   }
   preload() {
@@ -99,6 +106,8 @@ export default class PlayScene extends Phaser.Scene {
   }
 
   create() {
+    console.log("PlayScene create");
+
     this.game.events.on("obstacleDestroy", this.destroyObstacle, this);
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
@@ -141,39 +150,42 @@ export default class PlayScene extends Phaser.Scene {
     this.cake = new Cake(this);
     //creates reference to stage config data
     let stageData = STAGE_CONFIG;
-    let level = this.level;
-    //accesses platform data based on current level
-    this.platforms = stageData[level].platforms;
-    //this array gets all the platforms for the current level,so we can perform collisions with multiple platforms
-    this.platformArray = [];
-    console.log(this.platforms.length);
 
-    if (level === this.platforms.length) {
-      console.log("if statement works");
-      this.scene.start("WinScene");
-    }
-    /*
+    console.log("this current level: ", this.currentLevel);
+    console.log("stageLevel length: ", stageData.length);
+    if (this.currentLevel != stageData.length) {
+      //accesses platform data based on current level
+      this.platforms = stageData[this.currentLevel].platforms;
+
+      //this array gets all the platforms for the current level,so we can perform collisions with multiple platforms
+      this.platformArray = [];
+      /*
       this loop goes through the platforms of the current level
       then it phyisically creates the platforms for the level
       then it pushes all the platforms for that level into the array
     */
-    for (let i = 0; i < this.platforms.length; i++) {
-      let platform = this.platforms[i];
-      this.physicalPlatform = this.addPhysicalRectangle(
-        platform.x,
-        platform.y,
-        platform.width,
-        platform.height,
-        this.RandomColor()
-      );
-      this.platformArray.push(this.physicalPlatform);
+      for (let i = 0; i < this.platforms.length; i++) {
+        let platform = this.platforms[i];
+        this.physicalPlatform = this.addPhysicalRectangle(
+          platform.x,
+          platform.y,
+          platform.width,
+          platform.height,
+          this.RandomColor()
+        );
+        this.platformArray.push(this.physicalPlatform);
+      }
+      //collisions between objects and platforms
+      this.platformCollisions();
+      //collisions between player and cake
+      this.physics.add.collider(this.player, this.cake);
+      //turns off physics gravity for the ghost
+      this.enemy.body.setAllowGravity(false);
+    } else {
+      console.log("if statement works");
+      // this.scene.stop("PlayScene");
+      this.scene.start("WinScene");
     }
-    //collisions between objects and platforms
-    this.platformCollisions();
-    //collisions between player and cake
-    this.physics.add.collider(this.player, this.cake);
-    //turns off physics gravity for the ghost
-    this.enemy.body.setAllowGravity(false);
   }
   //function for collisions between objects and platforms
   platformCollisions() {

@@ -4,7 +4,7 @@ import PlayScene from "./PlayScene.js";
 
 export default class WinScene extends Phaser.Scene {
   constructor() {
-    super({ key: "WinScene" });
+    super("WinScene");
   }
   preload() {
     this.load.spritesheet("baker", "./assets/baker.png", {

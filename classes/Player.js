@@ -5,6 +5,8 @@ export default class Player extends Character {
   constructor(scene, x, y) {
     super(scene, x, y);
 
+    this.sprite.setDrag(500, 0).setMaxVelocity(200, 400);
+
     // Track the arrow keys & OPQA
     const {
       LEFT,
@@ -61,7 +63,7 @@ export default class Player extends Character {
     //const sprite = this;
     const onGround = this.body.blocked.down;
     const cakeOnGround = this.scene.cake.body.blocked.down;
-    const acceleration = onGround ? 150 : 150;
+    const acceleration = onGround ? 300 : 150;
 
     // Apply horizontal acceleration when left/a or right/d are applied
     if (keys.left.isDown || keys.a.isDown) {

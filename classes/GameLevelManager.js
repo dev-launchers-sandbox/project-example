@@ -23,6 +23,7 @@ export default class GameLevelManager extends Phaser.Scene {
     this.currentKey = sceneBaseName;
     this.gameLives = 3;
     this.numOfObs = 1;
+    this.currentLevel = 0;
   }
   create() {
     this.game.events.on("changeLevel", this.switchLevel, this);
@@ -40,18 +41,29 @@ export default class GameLevelManager extends Phaser.Scene {
     this.game.events.emit("obstacleDestroy");
     this.level++;
     this.numOfObs++;
+    this.currentLevel++;
 
+    // Remove old scene with old identifier
     this.scene.remove(this.currentKey);
-    //this.scene.start("PlayScene");
+
+    // Create new identifiier for scene we're about to create
+    this.currentKey = this.generateNewKey();
+
+    // Create the scene
     let playScene = new PlayScene(
-      this.generateNewKey(),
+      this.currentKey,
       this.numOfObs,
-      this.level
+      this.level,
+      this.currentLevel
     );
-    this.scene.add("PlayScene", playScene, true);
-    //this.scene.start("PlayScene");
-    //console.log(changeLevelEvent);
-    if (this.level === 6) {
+
+    // Add the newly create scene to our scene list, and tie it to the identifier we just created (so we can destroy it later)
+    this.scene.add(this.currentKey, playScene, true);
+
+    // (This logic should be handling all of the win stuff!)
+    // Much cleaner here
+    // TODO: Change '3' to use stageData.length instead of hardcoding
+    if (this.level === 3) {
       this.scene.start("WinScene");
     }
   }
@@ -107,6 +119,6 @@ const gameConfig = {
     width: 500 / 2,
     height: 300 / 2
   }
-}; // You'll wanna use the css in the html file, we can use t
+};
 
 const game = new Phaser.Game(gameConfig);
