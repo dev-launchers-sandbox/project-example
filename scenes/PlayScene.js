@@ -120,18 +120,30 @@ export default class PlayScene extends Phaser.Scene {
     this.levelHeight = stageData[this.currentLevel].levelHeight;
 
     camera.setBounds(0, 0, this.levelWidth, this.levelHeight);
-    camera.setZoom(1.15);
+    camera.setZoom(1.5);
     //creates player
     this.player = new Player(this, 30, 5);
     //make the game caemra follow the player
     camera.startFollow(this.player);
 
-    //background image
-    this.add.image(
+    //background image in top left corner
+    let backgroundImage = this.add.image(
       this.game.config.width / 2,
       this.game.config.height / 2,
       "PlaySceneIMage"
     );
+    // If background image isn't large enough to cover entire level, tile it...
+    for (let i = 0; i < this.levelWidth; i += backgroundImage.width) {
+      for (let j = 0; j < this.levelHeight; j += backgroundImage.height) {
+        this.add.image(
+          backgroundImage.x + i,
+          backgroundImage.y + j,
+          "PlaySceneIMage"
+        );
+      }
+    }
+    backgroundImage.destroy(); // We covered this with a new image, so can get rid of it
+
     //creates enemy
     this.enemy = new Enemy(this, 10, 0);
     //creates powerup
