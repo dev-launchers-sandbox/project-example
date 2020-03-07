@@ -6,6 +6,7 @@ const height = 300 / 2;
 export const STAGE_CONFIG = [
   {
     level: 1,
+    levelName: "The Beginning",
     platforms: [
       {
         x: width,
@@ -19,6 +20,39 @@ export const STAGE_CONFIG = [
   },
   {
     level: 2,
+    levelName: "Smash",
+    levelWidth: 1000,
+    levelHeight: 300,
+    platforms: [
+      {
+        x: 50,
+        y: 300,
+        width: 100,
+        height: 80
+      },
+      {
+        x: 200,
+        y: 300,
+        width: 100,
+        height: 80
+      },
+      {
+        x: 350,
+        y: 300,
+        width: 100,
+        height: 80
+      },
+      {
+        x: 500,
+        y: 300,
+        width: 100,
+        height: 80
+      }
+    ]
+  },
+  {
+    level: 3,
+    levelName: "Just Bouncin'",
     platforms: [
       {
         x: width,
@@ -43,7 +77,8 @@ export const STAGE_CONFIG = [
     levelHeight: 300 / 2
   },
   {
-    level: 3,
+    level: 4,
+    levelName: "In A Pinch",
     platforms: [
       {
         x: width,
