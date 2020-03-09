@@ -142,7 +142,6 @@ export const STAGE_CONFIG = [
       }
     ],
 
-
     teleporters: [],
     levelWidth: 1000,
     levelHeight: 300 / 2

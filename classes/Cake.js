@@ -85,48 +85,28 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
     });
     this.anims.play("cake-idle", true);
     //console.log(this.healthDiplay);
-
-    // Event fired when ghost touches cake
-    this.scene.game.events.on("cakeTouched", this.ghostDamagedCake, this);
-
-    // Event fired when cake touches obstacle
-    this.scene.game.events.on(
-      "obstacleTouched",
-      this.obstacleDamagedCake,
-      this
-    );
-
+    this.scene.game.events.on("cakeTouched", this.takeAwayHealth, this);
+    this.scene.game.events.on("obstacleTouched", this.takeAwayHealth, this);
     console.log("health constructor", this.health);
     //console.log(this.health, "constructor");
   }
-
-  ghostDamagedCake() {
-    this.takeAwayHealth(1);
-  }
-
-  obstacleDamagedCake() {
-    this.takeAwayHealth(10);
-  }
-
   /*
     takeAwayHealth() gets called when ghost and cake touch
     when called it decrements health and if health equals 0 it destroys and makes a new cake
   */
-  takeAwayHealth(amount) {
-    amount = amount ? amount : 1; // Default to 1 if amount isn't passed in
+  takeAwayHealth() {
     this.updateCounter++;
-    if (this.updateCounter % 10 === 0) {
-      console.log("AMOUNT", amount);
-      this.health -= amount;
-      /*
-        Updates and renders the text when enemy touches the cake
-        TODO: Fix error thrown when the game switches level and the ghost collides with the cake
-      */
-      this.healthDisplay.setText("Health:" + this.health);
-      this.chompSound.play();
+    if (this.updateCounter % 30 === 0) {
+      this.health -= 1;
     }
+    /*
+      Updates and renders the text when enemy touches the cake
+      TODO: Fix error thrown when the game switches level and the ghost collides with the cake
+    */
     //console.log(this.health, "takeAwayHealth");
-    if (this.health <= 0) {
+    this.healthDisplay.setText("Health:" + this.health);
+    this.chompSound.play();
+    if (this.health === 0) {
       this.scene.cake = new Cake(this.scene, 80, 5);
       this.destroy();
       //new Cake(this.scene, 80, 5)
@@ -137,12 +117,8 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
     it unhooks the cake event 
   */
   destroy() {
-    this.scene.game.events.off("cakeTouched", this.ghostDamagedCake, this);
-    this.scene.game.events.off(
-      "obstacleTouched",
-      this.obstacleDamagedCake,
-      this
-    );
+    this.scene.game.events.off("cakeTouched", this.takeAwayHealth, this);
+    this.scene.game.events.off("obstacleTouched", this.takeAwayHealth, this);
     super.destroy();
     console.log("cake destroy method");
   }
