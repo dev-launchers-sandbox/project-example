@@ -6,7 +6,6 @@ const height = 300 / 2;
 export const STAGE_CONFIG = [
   {
     level: 1,
-    levelName: "The Beginning",
     platforms: [
       {
         x: width,
@@ -15,13 +14,25 @@ export const STAGE_CONFIG = [
         height: 10 / 2
       }
     ],
+    finishLine: {
+      x: 50,
+      y: 5
+    },
+    obstacles: [
+      {
+        x: 175,
+        y: 75
+      }
+    ],
+    teleporters: [],
+
     levelWidth: 500 / 2,
     levelHeight: 300 / 2
   },
   {
     level: 2,
     levelName: "Smash",
-    levelWidth: 1000,
+    levelWidth: 550,
     levelHeight: 300,
     platforms: [
       {
@@ -48,11 +59,54 @@ export const STAGE_CONFIG = [
         width: 100,
         height: 80
       }
+    ],
+    finishLine: {
+      x: 80,
+      y: 10
+    },
+    obstacles: [
+      /*  
+     {
+        x: 70,
+        y: 10
+      },
+      */
+      {
+        x: 200,
+        y: 10
+      },
+      {
+        x: 350,
+        y: 10
+      }
+      /*
+      {
+        x: 285,
+        y: 10
+      },
+      {
+        x: 415,
+        y: 10
+      },
+      {
+        x: 435,
+        y: 10
+      }
+      */
+    ],
+    teleporters: [
+      {
+        x: width,
+        y: 300,
+        width: 1550,
+        height: 10 / 2,
+        destinationX: 50,
+        destinationY: 200
+      }
     ]
   },
   {
     level: 3,
-    levelName: "Just Bouncin'",
     platforms: [
       {
         x: width,
@@ -73,12 +127,25 @@ export const STAGE_CONFIG = [
         height: 10 / 2
       }
     ],
+    finishLine: {
+      x: 999,
+      y: 5
+    },
+    obstacles: [
+      {
+        x: 50,
+        y: 5
+      },
+      {
+        x: 100,
+        y: 10
+      }
+    ],
     levelWidth: 1000,
     levelHeight: 300 / 2
   },
   {
     level: 4,
-    levelName: "In A Pinch",
     platforms: [
       {
         x: width,
@@ -109,6 +176,20 @@ export const STAGE_CONFIG = [
         y: 225 / 2,
         width: 500 / 2,
         height: 10 / 2
+      }
+    ],
+    finishLine: {
+      x: 999,
+      y: 650
+    },
+    obstacles: [
+      {
+        x: 250,
+        y: 10
+      },
+      {
+        x: 400,
+        y: 700
       }
     ],
     levelWidth: 1000,

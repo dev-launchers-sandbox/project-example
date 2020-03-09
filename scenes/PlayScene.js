@@ -7,6 +7,7 @@ import FinishLine from "../classes/FinishLine.js";
 import Obstacle from "../classes/Obstacle.js";
 import RandomDataPoints from "../classes/RandomDataPoints.js";
 import Score from "../classes/Score.js";
+import Teleporter from "../classes/Teleporter.js";
 import { STAGE_CONFIG } from "../settings/StageConfig.js";
 import smashSound from "../assets/thump2.mp3";
 import jump from "../assets/jump.wav";
@@ -150,22 +151,37 @@ export default class PlayScene extends Phaser.Scene {
     this.powerup = new Powerup(this, 100, 5);
     //creates finishline
     this.finishLine = new FinishLine(this, 500, 100);
+    //creates teleporter array
+    this.teleporters = [];
+    this.teleportersLocations = stageData[this.currentLevel].teleporters;
+    for (let i = 0; i < this.teleportersLocations.length; i++) {
+      let teleporter = this.teleportersLocations[i];
+      this.teleporters.push(
+        new Teleporter(
+          this,
+          teleporter.x,
+          teleporter.y,
+          teleporter.width,
+          teleporter.height,
+          teleporter.destinationX,
+          teleporter.destinationY
+        )
+      );
+    }
+    this.physics.add.collider(
+      this.player,
+      this.teleporters,
+      this.spriteAndTeleporterCallback
+    );
     //creates score
     this.score = new Score(this);
-    //creates randomDataPointsGenerator
-    this.randomDataPointsGenerator = new RandomDataPoints();
-    //creates a reference to the location of the randomly generated obstacles
-    const obstacleLocations = this.randomDataPointsGenerator.datapoints(
-      this.numObstacles,
-      this.game.config.width - 50,
-      this.game.config.height
-    );
     //creates obstacle array
     this.obstacles = [];
-    //creates obstacles and pushes them into the obstacles array
-    obstacleLocations.forEach(point => {
-      this.obstacles.push(new Obstacle(this, point.x, point.y));
-    });
+    this.obstacleLocations = stageData[this.currentLevel].obstacles;
+    for (let i = 0; i < this.obstacleLocations.length; i++) {
+      let obstacle = this.obstacleLocations[i];
+      this.obstacles.push(new Obstacle(this, obstacle.x, obstacle.y));
+    }
     //creates cake
     this.cake = new Cake(this);
 
@@ -228,6 +244,10 @@ export default class PlayScene extends Phaser.Scene {
       obstacle.destroy();
     });
     this.finishLine.destroy();
+  }
+
+  spriteAndTeleporterCallback(sprite, teleporter) {
+    teleporter.teleport(sprite);
   }
   /*
     gets called when enemy and cake collide
