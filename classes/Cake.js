@@ -24,7 +24,7 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
     this.losingDisplay = undefined;
 
     this.scene.physics.add.collider(this.scene.player, this);
-    this.scene.physics.add.collider(
+    this.scene.physics.add.overlap(
       this.scene.enemy,
       this,
       this.scene.enemyAndCakeCallback,
@@ -36,6 +36,14 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
       this,
       this.scene.finishLine,
       this.scene.cakeAndFinishLineCallback,
+      null,
+      this.scene
+    );
+
+    this.scene.physics.add.collider(
+      this,
+      this.scene.teleporters,
+      this.scene.spriteAndTeleporterCallback,
       null,
       this.scene
     );
