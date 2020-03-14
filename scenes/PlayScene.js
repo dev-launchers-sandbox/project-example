@@ -13,6 +13,7 @@ import smashSound from "../assets/thump2.mp3";
 import jump from "../assets/jump.wav";
 import yay from "../assets/yay.wav";
 import chomp from "../assets/chomp.wav";
+import Box from "../classes/Box.js";
 
 export default class PlayScene extends Phaser.Scene {
   constructor(key, numObstacles, level, currentLevel) {
@@ -96,7 +97,7 @@ export default class PlayScene extends Phaser.Scene {
       margin: 0,
       spacing: 0
     });
-
+    this.load.image("box", "./assets/box.png");
     this.load.image("power", "./assets/powerup.png");
     this.load.image("PlaySceneIMage", "./assets/Hungryghostbc.png");
     //loading audio
@@ -108,7 +109,6 @@ export default class PlayScene extends Phaser.Scene {
 
   create() {
     console.log("PlayScene create");
-
     this.game.events.on("obstacleDestroy", this.destroyObstacle, this);
     const camera = this.cameras.main;
     const cursors = this.input.keyboard.createCursorKeys();
@@ -225,10 +225,14 @@ export default class PlayScene extends Phaser.Scene {
         );
         this.platformArray.push(this.physicalPlatform);
       }
+      this.box = new Box(this, 100, 100);
       //collisions between objects and platforms
       this.platformCollisions();
       //collisions between player and cake
       this.physics.add.collider(this.player, this.cake);
+      this.physics.add.collider(this.player, this.box);
+      this.physics.add.collider(this.cake, this.box);
+
       //turns off physics gravity for the ghost
       this.enemy.body.setAllowGravity(false);
     } else {
@@ -245,6 +249,7 @@ export default class PlayScene extends Phaser.Scene {
     this.physics.add.collider(this.enemy, this.platformArray);
     this.physics.add.collider(this.obstacles, this.platformArray);
     this.physics.add.collider(this.finishLine, this.platformArray);
+    this.physics.add.collider(this.box, this.platformArray);
   }
   /*
     this method is called when GameLevelManger switches level
