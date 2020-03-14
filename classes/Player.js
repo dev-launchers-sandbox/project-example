@@ -91,6 +91,9 @@ export default class Player extends Character {
       if (keys.down.isDown || keys.s.isDown) {
         this.anims.play("baker-smash", true);
         this.setVelocityY(220);
+        this.particleSmash();
+        this.smashSound.play();
+        this.scene.cameras.main.shake(300, 0.011);
       } else if (this.body.velocity.x !== 0) {
         this.anims.play("baker-walk", true);
       } else {
@@ -113,7 +116,7 @@ export default class Player extends Character {
         }
       }
     }
-    //checks distance from cake, checks if it's on the left side of the cake, checks if it's equal y from the cake, and if cake and player are onground, and checks for the player's Y velocity
+    //same thing just for the left side
     if (this.distanceAwayFromX(this.scene.cake.x) <= 30) {
       if (this.x < this.scene.cake.x && this.y === this.scene.cake.y) {
         if (onGround && cakeOnGround && this.body.velocity.y === 220) {
@@ -135,7 +138,7 @@ export default class Player extends Character {
       speed: 200,
       lifespan: 100,
       blendMOde: "ADD",
-      frequency: 50,
+      frequency: 30,
       alpha: { start: 1, end: 0 }
     });
 
@@ -145,7 +148,7 @@ export default class Player extends Character {
   }
 
   distanceAwayFromX(targetX) {
-    var distanceX = this.scene.cake.x - this.x;
+    var distanceX = targetX - this.x;
     return distanceX;
   }
 
