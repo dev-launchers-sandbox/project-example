@@ -123,7 +123,7 @@ export default class PlayScene extends Phaser.Scene {
     camera.setBounds(0, 0, this.levelWidth, this.levelHeight);
     camera.setZoom(1.5);
     //creates player
-    this.player = new Player(this, 30, 5);
+    this.player = new Player(this, 15, 5);
     //make the game caemra follow the player
     camera.startFollow(this.player);
 
@@ -183,7 +183,8 @@ export default class PlayScene extends Phaser.Scene {
       this.obstacles.push(new Obstacle(this, obstacle.x, obstacle.y));
     }
     //creates cake
-    this.cake = new Cake(this);
+    this.cakeLocation = stageData[this.currentLevel].cake;
+    this.cake = new Cake(this, this.cakeLocation.x, this.cakeLocation.y);
 
     console.log("this current level: ", this.currentLevel);
     console.log("stageLevel length: ", stageData.length);

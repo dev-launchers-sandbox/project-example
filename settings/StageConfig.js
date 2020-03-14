@@ -26,6 +26,11 @@ export const STAGE_CONFIG = [
     ],
     teleporters: [],
 
+    cake: {
+      x: 45,
+      y: 125
+    },
+
     levelWidth: 500 / 2,
     levelHeight: 300 / 2
   },
@@ -103,10 +108,55 @@ export const STAGE_CONFIG = [
         destinationX: 50,
         destinationY: 200
       }
-    ]
+    ],
+    cake: {
+      x: 45,
+      y: 250
+    }
   },
   {
     level: 3,
+    levelWidth: 800,
+    levelHeight: 500,
+    platforms: [
+      {
+        x: 0,
+        y: 500,
+        width: 100,
+        height: 50
+      },
+      {
+        x: 100,
+        y: 460,
+        width: 50,
+        height: 5
+      }
+    ],
+    obstacles: [
+      {
+        x: 10,
+        y: 490
+      }
+    ],
+
+    teleporters: [
+      {
+        x: width,
+        y: 500,
+        width: 1550,
+        height: 10 / 2,
+        destinationX: 35,
+        destinationY: 450
+      }
+    ],
+    cake: {
+      x: 35,
+      y: 450
+    }
+  },
+
+  {
+    level: 4,
     platforms: [
       {
         x: width,
@@ -142,13 +192,12 @@ export const STAGE_CONFIG = [
       }
     ],
 
-
     teleporters: [],
     levelWidth: 1000,
     levelHeight: 300 / 2
   },
   {
-    level: 4,
+    level: 5,
     platforms: [
       {
         x: width,

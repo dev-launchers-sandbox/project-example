@@ -74,6 +74,7 @@ export default class Player extends Character {
       this.setFlipX(false);
     } else {
       this.setVelocityX(0);
+      this.setAccelerationX(0);
     }
 
     // Only allow the player to jump if they are on the ground
