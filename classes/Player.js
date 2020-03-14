@@ -61,7 +61,7 @@ export default class Player extends Character {
   update() {
     const keys = this.keys;
     //const sprite = this;
-    const onGround = this.body.blocked.down;
+    const onGround = this.body.touching.down;
     const cakeOnGround = this.scene.cake.body.blocked.down;
     const acceleration = onGround ? 300 : 150;
 
