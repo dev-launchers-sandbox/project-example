@@ -24,7 +24,7 @@ export default class Powerup extends Phaser.Physics.Arcade.Sprite {
   }
 
   activate() {
-    this.scene.enemy.moveAway(this.scene.player.x, this.scene.player.y);
+    this.game.physics.arcade.gravity.y = 100;
   }
 
   destroy() {

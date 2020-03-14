@@ -15,7 +15,7 @@ export const STAGE_CONFIG = [
       }
     ],
     finishLine: {
-      x: 50,
+      x: 325,
       y: 5
     },
     obstacles: [
@@ -29,6 +29,11 @@ export const STAGE_CONFIG = [
     cake: {
       x: 45,
       y: 125
+    },
+
+    player: {
+      x: 15,
+      y: 5
     },
 
     levelWidth: 500 / 2,
@@ -66,8 +71,8 @@ export const STAGE_CONFIG = [
       }
     ],
     finishLine: {
-      x: 80,
-      y: 10
+      x: 520,
+      y: 200
     },
     obstacles: [
       /*  
@@ -99,6 +104,12 @@ export const STAGE_CONFIG = [
       }
       */
     ],
+
+    player: {
+      x: 15,
+      y: 5
+    },
+
     teleporters: [
       {
         x: width,
@@ -106,7 +117,8 @@ export const STAGE_CONFIG = [
         width: 1550,
         height: 10 / 2,
         destinationX: 50,
-        destinationY: 200
+        destinationY: 200,
+        color: 0xff0000
       }
     ],
     cake: {
@@ -130,14 +142,78 @@ export const STAGE_CONFIG = [
         y: 460,
         width: 50,
         height: 5
+      },
+      {
+        x: 195,
+        y: 440,
+        width: 50,
+        height: 5
+      },
+
+      {
+        x: 290,
+        y: 420,
+        width: 50,
+        height: 5
+      },
+      {
+        x: 395,
+        y: 420,
+        width: 50,
+        height: 5
+      },
+
+      {
+        x: 505,
+        y: 420,
+        width: 50,
+        height: 5
+      },
+      {
+        x: 35,
+        y: 190,
+        width: 50,
+        height: 5
+      },
+      {
+        x: 140,
+        y: 170,
+        width: 50,
+        height: 5
+      },
+      {
+        x: 250,
+        y: 150,
+        width: 50,
+        height: 5
+      },
+      {
+        x: 360,
+        y: 130,
+        width: 50,
+        height: 5
+      },
+      {
+        x: 465,
+        y: 110,
+        width: 50,
+        height: 5
       }
     ],
+    finishLine: {
+      x: 480,
+      y: 5
+    },
     obstacles: [
       {
         x: 10,
         y: 490
       }
     ],
+    player: {
+      x: 2,
+      y: 450
+    },
 
     teleporters: [
       {
@@ -146,7 +222,17 @@ export const STAGE_CONFIG = [
         width: 1550,
         height: 10 / 2,
         destinationX: 35,
-        destinationY: 450
+        destinationY: 450,
+        color: 0xff0000
+      },
+      {
+        x: 600,
+        y: 420,
+        widht: 100,
+        height: 10,
+        destinationX: 25,
+        destinationY: 160,
+        color: 0xff0000
       }
     ],
     cake: {
