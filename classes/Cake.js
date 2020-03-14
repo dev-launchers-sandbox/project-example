@@ -1,11 +1,10 @@
 import Phaser from "phaser";
 import Enemy from "./Enemy";
-const INIT_X = 45;
-const INIT_Y = 5;
+
 const HEALTH = 10;
 export default class Cake extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, speed) {
-    super(scene, INIT_X, INIT_Y, "cake");
+  constructor(scene, x, y, speed) {
+    super(scene, x, y, "cake");
     this.id = Math.floor(Math.random() * Math.floor(10));
 
     this.scene = scene;
@@ -127,7 +126,11 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
     }
     //console.log(this.health, "takeAwayHealth");
     if (this.health <= 0) {
-      this.scene.cake = new Cake(this.scene, 80, 5);
+      this.scene.cake = new Cake(
+        this.scene,
+        this.scene.cakeLocation.x,
+        this.scene.cakeLocation.y
+      );
       this.destroy();
       //new Cake(this.scene, 80, 5)
     }
