@@ -114,7 +114,8 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
   takeAwayHealth(amount) {
     amount = amount ? amount : 1; // Default to 1 if amount isn't passed in
     this.updateCounter++;
-    if (this.updateCounter % 10 === 0) {
+
+    if (this.updateCounter % 30 === 0) {
       console.log("AMOUNT", amount);
       this.health -= amount;
       /*
@@ -123,6 +124,7 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
       */
       this.healthDisplay.setText("Health:" + this.health);
       this.chompSound.play();
+      //this.scene.cameras.main.flash(1000, 255, 0, 0);
     }
     //console.log(this.health, "takeAwayHealth");
     if (this.health <= 0) {

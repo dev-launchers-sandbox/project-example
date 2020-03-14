@@ -3,8 +3,8 @@ import Phaser from "phaser";
 const COLOR = 0xff0000;
 
 export default class Teleporter extends Phaser.GameObjects.Rectangle {
-  constructor(scene, x, y, width, height, destinationX, destinationY) {
-    super(scene, x, y, width, height, COLOR);
+  constructor(scene, x, y, width, height, destinationX, destinationY, color) {
+    super(scene, x, y, width, height, color);
     this.scene = scene;
     this.width = width;
     this.height = height;

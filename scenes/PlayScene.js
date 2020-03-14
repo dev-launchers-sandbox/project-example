@@ -123,7 +123,12 @@ export default class PlayScene extends Phaser.Scene {
     camera.setBounds(0, 0, this.levelWidth, this.levelHeight);
     camera.setZoom(1.5);
     //creates player
-    this.player = new Player(this, 15, 5);
+    this.playerLocations = stageData[this.currentLevel].player;
+    this.player = new Player(
+      this,
+      this.playerLocations.x,
+      this.playerLocations.y
+    );
     //make the game caemra follow the player
     camera.startFollow(this.player);
 
@@ -150,7 +155,12 @@ export default class PlayScene extends Phaser.Scene {
     //creates powerup
     this.powerup = new Powerup(this, 100, 5);
     //creates finishline
-    this.finishLine = new FinishLine(this, 500, 100);
+    this.finishlineLocation = stageData[this.currentLevel].finishLine;
+    this.finishLine = new FinishLine(
+      this,
+      this.finishlineLocation.x,
+      this.finishlineLocation.y
+    );
     //creates teleporter array
     this.teleporters = [];
     this.teleportersLocations = stageData[this.currentLevel].teleporters;
@@ -164,7 +174,8 @@ export default class PlayScene extends Phaser.Scene {
           teleporter.width,
           teleporter.height,
           teleporter.destinationX,
-          teleporter.destinationY
+          teleporter.destinationY,
+          teleporter.color
         )
       );
     }
