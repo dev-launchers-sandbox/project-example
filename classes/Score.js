@@ -4,8 +4,8 @@ import GameLevelManager from "./GameLevelManager";
 import FinishLine from "./FinishLine.js";
 
 const WINNING_SCORE = 1;
-const INIT_X = 160;
-const INIT_Y = 10;
+const INIT_X = 150;
+const INIT_Y = 25;
 
 export default class Score extends Phaser.GameObjects.Text {
   constructor(scene) {

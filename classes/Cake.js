@@ -67,7 +67,7 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
       .setBounce(1.5, 0);
 
     this.healthDisplay = scene.add
-      .text(20, 10, "Health:" + this.health, {
+      .text(40, 25, "Health:" + this.health, {
         font: "10px monospace",
         fill: "#ffffff",
         padding: { x: 8, y: 1 },
