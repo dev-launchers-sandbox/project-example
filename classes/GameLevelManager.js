@@ -4,6 +4,7 @@ import PlayScene from "../scenes/PlayScene";
 import LoseScene from "../scenes/LoseScene";
 import WinScene from "../scenes/WinScene";
 import InstructionScene from "../scenes/InstructionScene.js";
+import UIScene from "../scenes/UIScene.js";
 import { STAGE_CONFIG } from "../settings/StageConfig.js";
 import Score from "./Score";
 
@@ -98,7 +99,8 @@ const scenes = [
   LoseScene,
   WinScene,
   InstructionScene,
-  GameLevelManager
+  GameLevelManager,
+  UIScene
 ];
 
 const gameConfig = {

@@ -15,13 +15,13 @@ export const STAGE_CONFIG = [
       }
     ],
     finishLine: {
-      x: 325,
-      y: 5
+      x: 230,
+      y: 130
     },
     obstacles: [
       {
         x: 175,
-        y: 75
+        y: 145
       }
     ],
     teleporters: [],
@@ -72,7 +72,7 @@ export const STAGE_CONFIG = [
     ],
     finishLine: {
       x: 520,
-      y: 200
+      y: 245
     },
     obstacles: [
       /*  
@@ -83,11 +83,11 @@ export const STAGE_CONFIG = [
       */
       {
         x: 200,
-        y: 10
+        y: 258
       },
       {
         x: 350,
-        y: 10
+        y: 258
       }
       /*
       {
@@ -107,7 +107,7 @@ export const STAGE_CONFIG = [
 
     player: {
       x: 15,
-      y: 5
+      y: 250
     },
 
     teleporters: [
@@ -202,7 +202,7 @@ export const STAGE_CONFIG = [
     ],
     finishLine: {
       x: 480,
-      y: 5
+      y: 90
     },
     obstacles: [
       {
@@ -263,6 +263,14 @@ export const STAGE_CONFIG = [
         height: 10 / 2
       }
     ],
+    player: {
+      x: 2,
+      y: 145
+    },
+    cake: {
+      x: 8,
+      y: 145
+    },
     finishLine: {
       x: 999,
       y: 5

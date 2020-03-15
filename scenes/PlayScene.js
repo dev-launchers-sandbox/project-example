@@ -184,6 +184,15 @@ export default class PlayScene extends Phaser.Scene {
       this.teleporters,
       this.spriteAndTeleporterCallback
     );
+
+    //collisions between player and powerup
+    /*
+    this.physics.add.collider(
+      this.player,
+      this.powerup,
+      this.playerAndPowerupCallback
+    );
+    */
     //creates score
     this.score = new Score(this);
     //creates obstacle array
@@ -266,6 +275,7 @@ export default class PlayScene extends Phaser.Scene {
   spriteAndTeleporterCallback(sprite, teleporter) {
     teleporter.teleport(sprite);
   }
+
   /*
     gets called when enemy and cake collide
     when called it takes away cakes health and "cakeTouch" event is emitted
@@ -278,8 +288,9 @@ export default class PlayScene extends Phaser.Scene {
   /*
     gets called when player and powerup collide
   */
-  playerAndPowerupCallback(player, powerup) {
+  playerAndPowerupCallback(powerup) {
     powerup.activate();
+    console.log("powerup activated");
   }
   /*
     gets called when cake and finishline touch
