@@ -9,15 +9,14 @@ export default class FinishLine extends Phaser.Physics.Arcade.Sprite {
     //this.score = 0;
     this.friction = 10;
 
-    // Add this to the scene as a Phaser game object
-    scene.add.existing(this);
+    // Add this to the scene as a Phaser game object and makes it static
+    scene.add.existing(this, true);
 
     // Create the physics-based sprite that we will move around and animate
-    this.sprite = scene.physics.add
-      .existing(this)
-      .setDrag(500, 0)
-      .setMaxVelocity(200, 400)
-      .setCollideWorldBounds(true);
+    this.sprite = scene.physics.add.existing(this, true);
+    //.setDrag(500, 0)
+    //.setMaxVelocity(200, 400)
+    //.setCollideWorldBounds(true);
   }
 
   update() {}
