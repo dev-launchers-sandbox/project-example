@@ -14,15 +14,15 @@ export default class Obstacle extends Phaser.Physics.Arcade.Sprite {
 
     //this.changeTint(this);
     // Add this to the scene as a Phaser game object
-    scene.add.existing(this); // add to rendering engine
+    scene.add.existing(this, true); // add to rendering engine
 
     this.physicalSprite = scene.physics.add // add to physics engine
-      .existing(this)
-      .setDrag(0, 0)
-      .setMaxVelocity(0, 100)
-      .setFriction(this.friction)
-      .setCollideWorldBounds(true)
-      .setBounce(0, 0);
+      .existing(this, true);
+    //.setDrag(0, 0)
+    //.setMaxVelocity(0, 100)
+    //.setFriction(this.friction)
+    //.setCollideWorldBounds(true)
+    //.setBounce(0, 0);
 
     //obstacles and finishline collision
     this.scene.physics.add.collider(this, this.scene.platforms);
