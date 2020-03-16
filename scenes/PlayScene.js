@@ -153,8 +153,13 @@ export default class PlayScene extends Phaser.Scene {
     //creates enemy
     this.enemy = new Enemy(this, 10, 0);
     //creates powerup
-    this.powerup = new Powerup(this, 100, 5);
-    //creates finishline
+    this.powerupLocations = stageData[this.currentLevel].powerup;
+    this.powerup = new Powerup(
+      this,
+      this.powerupLocations.x,
+      this.powerupLocations.y,
+      this.powerupLocations.time
+    ); //creates finishline
     this.finishlineLocation = stageData[this.currentLevel].finishLine;
     this.finishLine = new FinishLine(
       this,

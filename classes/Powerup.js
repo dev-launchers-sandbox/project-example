@@ -1,9 +1,10 @@
 import Phaser from "phaser";
 
 export default class Powerup extends Phaser.Physics.Arcade.Sprite {
-  constructor(scene, x, y) {
+  constructor(scene, x, y, time) {
     super(scene, x, y, "power", 0);
     this.scene = scene;
+    this.time = time;
     //player and powerup collisions
 
     // Add this to the scene as a Phaser game object
@@ -33,13 +34,17 @@ export default class Powerup extends Phaser.Physics.Arcade.Sprite {
   activate() {
     //gives us easier access to scene
     let scene = this.scene;
+    let player = this.scene.player;
     //changes the gravity of dynamic objets to -10
-    this.scene.physics.world.gravity.y = -10;
+    scene.physics.world.gravity.y = -10;
+    player.setGravityY(-10);
+
     //when 5 seconds pass the graivty gets set back to default
     this.scene.time.delayedCall(
-      5000,
+      this.time,
       () => {
         scene.physics.world.gravity.y = 500;
+        player.setGravityY(100);
       },
       null,
       this.scene

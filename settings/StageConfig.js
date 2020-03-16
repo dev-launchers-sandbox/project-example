@@ -36,6 +36,12 @@ export const STAGE_CONFIG = [
       y: 5
     },
 
+    powerup: {
+      x: 1000,
+      y: 1000,
+      time: 5000
+    },
+
     levelWidth: 500 / 2,
     levelHeight: 300 / 2
   },
@@ -124,10 +130,50 @@ export const STAGE_CONFIG = [
     cake: {
       x: 45,
       y: 250
-    }
+    },
+    powerup: {}
   },
   {
     level: 3,
+    levelName: "gravity",
+    levelWidth: 300,
+    levelHeight: 150,
+    platforms: [
+      {
+        x: width,
+        y: height,
+        width: 350,
+        height: 10 / 2
+      },
+      {
+        x: 150,
+        y: 130,
+        width: 10,
+        height: 100
+      }
+    ],
+    finishLine: {
+      x: 280,
+      y: 130
+    },
+    obstacles: [],
+    teleporters: [],
+    cake: {
+      x: 45,
+      y: 125
+    },
+    player: {
+      x: 15,
+      y: 5
+    },
+    powerup: {
+      x: 170,
+      y: 125,
+      time: 8000
+    }
+  },
+  {
+    level: 4,
     levelWidth: 800,
     levelHeight: 500,
     platforms: [
@@ -242,7 +288,7 @@ export const STAGE_CONFIG = [
   },
 
   {
-    level: 4,
+    level: 5,
     platforms: [
       {
         x: width,
