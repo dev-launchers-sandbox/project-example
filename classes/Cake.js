@@ -57,6 +57,8 @@ export default class Cake extends Phaser.Physics.Arcade.Sprite {
       this.scene
     );
 
+    this.scene.physics.add.collider(this, this.scene.boxes);
+
     // Create the physics-based sprite that we will move around and animate
     scene.physics.add
       .existing(this)

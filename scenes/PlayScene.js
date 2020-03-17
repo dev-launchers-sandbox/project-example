@@ -108,112 +108,116 @@ export default class PlayScene extends Phaser.Scene {
   }
 
   create() {
-    console.log("PlayScene create");
-    this.game.events.on("obstacleDestroy", this.destroyObstacle, this);
-    const camera = this.cameras.main;
-    const cursors = this.input.keyboard.createCursorKeys();
-
-    //creates reference to stage config data
     let stageData = STAGE_CONFIG;
-    //accesses width data based on current level
-    this.levelWidth = stageData[this.currentLevel].levelWidth;
-    //accesses height data based on current level
-    this.levelHeight = stageData[this.currentLevel].levelHeight;
+    if (this.currentLevel != stageData.length) {
+      console.log("PlayScene create");
+      this.game.events.on("obstacleDestroy", this.destroyObstacle, this);
+      const camera = this.cameras.main;
+      const cursors = this.input.keyboard.createCursorKeys();
 
-    camera.setBounds(0, 0, this.levelWidth, this.levelHeight);
-    camera.setZoom(1.5);
-    //creates player
-    this.playerLocations = stageData[this.currentLevel].player;
-    this.player = new Player(
-      this,
-      this.playerLocations.x,
-      this.playerLocations.y
-    );
-    //make the game caemra follow the player
-    camera.startFollow(this.player);
+      //creates reference to stage config data
 
-    //background image in top left corner
-    let backgroundImage = this.add.image(
-      this.game.config.width / 2,
-      this.game.config.height / 2,
-      "PlaySceneIMage"
-    );
-    // If background image isn't large enough to cover entire level, tile it...
-    for (let i = 0; i < this.levelWidth; i += backgroundImage.width) {
-      for (let j = 0; j < this.levelHeight; j += backgroundImage.height) {
-        this.add.image(
-          backgroundImage.x + i,
-          backgroundImage.y + j,
-          "PlaySceneIMage"
+      //accesses width data based on current level
+      this.levelWidth = stageData[this.currentLevel].levelWidth;
+      //accesses height data based on current level
+      this.levelHeight = stageData[this.currentLevel].levelHeight;
+
+      camera.setBounds(0, 0, this.levelWidth, this.levelHeight);
+      camera.setZoom(1.5);
+      //creates player
+      this.playerLocations = stageData[this.currentLevel].player;
+      this.player = new Player(
+        this,
+        this.playerLocations.x,
+        this.playerLocations.y
+      );
+      //make the game caemra follow the player
+      camera.startFollow(this.player);
+
+      //background image in top left corner
+      let backgroundImage = this.add.image(
+        this.game.config.width / 2,
+        this.game.config.height / 2,
+        "PlaySceneIMage"
+      );
+      // If background image isn't large enough to cover entire level, tile it...
+      for (let i = 0; i < this.levelWidth; i += backgroundImage.width) {
+        for (let j = 0; j < this.levelHeight; j += backgroundImage.height) {
+          this.add.image(
+            backgroundImage.x + i,
+            backgroundImage.y + j,
+            "PlaySceneIMage"
+          );
+        }
+      }
+      backgroundImage.destroy(); // We covered this with a new image, so can get rid of it
+
+      //creates enemy
+      this.enemy = new Enemy(this, 10, 0);
+      //creates powerup
+      this.powerups = [];
+      this.powerupLocations = stageData[this.currentLevel].powerups;
+      for (let i = 0; i < this.powerupLocations.length; i++) {
+        let powerup = this.powerupLocations[i];
+        this.powerups.push(
+          new Powerup(this, powerup.x, powerup.y, powerup.time)
         );
       }
-    }
-    backgroundImage.destroy(); // We covered this with a new image, so can get rid of it
-
-    //creates enemy
-    this.enemy = new Enemy(this, 10, 0);
-    //creates powerup
-    this.powerupLocations = stageData[this.currentLevel].powerup;
-    this.powerup = new Powerup(
-      this,
-      this.powerupLocations.x,
-      this.powerupLocations.y,
-      this.powerupLocations.time
-    ); //creates finishline
-    this.finishlineLocation = stageData[this.currentLevel].finishLine;
-    this.finishLine = new FinishLine(
-      this,
-      this.finishlineLocation.x,
-      this.finishlineLocation.y
-    );
-    //creates teleporter array
-    this.teleporters = [];
-    this.teleportersLocations = stageData[this.currentLevel].teleporters;
-    for (let i = 0; i < this.teleportersLocations.length; i++) {
-      let teleporter = this.teleportersLocations[i];
-      this.teleporters.push(
-        new Teleporter(
-          this,
-          teleporter.x,
-          teleporter.y,
-          teleporter.width,
-          teleporter.height,
-          teleporter.destinationX,
-          teleporter.destinationY,
-          teleporter.color
-        )
+      //creates finishline
+      this.finishlineLocation = stageData[this.currentLevel].finishLine;
+      this.finishLine = new FinishLine(
+        this,
+        this.finishlineLocation.x,
+        this.finishlineLocation.y
       );
-    }
-    this.physics.add.collider(
-      this.player,
-      this.teleporters,
-      this.spriteAndTeleporterCallback
-    );
+      //creates teleporter array
+      this.teleporters = [];
+      this.teleportersLocations = stageData[this.currentLevel].teleporters;
+      for (let i = 0; i < this.teleportersLocations.length; i++) {
+        let teleporter = this.teleportersLocations[i];
+        this.teleporters.push(
+          new Teleporter(
+            this,
+            teleporter.x,
+            teleporter.y,
+            teleporter.width,
+            teleporter.height,
+            teleporter.destinationX,
+            teleporter.destinationY,
+            teleporter.color
+          )
+        );
+      }
+      this.physics.add.collider(
+        this.player,
+        this.teleporters,
+        this.spriteAndTeleporterCallback
+      );
 
-    //collisions between player and powerup
-    /*
-    this.physics.add.collider(
-      this.player,
-      this.powerup,
-      this.playerAndPowerupCallback
-    );
-    */
-    //creates score
-    this.score = new Score(this);
-    //creates obstacle array
-    this.obstacles = [];
-    this.obstacleLocations = stageData[this.currentLevel].obstacles;
-    for (let i = 0; i < this.obstacleLocations.length; i++) {
-      let obstacle = this.obstacleLocations[i];
-      this.obstacles.push(new Obstacle(this, obstacle.x, obstacle.y));
-    }
-    //creates cake
-    this.cakeLocation = stageData[this.currentLevel].cake;
-    this.cake = new Cake(this, this.cakeLocation.x, this.cakeLocation.y);
+      //collisions between player and powerup
+      /*
+      this.physics.add.collider(
+        this.player,
+        this.powerup,
+        this.playerAndPowerupCallback
+      );
+      */
+      //creates score
+      this.score = new Score(this);
+      //creates obstacle array
+      this.obstacles = [];
+      this.obstacleLocations = stageData[this.currentLevel].obstacles;
+      for (let i = 0; i < this.obstacleLocations.length; i++) {
+        let obstacle = this.obstacleLocations[i];
+        this.obstacles.push(new Obstacle(this, obstacle.x, obstacle.y));
+      }
+      //creates cake
+      this.cakeLocation = stageData[this.currentLevel].cake;
+      this.cake = new Cake(this, this.cakeLocation.x, this.cakeLocation.y);
 
-    console.log("this current level: ", this.currentLevel);
-    console.log("stageLevel length: ", stageData.length);
-    if (this.currentLevel != stageData.length) {
+      console.log("this current level: ", this.currentLevel);
+      console.log("stageLevel length: ", stageData.length);
+
       //accesses platform data based on current level
       this.platforms = stageData[this.currentLevel].platforms;
 
@@ -224,10 +228,10 @@ export default class PlayScene extends Phaser.Scene {
       //this array gets all the platforms for the current level,so we can perform collisions with multiple platforms
       this.platformArray = [];
       /*
-      this loop goes through the platforms of the current level
-      then it phyisically creates the platforms for the level
-      then it pushes all the platforms for that level into the array
-    */
+        this loop goes through the platforms of the current level
+        then it phyisically creates the platforms for the level
+        then it pushes all the platforms for that level into the array
+      */
       for (let i = 0; i < this.platforms.length; i++) {
         let platform = this.platforms[i];
         this.physicalPlatform = this.addPhysicalRectangle(
@@ -239,13 +243,22 @@ export default class PlayScene extends Phaser.Scene {
         );
         this.platformArray.push(this.physicalPlatform);
       }
-      this.box = new Box(this, 100, 100);
+      this.boxes = [];
+      this.boxLocation = stageData[this.currentLevel].boxes;
+      for (let i = 0; i < this.boxLocation.length; i++) {
+        let box = this.boxLocation[i];
+        this.boxes.push(new Box(this, box.x, box.y));
+      }
       //collisions between objects and platforms
       this.platformCollisions();
       //collisions between player and cake
       this.physics.add.collider(this.player, this.cake);
-      this.physics.add.collider(this.player, this.box);
-      this.physics.add.collider(this.cake, this.box);
+      this.physics.add.collider(this.player, this.boxes, () => {
+        this.boxes.forEach(box =>
+          box.setVelocity(this.player.setVelocity(100))
+        );
+      });
+      this.physics.add.collider(this.cake, this.boxes);
 
       //turns off physics gravity for the ghost
       this.enemy.body.setAllowGravity(false);
@@ -259,11 +272,11 @@ export default class PlayScene extends Phaser.Scene {
   platformCollisions() {
     this.physics.add.collider(this.player, this.platformArray);
     this.physics.add.collider(this.cake, this.platformArray);
-    this.physics.add.collider(this.powerup, this.platformArray);
+    this.physics.add.collider(this.powerups, this.platformArray);
     this.physics.add.collider(this.enemy, this.platformArray);
     this.physics.add.collider(this.obstacles, this.platformArray);
     this.physics.add.collider(this.finishLine, this.platformArray);
-    this.physics.add.collider(this.box, this.platformArray);
+    this.physics.add.collider(this.boxes, this.platformArray);
   }
   /*
     this method is called when GameLevelManger switches level
@@ -345,11 +358,6 @@ export default class PlayScene extends Phaser.Scene {
   //returns a random hex value for red
   randomRed() {
     return Math.floor(Math.random() * 0xaa) << 16;
-  }
-  //calls player and enemy updates
-  update(time, delta) {
-    this.player.update(time, delta);
-    this.enemy.update(time, delta);
   }
 
   update(time, delta) {

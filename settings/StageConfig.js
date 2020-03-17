@@ -36,11 +36,15 @@ export const STAGE_CONFIG = [
       y: 5
     },
 
-    powerup: {
-      x: 1000,
-      y: 1000,
-      time: 5000
-    },
+    powerups: [
+      {
+        x: 60,
+        y: 125,
+        time: 8000
+      }
+    ],
+
+    boxes: [],
 
     levelWidth: 500 / 2,
     levelHeight: 300 / 2
@@ -131,7 +135,8 @@ export const STAGE_CONFIG = [
       x: 45,
       y: 250
     },
-    powerup: {}
+    powerups: [],
+    boxes: []
   },
   {
     level: 3,
@@ -166,12 +171,16 @@ export const STAGE_CONFIG = [
       x: 15,
       y: 5
     },
-    powerup: {
-      x: 170,
-      y: 125,
-      time: 8000
-    }
-  },
+    powerups: [
+      {
+        x: 170,
+        y: 125,
+        time: 8000
+      }
+    ],
+    boxes: []
+  }
+  /*
   {
     level: 4,
     levelWidth: 800,
@@ -284,7 +293,10 @@ export const STAGE_CONFIG = [
     cake: {
       x: 35,
       y: 450
-    }
+    },
+
+    powerups: [],
+    boxes: []
   },
 
   {
@@ -387,4 +399,5 @@ export const STAGE_CONFIG = [
     levelWidth: 1000,
     levelHeight: 700
   }
+  */
 ];
