@@ -36,13 +36,7 @@ export const STAGE_CONFIG = [
       y: 5
     },
 
-    powerups: [
-      {
-        x: 60,
-        y: 125,
-        time: 8000
-      }
-    ],
+    powerups: [],
 
     boxes: [],
 

@@ -41,6 +41,8 @@ export default class GameLevelManager extends Phaser.Scene {
   destroy() {}
 
   switchLevel() {
+    console.log("current level: ", this.currentLevel);
+    console.log("stage data length", this.stageData.length);
     this.game.events.emit("obstacleDestroy");
     this.level++;
     this.numOfObs++;
@@ -66,7 +68,7 @@ export default class GameLevelManager extends Phaser.Scene {
     // (This logic should be handling all of the win stuff!)
     // Much cleaner here
     // TODO: Change '3' to use stageData.length instead of hardcoding
-    if (this.level === this.stageData.length) {
+    if (this.currentLevel === this.stageData.length) {
       this.scene.start("WinScene");
     }
   }
