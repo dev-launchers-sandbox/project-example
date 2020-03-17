@@ -108,15 +108,14 @@ export default class PlayScene extends Phaser.Scene {
   }
 
   create() {
+    console.log("PlayScene create");
+    this.game.events.on("obstacleDestroy", this.destroyObstacle, this);
+    const camera = this.cameras.main;
+    const cursors = this.input.keyboard.createCursorKeys();
+
+    //creates reference to stage config data
     let stageData = STAGE_CONFIG;
-    if (this.currentLevel != stageData.length) {
-      console.log("PlayScene create");
-      this.game.events.on("obstacleDestroy", this.destroyObstacle, this);
-      const camera = this.cameras.main;
-      const cursors = this.input.keyboard.createCursorKeys();
-
-      //creates reference to stage config data
-
+    if (this.currentLevel !== stageData.length) {
       //accesses width data based on current level
       this.levelWidth = stageData[this.currentLevel].levelWidth;
       //accesses height data based on current level
@@ -217,37 +216,40 @@ export default class PlayScene extends Phaser.Scene {
 
       console.log("this current level: ", this.currentLevel);
       console.log("stageLevel length: ", stageData.length);
+      if (this.currentLevel != stageData.length) {
+        //accesses platform data based on current level
+        this.platforms = stageData[this.currentLevel].platforms;
 
-      //accesses platform data based on current level
-      this.platforms = stageData[this.currentLevel].platforms;
+        // setBounds() IS A METHOD OF THE WORLD CLASS!
+        // https://photonstorm.github.io/phaser3-docs/Phaser.Physics.Arcade.World.html
+        this.physics.world.setBounds(0, 0, this.levelWidth, this.levelHeight);
 
-      // setBounds() IS A METHOD OF THE WORLD CLASS!
-      // https://photonstorm.github.io/phaser3-docs/Phaser.Physics.Arcade.World.html
-      this.physics.world.setBounds(0, 0, this.levelWidth, this.levelHeight);
-
-      //this array gets all the platforms for the current level,so we can perform collisions with multiple platforms
-      this.platformArray = [];
-      /*
+        //this array gets all the platforms for the current level,so we can perform collisions with multiple platforms
+        this.platformArray = [];
+        /*
         this loop goes through the platforms of the current level
         then it phyisically creates the platforms for the level
         then it pushes all the platforms for that level into the array
       */
-      for (let i = 0; i < this.platforms.length; i++) {
-        let platform = this.platforms[i];
-        this.physicalPlatform = this.addPhysicalRectangle(
-          platform.x,
-          platform.y,
-          platform.width,
-          platform.height,
-          this.RandomColor()
-        );
-        this.platformArray.push(this.physicalPlatform);
-      }
-      this.boxes = [];
-      this.boxLocation = stageData[this.currentLevel].boxes;
-      for (let i = 0; i < this.boxLocation.length; i++) {
-        let box = this.boxLocation[i];
-        this.boxes.push(new Box(this, box.x, box.y));
+        for (let i = 0; i < this.platforms.length; i++) {
+          let platform = this.platforms[i];
+          this.physicalPlatform = this.addPhysicalRectangle(
+            platform.x,
+            platform.y,
+            platform.width,
+            platform.height,
+            this.RandomColor()
+          );
+          this.platformArray.push(this.physicalPlatform);
+        }
+        this.boxes = [];
+        this.boxLocation = stageData[this.currentLevel].boxes;
+        for (let i = 0; i < this.boxLocation.length; i++) {
+          let box = this.boxLocation[i];
+          this.boxes.push(new Box(this, box.x, box.y));
+        }
+      } else {
+        this.scene.start("WinScene");
       }
       //collisions between objects and platforms
       this.platformCollisions();
@@ -359,11 +361,16 @@ export default class PlayScene extends Phaser.Scene {
   randomRed() {
     return Math.floor(Math.random() * 0xaa) << 16;
   }
+  //calls player and enemy updates
 
   update(time, delta) {
-    this.player.update(time, delta);
-    this.enemy.update(time, delta);
-    this.cake.update(time, delta);
+    let player = this.player;
+    let enemy = this.enemy;
+    let cake = this.cake;
+
+    player.update(time, delta);
+    enemy.update(time, delta);
+    cake.update(time, delta);
   }
 
   /* <Begin> helper functions added by Kris */
