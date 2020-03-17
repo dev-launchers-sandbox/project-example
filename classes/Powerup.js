@@ -21,7 +21,7 @@ export default class Powerup extends Phaser.Physics.Arcade.Sprite {
     // When the player collides with the powerup, the powerpul will activate then destroy itself.
     scene.physics.add.overlap(
       scene.player,
-      this,
+      this.scene.powerups,
       () => {
         this.activate();
         this.destroy();
@@ -37,14 +37,14 @@ export default class Powerup extends Phaser.Physics.Arcade.Sprite {
     let player = this.scene.player;
     //changes the gravity of dynamic objets to -10
     scene.physics.world.gravity.y = -10;
-    player.setGravityY(-10);
+    player.setGravityY(-15);
 
     //when 5 seconds pass the graivty gets set back to default
     this.scene.time.delayedCall(
       this.time,
       () => {
         scene.physics.world.gravity.y = 500;
-        player.setGravityY(100);
+        // player.setGravityY(100);
       },
       null,
       this.scene
